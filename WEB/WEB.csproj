@@ -226,6 +226,9 @@
     <Compile Include="SupportOnline.cs">
       <DependentUpon>ShopModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="sysdiagram.cs">
+      <DependentUpon>ShopModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="SystemConfig.cs">
       <DependentUpon>ShopModel.tt</DependentUpon>
     </Compile>
@@ -434,6 +437,9 @@
       <DependentUpon>ShopModel.edmx</DependentUpon>
       <LastGenOutput>ShopModel.cs</LastGenOutput>
     </Content>
+    <Content Include="UploadedFiles\bannerDellVostro.jpg" />
+    <Content Include="UploadedFiles\bannerDellVostro2.jpg" />
+    <Content Include="UploadedFiles\dell-inspiron-3476.jpg" />
     <Content Include="UploadedFiles\files\20190611_101319.jpg" />
     <Content Include="UploadedFiles\files\dell-vostro-3568-vti32072w-den-2-org.jpg" />
     <Content Include="UploadedFiles\files\portrait_18255481810_o.jpg" />
@@ -862,6 +868,8 @@
     <Content Include="Views\Shared\_AdminLayout.cshtml" />
     <Content Include="Views\Admin\Income.cshtml" />
     <Content Include="Views\ShoppingCart\MakeOrder.cshtml" />
+    <Content Include="Views\ShoppingCart\MyAccount.cshtml" />
+    <Content Include="Views\ShoppingCart\OrderDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

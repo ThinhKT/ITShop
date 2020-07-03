@@ -30,8 +30,9 @@ namespace WEB
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public string CreatedBy { get; set; }
         public string PaymentStatus { get; set; }
-        public bool Status { get; set; }
-        public string CustomerId { get; set; }
+        public int Status { get; set; }
+        public Nullable<int> CustomerId { get; set; }
+        public Nullable<decimal> TotalPrice { get; set; }
     
         public virtual ApplicationUser ApplicationUser { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
