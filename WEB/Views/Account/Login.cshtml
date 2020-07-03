@@ -1,0 +1,37 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!-- Checkout Section Begin -->
+<section class="checkout spad">
+    <div class="container">
+        <div class="checkout__form">
+            <h4>Đăng nhập</h4>
+            <form action="/Account/Login" method="post">
+                @if (ViewBag.Err != null)
+                {
+                    <h2 style="color:red">*@ViewBag.Err</h2>
+                }
+                <div class="row">
+                    @if (Session["NonLogin"] != null)
+                    {
+                        <h2 style="color:red">*@Session["NonLogin"]</h2>
+                        Session["NonLogin"] = null;
+                    }
+                    <div class="col-lg-8 col-md-6">
+                        <div class="checkout__input">
+                            <p>User Name<span>*</span></p>
+                            <input type="text" name="UserName" required>
+                        </div>
+                        <div class="checkout__input">
+                            <p>Password<span>*</span></p>
+                            <input type="password" name="Password" required>
+                        </div>
+                        <button type="submit" class="site-btn">Đăng nhập</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+<!-- Checkout Section End -->

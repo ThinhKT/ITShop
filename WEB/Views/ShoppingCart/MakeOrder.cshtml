@@ -1,0 +1,78 @@
+﻿
+@{
+    ViewBag.Title = "MakeOrder";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!-- Checkout Section Begin -->
+        <div class="checkout__form">
+            <h4>Thông tin đơn hàng</h4>
+            <form action="#">
+                <div class="row">
+                    <div class="col-lg-8 col-md-6">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="checkout__input">
+                                    <input type="text" placeholder="Họ*">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="checkout__input">
+                                    <input type="text" placeholder="Tên*">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="checkout__input">
+                            <input type="text" placeholder="Số nhà, tên đường, quận, huyện,..." class="checkout__input__add">
+                            <input type="text" placeholder="Địa chỉ tùy chọn">
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="checkout__input">
+                                    <input type="text" placeholder="Số điện thoại*">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="checkout__input">
+                                    <input type="text" placeholder="Email*">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="checkout__input">
+                            <input type="text" placeholder="Nhập lại mật khẩu để xác minh*">
+                        </div>
+                        <div class="checkout__input__checkbox">
+                            <label for="diff-acc">
+                                Ship to a different address?
+                                <input type="checkbox" id="diff-acc">
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                        <div class="checkout__input">
+                            <p>Order notes<span>*</span></p>
+                            <input type="text"
+                                   placeholder="Notes about your order, e.g. special notes for delivery.">
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="checkout__order">
+                            <h4>Đơn hàng</h4>
+                            <div class="checkout__order__products">Sản phẩm <span>Tổng giá</span></div>
+                            <ul>
+                                <li>Vegetable’s <span>$75.99</span></li>
+                                <li>Fresh Vegetable <span>$151.99</span></li>
+                                <li>Organic Bananas <span>$53.99</span></li>
+                            </ul>
+                            <div class="checkout__order__subtotal">Subtotal <span>$750.99</span></div>
+                            <div class="checkout__order__total">Total <span>$750.99</span></div>
+                            <div class="checkout__input__checkbox">
+                                <input type="radio" name="payment" checked> Thanh toán khi nhận hàng
+                                <br/>
+                                <input type="radio" name="payment"> Thanh toán online
+                            </div>
+                            <button type="submit" class="site-btn">Đặt hàng</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+<!-- Checkout Section End -->

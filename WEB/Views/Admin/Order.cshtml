@@ -1,0 +1,38 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<h1>Danh sách đơn hàng</h1>
+<div class="tm-bg-primary-dark tm-block tm-block-taller tm-block-scroll">
+    <h2 class="tm-block-title">Orders List</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">MÃ</th>
+                <th scope="col">TÊN KH</th>
+                <th scope="col">DỊA CHỈ KH</th>
+                <th scope="col">EMAIL KH</th>
+                <th scope="col">SĐT</th>
+                <th scope="col">GIÁ SẢN PHẨM</th>
+                <th scope="col">SỐ LƯỢNG</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in ViewBag.OrderList)
+            {
+                <tr>
+                    <th scope="row"><b>@item.ID</b></th>
+                    <td>
+                        @*<div class="tm-status-circle moving">*@
+                        @item.CustomerName
+                    </td>
+                    <td><b>@item.CustomerAddress</b></td>
+                    <td><b>@item.CustomerEmail</b></td>
+                    <td><b>@item.CustomerMobile</b></td>
+                    <td><b>@item.Price</b></td>
+                    <td><b>@item.Quantity</b></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

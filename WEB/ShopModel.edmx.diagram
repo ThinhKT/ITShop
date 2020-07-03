@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="3ac4a5c4ed3148ec90be12aade0bc071" Name="Diagram1">
+        <EntityTypeShape EntityType="ShopModel.C__MigrationHistory" Width="1.5" PointX="9.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopModel.ApplicationGroup" Width="1.5" PointX="0.75" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopModel.ApplicationRole" Width="1.5" PointX="3" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopModel.ApplicationUserClaim" Width="1.5" PointX="5.25" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopModel.ApplicationUserLogin" Width="1.5" PointX="5.25" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopModel.ApplicationUserRole" Width="1.5" PointX="8.25" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopModel.ApplicationUser" Width="1.5" PointX="3" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopModel.ContactDetail" Width="1.5" PointX="10.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopModel.Error" Width="1.5" PointX="11.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopModel.Feedback" Width="1.5" PointX="9.75" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopModel.Footer" Width="1.5" PointX="11.75" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopModel.MenuGroup" Width="1.5" PointX="7.75" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopModel.Menu" Width="1.5" PointX="10" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopModel.OrderDetail" Width="1.5" PointX="7.5" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopModel.Order" Width="1.5" PointX="5.25" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopModel.Page" Width="1.5" PointX="12.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopModel.PostCategory" Width="1.5" PointX="3" PointY="22.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopModel.Post" Width="1.5" PointX="5.25" PointY="22.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopModel.ProductCategory" Width="1.5" PointX="3" PointY="15.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopModel.Product" Width="1.5" PointX="5.25" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopModel.Slide" Width="1.5" PointX="12.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopModel.SupportOnline" Width="1.5" PointX="13.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopModel.SystemConfig" Width="1.5" PointX="0.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopModel.Tag" Width="1.5" PointX="7.5" PointY="16.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopModel.VisitorStatistic" Width="1.5" PointX="13.75" PointY="12.75" IsExpanded="true" />
+        <AssociationConnector Association="ShopModel.FK_dbo_IdentityUserRoles_dbo_IdentityRoles_IdentityRole_Id" ManuallyRouted="false" />
+        <AssociationConnector Association="ShopModel.FK_dbo_IdentityUserClaims_dbo_ApplicationUsers_ApplicationUser_Id" ManuallyRouted="false" />
+        <AssociationConnector Association="ShopModel.FK_dbo_IdentityUserLogins_dbo_ApplicationUsers_ApplicationUser_Id" ManuallyRouted="false" />
+        <AssociationConnector Association="ShopModel.FK_dbo_IdentityUserRoles_dbo_ApplicationUsers_ApplicationUser_Id" ManuallyRouted="false" />
+        <AssociationConnector Association="ShopModel.FK_dbo_Orders_dbo_ApplicationUsers_CustomerId" ManuallyRouted="false" />
+        <AssociationConnector Association="ShopModel.FK_dbo_Menus_dbo_MenuGroups_GroupID" ManuallyRouted="false" />
+        <AssociationConnector Association="ShopModel.FK_dbo_OrderDetails_dbo_Orders_OrderID" ManuallyRouted="false" />
+        <AssociationConnector Association="ShopModel.FK_dbo_OrderDetails_dbo_Products_ProductID" ManuallyRouted="false" />
+        <AssociationConnector Association="ShopModel.FK_dbo_Posts_dbo_PostCategories_CategoryID" ManuallyRouted="false" />
+        <AssociationConnector Association="ShopModel.FK_dbo_Products_dbo_ProductCategories_CategoryID" ManuallyRouted="false" />
+        <AssociationConnector Association="ShopModel.ApplicationRoleGroups" ManuallyRouted="false" />
+        <AssociationConnector Association="ShopModel.ApplicationUserGroups" ManuallyRouted="false" />
+        <AssociationConnector Association="ShopModel.PostTags" ManuallyRouted="false" />
+        <AssociationConnector Association="ShopModel.ProductTags" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

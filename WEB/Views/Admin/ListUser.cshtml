@@ -1,0 +1,61 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="row tm-content-row">
+    <div class="col-12 tm-block-col">
+        <div class="tm-bg-primary-dark tm-block tm-block-h-auto">
+            <h2 class="tm-block-title">List of Accounts</h2>
+            <p class="text-white">Accounts</p>
+            <select class="custom-select">
+                <option value="0">Select account</option>
+                <option value="1">Admin</option>
+                <option value="2">Editor</option>
+                <option value="3">Merchant</option>
+                <option value="4">Customer</option>
+            </select>
+        </div>
+    </div>
+</div>
+<!-- row -->
+<div class="tm-bg-primary-dark tm-block tm-block-taller tm-block-scroll">
+    <h2 class="tm-block-title">DANH SÁCH NGƯỜI DÙNG</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">MÃ</th>
+                <th scope="col">HỌ TÊN</th>
+                <th scope="col">TÊN TK</th>
+                <th scope="col">NGÀY SINH</th>
+                <th scope="col">ĐỊA CHỈ</th>
+                <th scope="col">EMAIL</th>
+                <th scope="col">SDT</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in ViewBag.UserList)
+            {
+            <tr>
+                <th scope="row"><b>@item.Id</b></th>
+                <td>
+                    @*<div class="tm-status-circle moving">*@
+                    @item.FullName
+                </td>
+                <td><b>@item.UserName</b></td>
+                <td><b>@item.BirthDay</b></td>
+                <td><b>@item.Address</b></td>
+                <td>@item.Email</td>
+                <td>@item.PhoneNumber</td>
+                <td class="text-center">
+                    <a href="#" class="tm-product-delete-link">
+                        <i class="far fa-trash-alt tm-product-delete-icon"></i>
+                    </a>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<button class="btn btn-primary btn-block text-uppercase mb-3">
+    Thêm
+</button>

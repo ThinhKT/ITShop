@@ -1,0 +1,103 @@
+﻿@using WEB.Assets.User;
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@if (ViewBag.None != null)
+{
+    <h2>@ViewBag.None</h2>
+}
+
+<!-- Shoping Cart Section Begin -->
+<section class="shoping-cart spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="shoping__cart__table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="shoping__product">Sản phẩm</th>
+                                <th>Đơn giá</th>
+                                <th>Số lượng</th>
+                                <th>Tổng giá</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (ViewBag.Cart != null)
+                            {
+                                Session["totalPrice"] = 0;
+                                foreach (var item in ViewBag.Cart)
+                                {
+                            <tr>
+                                <td class="shoping__cart__item">
+                                    <img src="img/cart/cart-1.jpg" alt="">
+                                    <h5>@item.Name</h5>
+                                </td>
+                                <td class="shoping__cart__price">
+                                    @item.Price VND
+                                </td>
+                                @for (int i = 0; i < TempCart.count; i++)
+                                {
+                                    if (item.ID == TempCart.ID[i])
+                                    {
+                                        //Session["totalPrice"] = Session["totalPrice"] + (item.Price * TempCart.ammount[i]);
+                                        <td class="shoping__cart__quantity">
+                                            <div class="quantity">
+                                                <div class="pro-qty">
+                                                    <input type="text" value="@TempCart.ammount[i]">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="shoping__cart__total">
+                                            @(item.Price * TempCart.ammount[i]) VND
+                                        </td>
+                                        <td class="shoping__cart__item__close">
+                                            <span class="icon_close"></span>
+                                        </td>
+                                        break;
+                                    }
+                                }
+                            </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="shoping__cart__btns">
+                    <a href="/Dashboard/Dashboard" class="primary-btn cart-btn">TIẾP TỤC MUA HÀNG</a>
+                    <a href="/ShoppingCart/ViewCart" class="primary-btn cart-btn cart-btn-right">
+                        <span class="icon_loading"></span>
+                        RElOAD GIỎ HÀNG
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="shoping__continue">
+                    <div class="shoping__discount">
+                        <h5>Discount Codes - Không dùng</h5>
+                        <form action="#">
+                            <input type="text" placeholder="Enter your coupon code">
+                            <button type="submit" class="site-btn">APPLY COUPON</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="shoping__checkout">
+                    <h5>Chi phí giỏ hàng</h5>
+                    <ul>
+                        <li>Tổng tiền sản phẩm<span>@Session["totalPrice"] VND</span></li>
+                        <li>Tổng tiền cuối (thêm phí ship)<span>@Session["totalPrice"] VND</span></li>
+                    </ul>
+                    <a href="/ShoppingCart/MakeOrder" class="primary-btn">Đặt hàng</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Shoping Cart Section End -->

@@ -1,0 +1,933 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{5793477B-DF9F-4E7E-91AE-8E7F0A719360}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>WEB</RootNamespace>
+    <AssemblyName>WEB</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TypeScriptToolsVersion>3.1</TypeScriptToolsVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.4\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.4\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ApplicationGroup.cs">
+      <DependentUpon>ShopModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ApplicationRole.cs">
+      <DependentUpon>ShopModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ApplicationUser.cs">
+      <DependentUpon>ShopModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ApplicationUserClaim.cs">
+      <DependentUpon>ShopModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ApplicationUserLogin.cs">
+      <DependentUpon>ShopModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ApplicationUserRole.cs">
+      <DependentUpon>ShopModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Assets\User\TempCart.cs" />
+    <Compile Include="ContactDetail.cs">
+      <DependentUpon>ShopModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\AboutController.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\ContactController.cs" />
+    <Compile Include="Controllers\DashboardController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PageController.cs" />
+    <Compile Include="Controllers\PostController.cs" />
+    <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\ShoppingCartController.cs" />
+    <Compile Include="C__MigrationHistory.cs">
+      <DependentUpon>ShopModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Error.cs">
+      <DependentUpon>ShopModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Feedback.cs">
+      <DependentUpon>ShopModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Footer.cs">
+      <DependentUpon>ShopModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Menu.cs">
+      <DependentUpon>ShopModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MenuGroup.cs">
+      <DependentUpon>ShopModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Order.cs">
+      <DependentUpon>ShopModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OrderDetail.cs">
+      <DependentUpon>ShopModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Page.cs">
+      <DependentUpon>ShopModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Post.cs">
+      <DependentUpon>ShopModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PostCategory.cs">
+      <DependentUpon>ShopModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Product.cs">
+      <DependentUpon>ShopModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProductCategory.cs">
+      <DependentUpon>ShopModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ShopModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ShopModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ShopModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ShopModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ShopModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ShopModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Slide.cs">
+      <DependentUpon>ShopModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SupportOnline.cs">
+      <DependentUpon>ShopModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SystemConfig.cs">
+      <DependentUpon>ShopModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Tag.cs">
+      <DependentUpon>ShopModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VisitorStatistic.cs">
+      <DependentUpon>ShopModel.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Admin\css\bootstrap.min.css" />
+    <Content Include="Assets\Admin\css\fontawesome.min.css" />
+    <Content Include="Assets\Admin\css\templatemo-style.css" />
+    <Content Include="Assets\Admin\img\arrow-down.png" />
+    <Content Include="Assets\Admin\img\avatar.png" />
+    <Content Include="Assets\Admin\img\check-mark.png" />
+    <Content Include="Assets\Admin\img\notification-01.jpg" />
+    <Content Include="Assets\Admin\img\notification-02.jpg" />
+    <Content Include="Assets\Admin\img\notification-03.jpg" />
+    <Content Include="Assets\Admin\img\product-image.jpg" />
+    <Content Include="Assets\Admin\jquery-ui-datepicker\AUTHORS.txt" />
+    <Content Include="Assets\Admin\jquery-ui-datepicker\external\jquery\jquery.js" />
+    <Content Include="Assets\Admin\jquery-ui-datepicker\images\ui-bg_glass_75_d0e5f5_1x400.png" />
+    <Content Include="Assets\Admin\jquery-ui-datepicker\images\ui-bg_glass_85_dfeffc_1x400.png" />
+    <Content Include="Assets\Admin\jquery-ui-datepicker\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Assets\Admin\jquery-ui-datepicker\images\ui-bg_gloss-wave_55_5c9ccc_500x100.png" />
+    <Content Include="Assets\Admin\jquery-ui-datepicker\images\ui-bg_inset-hard_100_f5f8f9_1x100.png" />
+    <Content Include="Assets\Admin\jquery-ui-datepicker\images\ui-bg_inset-hard_100_fcfdfd_1x100.png" />
+    <Content Include="Assets\Admin\jquery-ui-datepicker\images\ui-icons_217bc0_256x240.png" />
+    <Content Include="Assets\Admin\jquery-ui-datepicker\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Assets\Admin\jquery-ui-datepicker\images\ui-icons_469bdd_256x240.png" />
+    <Content Include="Assets\Admin\jquery-ui-datepicker\images\ui-icons_6da8d5_256x240.png" />
+    <Content Include="Assets\Admin\jquery-ui-datepicker\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Assets\Admin\jquery-ui-datepicker\images\ui-icons_d8e7f3_256x240.png" />
+    <Content Include="Assets\Admin\jquery-ui-datepicker\images\ui-icons_f9bd01_256x240.png" />
+    <Content Include="Assets\Admin\jquery-ui-datepicker\index.html" />
+    <Content Include="Assets\Admin\jquery-ui-datepicker\jquery-ui.css" />
+    <Content Include="Assets\Admin\jquery-ui-datepicker\jquery-ui.js" />
+    <Content Include="Assets\Admin\jquery-ui-datepicker\jquery-ui.min.css" />
+    <Content Include="Assets\Admin\jquery-ui-datepicker\jquery-ui.min.js" />
+    <Content Include="Assets\Admin\jquery-ui-datepicker\jquery-ui.structure.css" />
+    <Content Include="Assets\Admin\jquery-ui-datepicker\jquery-ui.structure.min.css" />
+    <Content Include="Assets\Admin\jquery-ui-datepicker\jquery-ui.theme.css" />
+    <Content Include="Assets\Admin\jquery-ui-datepicker\jquery-ui.theme.min.css" />
+    <Content Include="Assets\Admin\jquery-ui-datepicker\LICENSE.txt" />
+    <Content Include="Assets\Admin\js\bootstrap.min.js" />
+    <Content Include="Assets\Admin\js\Chart.min.js" />
+    <Content Include="Assets\Admin\js\jquery-3.3.1.min.js" />
+    <Content Include="Assets\Admin\js\moment.min.js" />
+    <Content Include="Assets\Admin\js\tooplate-scripts.js" />
+    <Content Include="Assets\Admin\webfonts\fa-brands-400.svg" />
+    <Content Include="Assets\Admin\webfonts\fa-regular-400.svg" />
+    <Content Include="Assets\Admin\webfonts\fa-solid-900.svg" />
+    <Content Include="Assets\User\css\bootstrap.min.css" />
+    <Content Include="Assets\User\css\elegant-icons.css" />
+    <Content Include="Assets\User\css\font-awesome.min.css" />
+    <Content Include="Assets\User\css\jquery-ui.min.css" />
+    <Content Include="Assets\User\css\nice-select.css" />
+    <Content Include="Assets\User\css\owl.carousel.min.css" />
+    <Content Include="Assets\User\css\slicknav.min.css" />
+    <Content Include="Assets\User\css\style.css" />
+    <Content Include="Assets\User\fonts\ElegantIcons.svg" />
+    <Content Include="Assets\User\fonts\fontawesome-webfont.svg" />
+    <Content Include="Assets\User\img\banner\banner-1.jpg" />
+    <Content Include="Assets\User\img\banner\banner-2.jpg" />
+    <Content Include="Assets\User\img\blog\blog-1.jpg" />
+    <Content Include="Assets\User\img\blog\blog-2.jpg" />
+    <Content Include="Assets\User\img\blog\blog-3.jpg" />
+    <Content Include="Assets\User\img\blog\blog-4.jpg" />
+    <Content Include="Assets\User\img\blog\blog-5.jpg" />
+    <Content Include="Assets\User\img\blog\blog-6.jpg" />
+    <Content Include="Assets\User\img\blog\details\details-author.jpg" />
+    <Content Include="Assets\User\img\blog\details\details-hero.jpg" />
+    <Content Include="Assets\User\img\blog\details\details-pic.jpg" />
+    <Content Include="Assets\User\img\blog\sidebar\sr-1.jpg" />
+    <Content Include="Assets\User\img\blog\sidebar\sr-2.jpg" />
+    <Content Include="Assets\User\img\blog\sidebar\sr-3.jpg" />
+    <Content Include="Assets\User\img\breadcrumb.jpg" />
+    <Content Include="Assets\User\img\cart\cart-1.jpg" />
+    <Content Include="Assets\User\img\cart\cart-2.jpg" />
+    <Content Include="Assets\User\img\cart\cart-3.jpg" />
+    <Content Include="Assets\User\img\categories\cat-1.jpg" />
+    <Content Include="Assets\User\img\categories\cat-2.jpg" />
+    <Content Include="Assets\User\img\categories\cat-3.jpg" />
+    <Content Include="Assets\User\img\categories\cat-4.jpg" />
+    <Content Include="Assets\User\img\categories\cat-5.jpg" />
+    <Content Include="Assets\User\img\featured\feature-1.jpg" />
+    <Content Include="Assets\User\img\featured\feature-2.jpg" />
+    <Content Include="Assets\User\img\featured\feature-3.jpg" />
+    <Content Include="Assets\User\img\featured\feature-4.jpg" />
+    <Content Include="Assets\User\img\featured\feature-5.jpg" />
+    <Content Include="Assets\User\img\featured\feature-6.jpg" />
+    <Content Include="Assets\User\img\featured\feature-7.jpg" />
+    <Content Include="Assets\User\img\featured\feature-8.jpg" />
+    <Content Include="Assets\User\img\hero\banner.jpg" />
+    <Content Include="Assets\User\img\language.png" />
+    <Content Include="Assets\User\img\latest-product\lp-1.jpg" />
+    <Content Include="Assets\User\img\latest-product\lp-2.jpg" />
+    <Content Include="Assets\User\img\latest-product\lp-3.jpg" />
+    <Content Include="Assets\User\img\logo.png" />
+    <Content Include="Assets\User\img\payment-item.png" />
+    <Content Include="Assets\User\img\product\details\product-details-1.jpg" />
+    <Content Include="Assets\User\img\product\details\product-details-2.jpg" />
+    <Content Include="Assets\User\img\product\details\product-details-3.jpg" />
+    <Content Include="Assets\User\img\product\details\product-details-4.jpg" />
+    <Content Include="Assets\User\img\product\details\product-details-5.jpg" />
+    <Content Include="Assets\User\img\product\details\thumb-1.jpg" />
+    <Content Include="Assets\User\img\product\details\thumb-2.jpg" />
+    <Content Include="Assets\User\img\product\details\thumb-3.jpg" />
+    <Content Include="Assets\User\img\product\details\thumb-4.jpg" />
+    <Content Include="Assets\User\img\product\discount\pd-1.jpg" />
+    <Content Include="Assets\User\img\product\discount\pd-2.jpg" />
+    <Content Include="Assets\User\img\product\discount\pd-3.jpg" />
+    <Content Include="Assets\User\img\product\discount\pd-4.jpg" />
+    <Content Include="Assets\User\img\product\discount\pd-5.jpg" />
+    <Content Include="Assets\User\img\product\discount\pd-6.jpg" />
+    <Content Include="Assets\User\img\product\product-1.jpg" />
+    <Content Include="Assets\User\img\product\product-10.jpg" />
+    <Content Include="Assets\User\img\product\product-11.jpg" />
+    <Content Include="Assets\User\img\product\product-12.jpg" />
+    <Content Include="Assets\User\img\product\product-2.jpg" />
+    <Content Include="Assets\User\img\product\product-3.jpg" />
+    <Content Include="Assets\User\img\product\product-4.jpg" />
+    <Content Include="Assets\User\img\product\product-5.jpg" />
+    <Content Include="Assets\User\img\product\product-6.jpg" />
+    <Content Include="Assets\User\img\product\product-7.jpg" />
+    <Content Include="Assets\User\img\product\product-8.jpg" />
+    <Content Include="Assets\User\img\product\product-9.jpg" />
+    <Content Include="Assets\User\js\bootstrap.min.js" />
+    <Content Include="Assets\User\js\jquery-3.3.1.min.js" />
+    <Content Include="Assets\User\js\jquery-ui.min.js" />
+    <Content Include="Assets\User\js\jquery.nice-select.min.js" />
+    <Content Include="Assets\User\js\jquery.slicknav.js" />
+    <Content Include="Assets\User\js\main.js" />
+    <Content Include="Assets\User\js\mixitup.min.js" />
+    <Content Include="Assets\User\js\owl.carousel.min.js" />
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="favicon.ico" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Assets\User\fonts\ElegantIcons.eot" />
+    <Content Include="Assets\User\fonts\ElegantIcons.ttf" />
+    <Content Include="Assets\User\fonts\ElegantIcons.woff" />
+    <Content Include="Assets\User\fonts\fontawesome-webfont.eot" />
+    <Content Include="Assets\User\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Assets\User\fonts\fontawesome-webfont.woff" />
+    <Content Include="Assets\User\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Assets\User\fonts\FontAwesome.otf" />
+    <Content Include="Assets\User\sass\style.scss" />
+    <Content Include="Assets\User\sass\_base.scss" />
+    <Content Include="Assets\User\sass\_blog-details.scss" />
+    <Content Include="Assets\User\sass\_blog-sidebar.scss" />
+    <Content Include="Assets\User\sass\_blog.scss" />
+    <Content Include="Assets\User\sass\_breadcrumb.scss" />
+    <Content Include="Assets\User\sass\_checkout.scss" />
+    <Content Include="Assets\User\sass\_contact.scss" />
+    <Content Include="Assets\User\sass\_footer.scss" />
+    <Content Include="Assets\User\sass\_header.scss" />
+    <Content Include="Assets\User\sass\_hero.scss" />
+    <Content Include="Assets\User\sass\_home-page.scss" />
+    <Content Include="Assets\User\sass\_mixins.scss" />
+    <Content Include="Assets\User\sass\_responsive.scss" />
+    <Content Include="Assets\User\sass\_shop-details.scss" />
+    <Content Include="Assets\User\sass\_shop-grid.scss" />
+    <Content Include="Assets\User\sass\_shoping-cart.scss" />
+    <Content Include="Assets\User\sass\_sidebar.scss" />
+    <Content Include="Assets\User\sass\_variable.scss" />
+    <Content Include="Assets\Admin\jquery-ui-datepicker\package.json" />
+    <Content Include="Assets\Admin\webfonts\fa-brands-400.eot" />
+    <Content Include="Assets\Admin\webfonts\fa-brands-400.ttf" />
+    <Content Include="Assets\Admin\webfonts\fa-brands-400.woff" />
+    <Content Include="Assets\Admin\webfonts\fa-brands-400.woff2" />
+    <Content Include="Assets\Admin\webfonts\fa-regular-400.eot" />
+    <Content Include="Assets\Admin\webfonts\fa-regular-400.ttf" />
+    <Content Include="Assets\Admin\webfonts\fa-regular-400.woff" />
+    <Content Include="Assets\Admin\webfonts\fa-regular-400.woff2" />
+    <Content Include="Assets\Admin\webfonts\fa-solid-900.eot" />
+    <Content Include="Assets\Admin\webfonts\fa-solid-900.ttf" />
+    <Content Include="Assets\Admin\webfonts\fa-solid-900.woff" />
+    <Content Include="Assets\Admin\webfonts\fa-solid-900.woff2" />
+    <None Include="Scripts\jquery-3.3.1.intellisense.js" />
+    <Content Include="Scripts\jquery-3.3.1.js" />
+    <Content Include="Scripts\jquery-3.3.1.min.js" />
+    <Content Include="Scripts\jquery-3.3.1.slim.js" />
+    <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="ShopModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ShopModel.Context.cs</LastGenOutput>
+      <DependentUpon>ShopModel.edmx</DependentUpon>
+    </Content>
+    <Content Include="ShopModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ShopModel.edmx</DependentUpon>
+      <LastGenOutput>ShopModel.cs</LastGenOutput>
+    </Content>
+    <Content Include="UploadedFiles\files\20190611_101319.jpg" />
+    <Content Include="UploadedFiles\files\dell-vostro-3568-vti32072w-den-2-org.jpg" />
+    <Content Include="UploadedFiles\files\portrait_18255481810_o.jpg" />
+    <Content Include="UploadedFiles\images1\20190611_101319.jpg" />
+    <Content Include="UploadedFiles\images1\20190611_103647.jpg" />
+    <Content Include="UploadedFiles\images1\asus-x407ua-bv351t-vang-dong-1-2-org.jpg" />
+    <Content Include="UploadedFiles\images1\asus-x407ua-bv351t-vang-dong-3-org.jpg" />
+    <Content Include="UploadedFiles\images1\asus-x407ua-i3-7020u-4gb-1tb-win10-bv309t-vang-1-1-org.jpg" />
+    <Content Include="UploadedFiles\images1\asus-x407ua-i3-7020u-4gb-1tb-win10-bv309t-vang-2-org%281%29.jpg" />
+    <Content Include="UploadedFiles\images1\asus-x407ua-i3-7020u-4gb-1tb-win10-bv309t-vang-2-org.jpg" />
+    <Content Include="UploadedFiles\images1\asus-x407ua-i3-7020u-4gb-1tb-win10-bv309t-vang-3-org.jpg" />
+    <Content Include="UploadedFiles\images1\asus-x407ua-i3-7020u-4gb-1tb-win10-bv309t-vang-5-org.jpg" />
+    <Content Include="UploadedFiles\images1\asus-x441ma-ga024t-1-1-org.jpg" />
+    <Content Include="UploadedFiles\images1\asus-x441ma-ga024t-2-org%281%29.jpg" />
+    <Content Include="UploadedFiles\images1\asus-x441ma-ga024t-2-org.jpg" />
+    <Content Include="UploadedFiles\images1\asus-x441ma-ga024t-3-org.jpg" />
+    <Content Include="UploadedFiles\images1\asus-x441ma-ga024t-5-org.jpg" />
+    <Content Include="UploadedFiles\images1\asus-x507ma-n4000-4gb-256gb-win10-br318t-xam-1-1-org%281%29.jpg" />
+    <Content Include="UploadedFiles\images1\asus-x507ma-n4000-4gb-256gb-win10-br318t-xam-1-1-org.jpg" />
+    <Content Include="UploadedFiles\images1\asus-x507ma-n4000-4gb-256gb-win10-br318t-xam-2-org.jpg" />
+    <Content Include="UploadedFiles\images1\asus-x507ma-n4000-4gb-256gb-win10-br318t-xam-3-org.jpg" />
+    <Content Include="UploadedFiles\images1\asus-x507ma-n4000-4gb-256gb-win10-br318t-xam-5-org.jpg" />
+    <Content Include="UploadedFiles\images1\dell-inspiron-3476-8j61p11-1-org.jpg" />
+    <Content Include="UploadedFiles\images1\dell-inspiron-3476-8j61p11-2-org%281%29.jpg" />
+    <Content Include="UploadedFiles\images1\dell-inspiron-3476-8j61p11-2-org.jpg" />
+    <Content Include="UploadedFiles\images1\dell-inspiron-3476-8j61p11-3-org.jpg" />
+    <Content Include="UploadedFiles\images1\dell-inspiron-3476-8j61p11-5-org.jpg" />
+    <Content Include="UploadedFiles\images1\dell-inspiron-3576-p63f002n76b-mau-den-1-5-org%281%29.jpg" />
+    <Content Include="UploadedFiles\images1\dell-inspiron-3576-p63f002n76b-mau-den-1-5-org.jpg" />
+    <Content Include="UploadedFiles\images1\dell-inspiron-3576-p63f002n76b-mau-den-2-org.jpg" />
+    <Content Include="UploadedFiles\images1\dell-inspiron-3576-p63f002n76b-mau-den-3-org.jpg" />
+    <Content Include="UploadedFiles\images1\dell-inspiron-3576-p63f002n76b-mau-den-5-org.jpg" />
+    <Content Include="UploadedFiles\images1\dell-inspiron-3580-i5-8265u-4gb-1tb-radeon-2gb-70-15-1-600x600.jpg" />
+    <Content Include="UploadedFiles\images1\dell-vostro-3468-i3-7020u-70161069-1-1-org.jpg" />
+    <Content Include="UploadedFiles\images1\dell-vostro-3468-i3-7020u-70161069-2-org.jpg" />
+    <Content Include="UploadedFiles\images1\dell-vostro-3468-i3-7020u-70161069-3-org%281%29.jpg" />
+    <Content Include="UploadedFiles\images1\dell-vostro-3468-i3-7020u-70161069-3-org.jpg" />
+    <Content Include="UploadedFiles\images1\dell-vostro-3468-i3-7020u-70161069-5-org.jpg" />
+    <Content Include="UploadedFiles\images1\dell-vostro-3568-vti32072w-den-2-org.jpg" />
+    <Content Include="UploadedFiles\images1\portraits-2_18376276485_o.jpg" />
+    <Content Include="UploadedFiles\images1\portraits-3_18428111121_o.jpg" />
+    <Content Include="UploadedFiles\images1\portraits_18394664611_o.jpg" />
+    <Content Include="UploadedFiles\images1\portraits_18416703926_o.jpg" />
+    <Content Include="UploadedFiles\images1\portraits_18431062646_o.jpg" />
+    <Content Include="UploadedFiles\images1\portraits_18453207252_o.jpg" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\iPhone\iPhone 11 Pro 256GB\iphone-11-pro-256gb-black-400x460.png" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\iPhone\iPhone 11 Pro 256GB\iphone-11-pro-max-512gb-bac-1-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\iPhone\iPhone 11 Pro 256GB\iphone-11-pro-max-512gb-bac-2-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\iPhone\iPhone 11 Pro 256GB\iphone-11-pro-max-512gb-bac-3-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\iPhone\iPhone 11 Pro 256GB\iphone-11-pro-max-512gb-bac-4-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\iPhone\iPhone 11 Pro Max 256GB\iphone-11-pro-max-256gb-green-400x460.png" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\iPhone\iPhone 11 Pro Max 256GB\iphone-11-pro-max-512gb-bac-1-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\iPhone\iPhone 11 Pro Max 256GB\iphone-11-pro-max-512gb-bac-2-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\iPhone\iPhone 11 Pro Max 256GB\iphone-11-pro-max-512gb-bac-3-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\iPhone\iPhone 11 Pro Max 256GB\iphone-11-pro-max-512gb-bac-4-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\iPhone\iPhone 11 Pro Max 512GB\iphone-11-pro-max-512gb-gold-600x600.jpg" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\iPhone\iPhone 11 Pro Max 512GB\iphone-11-pro-max-512gb-vang-1-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\iPhone\iPhone 11 Pro Max 512GB\iphone-11-pro-max-512gb-vang-2-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\iPhone\iPhone 11 Pro Max 512GB\iphone-11-pro-max-512gb-vang-3-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\iPhone\iPhone 11 Pro Max 512GB\iphone-11-pro-max-512gb-vang-4-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\iPhone\iPhone 11 Pro Max 64GB\iphone-11-pro-max-512gb-bac-1-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\iPhone\iPhone 11 Pro Max 64GB\iphone-11-pro-max-512gb-bac-2-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\iPhone\iPhone 11 Pro Max 64GB\iphone-11-pro-max-512gb-bac-3-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\iPhone\iPhone 11 Pro Max 64GB\iphone-11-pro-max-512gb-bac-4-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\iPhone\iPhone 11 Pro Max 64GB\iphone-11-pro-max-green-400x460.png" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\Oppo\OPPO Reno 10x Zoom Edition\oppo-reno-10x-zoom-edition-black-400x460.png" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\Oppo\OPPO Reno 10x Zoom Edition\oppo-reno-10x-zoom-edition-den-1-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\Oppo\OPPO Reno 10x Zoom Edition\oppo-reno-10x-zoom-edition-den-2-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\Oppo\OPPO Reno 10x Zoom Edition\oppo-reno-10x-zoom-edition-den-3-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\Oppo\OPPO Reno 10x Zoom Edition\oppo-reno-10x-zoom-edition-den-4-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\Oppo\OPPO Reno2 F\oppo-reno2-f-green-mtp-400x460.png" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\Oppo\OPPO Reno2 F\oppo-reno2-f-xanh-1-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\Oppo\OPPO Reno2 F\oppo-reno2-f-xanh-2-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\Oppo\OPPO Reno2 F\oppo-reno2-f-xanh-3-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\Oppo\OPPO Reno2 F\oppo-reno2-f-xanh-4-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\Oppo\OPPO Reno2\oppo-reno2-black-mtp1-400x460.png" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\Oppo\OPPO Reno2\oppo-reno2-den-1-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\Oppo\OPPO Reno2\oppo-reno2-den-2-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\Oppo\OPPO Reno2\oppo-reno2-den-3-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\Oppo\OPPO Reno2\oppo-reno2-den-4-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\Oppo\OPPO Reno\oppo-reno-pink-400x460.png" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\Oppo\OPPO Reno\oppo-reno-xanh-1-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\Oppo\OPPO Reno\oppo-reno-xanh-2-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\Oppo\OPPO Reno\oppo-reno-xanh-3-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\Oppo\OPPO Reno\oppo-reno-xanh-4-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\Samsung\Samsung Galaxy Note 10+\samsung-galaxy-note-10-plus-bac-1-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\Samsung\Samsung Galaxy Note 10+\samsung-galaxy-note-10-plus-bac-2-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\Samsung\Samsung Galaxy Note 10+\samsung-galaxy-note-10-plus-bac-3-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\Samsung\Samsung Galaxy Note 10+\samsung-galaxy-note-10-plus-bac-4-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\Samsung\Samsung Galaxy Note 10+\samsung-galaxy-note-10-plus-silver-400x460.png" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\Samsung\Samsung Galaxy Note 10\samsung-galaxy-note-10-bac-1-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\Samsung\Samsung Galaxy Note 10\samsung-galaxy-note-10-bac-2-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\Samsung\Samsung Galaxy Note 10\samsung-galaxy-note-10-bac-3-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\Samsung\Samsung Galaxy Note 10\samsung-galaxy-note-10-bac-4-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\Samsung\Samsung Galaxy Note 10\samsung-galaxy-note-10-pink-400x460.png" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\Samsung\Samsung Galaxy Note 9\samsung-galaxy-note-9-1-1-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\Samsung\Samsung Galaxy Note 9\samsung-galaxy-note-9-2-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\Samsung\Samsung Galaxy Note 9\samsung-galaxy-note-9-3-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\Samsung\Samsung Galaxy Note 9\samsung-galaxy-note-9-4-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\Samsung\Samsung Galaxy Note 9\samsung-galaxy-note-9-black-400x460-400x460.png" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\Samsung\Samsung Galaxy S10+ %28512GB%29\samsung-galaxy-s10-plus-512gb-den-1-1-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\Samsung\Samsung Galaxy S10+ %28512GB%29\samsung-galaxy-s10-plus-512gb-den-2-1-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\Samsung\Samsung Galaxy S10+ %28512GB%29\samsung-galaxy-s10-plus-512gb-den-3-2-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\Samsung\Samsung Galaxy S10+ %28512GB%29\samsung-galaxy-s10-plus-512gb-den-4-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\Samsung\Samsung Galaxy S10+ %28512GB%29\sieu-pham-galaxy-s-moi-2-512gb-black-400x460.png" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\Xiaomi\Xiaomi Mi 9 SE\xiaomi-mi-9-se-blue-18thangbh-400x460.png" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\Xiaomi\Xiaomi Mi 9 SE\xiaomi-mi-9-se-xanh-1-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\Xiaomi\Xiaomi Mi 9 SE\xiaomi-mi-9-se-xanh-2-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\Xiaomi\Xiaomi Mi 9 SE\xiaomi-mi-9-se-xanh-3-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\Xiaomi\Xiaomi Mi 9 SE\xiaomi-mi-9-se-xanh-4-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\Xiaomi\Xiaomi Mi 9T\xiaomi-mi-9t-do-1-1-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\Xiaomi\Xiaomi Mi 9T\xiaomi-mi-9t-do-2-1-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\Xiaomi\Xiaomi Mi 9T\xiaomi-mi-9t-do-3-1-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\Xiaomi\Xiaomi Mi 9T\xiaomi-mi-9t-do-4-1-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\Xiaomi\Xiaomi Mi 9T\xiaomi-mi-9t-red-18thangbh-400x460.png" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\Xiaomi\Xiaomi Redmi Note 8 Pro %286GB128GB%29 Xanh\xiaomi-redmi-note-8-pro-6gb-128gb-xanh-duong-1-2-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\Xiaomi\Xiaomi Redmi Note 8 Pro %286GB128GB%29 Xanh\xiaomi-redmi-note-8-pro-6gb-128gb-xanh-duong-2-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\Xiaomi\Xiaomi Redmi Note 8 Pro %286GB128GB%29 Xanh\xiaomi-redmi-note-8-pro-6gb-128gb-xanh-duong-3-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\Xiaomi\Xiaomi Redmi Note 8 Pro %286GB128GB%29 Xanh\xiaomi-redmi-note-8-pro-6gb-128gb-xanh-duong-4-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\Xiaomi\Xiaomi Redmi Note 8 Pro %286GB128GB%29 Xanh\xiaomi-redmi-note-8-pro-6gb-128gb-xanh-duong-docquyen-400x460.png" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\Xiaomi\Xiaomi Redmi Note 8 Pro %286GB128GB%29\xiaomi-redmi-note-8-pro-6gb-128gb-black-18thangbh-400x460.png" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\Xiaomi\Xiaomi Redmi Note 8 Pro %286GB128GB%29\xiaomi-redmi-note-8-pro-6gb-128gb-xam-1-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\Xiaomi\Xiaomi Redmi Note 8 Pro %286GB128GB%29\xiaomi-redmi-note-8-pro-6gb-128gb-xam-2-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\Xiaomi\Xiaomi Redmi Note 8 Pro %286GB128GB%29\xiaomi-redmi-note-8-pro-6gb-128gb-xam-3-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Dien Thoai\Xiaomi\Xiaomi Redmi Note 8 Pro %286GB128GB%29\xiaomi-redmi-note-8-pro-6gb-128gb-xam-4-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Laptop\Asus\Laptop Asus VivoBook 14 X407UA i3 7020U4GB1TBWin10 %28BV309T%29\asus-x407ua-i3-7020u-4gb-1tb-win10-bv309t-vang-1-1-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Laptop\Asus\Laptop Asus VivoBook 14 X407UA i3 7020U4GB1TBWin10 %28BV309T%29\asus-x407ua-i3-7020u-4gb-1tb-win10-bv309t-vang-2-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Laptop\Asus\Laptop Asus VivoBook 14 X407UA i3 7020U4GB1TBWin10 %28BV309T%29\asus-x407ua-i3-7020u-4gb-1tb-win10-bv309t-vang-3-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Laptop\Asus\Laptop Asus VivoBook 14 X407UA i3 7020U4GB1TBWin10 %28BV309T%29\asus-x407ua-i3-7020u-4gb-1tb-win10-bv309t-vang-5-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Laptop\Asus\Laptop Asus VivoBook X407UA i3 7020U4GB1TBWin10 %28BV351T%29\asus-x407ua-bv351t-vang-dong-1-2-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Laptop\Asus\Laptop Asus VivoBook X407UA i3 7020U4GB1TBWin10 %28BV351T%29\asus-x407ua-bv351t-vang-dong-2-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Laptop\Asus\Laptop Asus VivoBook X407UA i3 7020U4GB1TBWin10 %28BV351T%29\asus-x407ua-bv351t-vang-dong-3-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Laptop\Asus\Laptop Asus VivoBook X407UA i3 7020U4GB1TBWin10 %28BV351T%29\asus-x407ua-bv351t-vang-dong-5-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Laptop\Asus\Laptop Asus VivoBook X441MA N50004GB1TBWin10 %28GA024T%29\asus-x441ma-ga024t-1-1-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Laptop\Asus\Laptop Asus VivoBook X441MA N50004GB1TBWin10 %28GA024T%29\asus-x441ma-ga024t-2-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Laptop\Asus\Laptop Asus VivoBook X441MA N50004GB1TBWin10 %28GA024T%29\asus-x441ma-ga024t-3-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Laptop\Asus\Laptop Asus VivoBook X441MA N50004GB1TBWin10 %28GA024T%29\asus-x441ma-ga024t-5-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Laptop\Asus\Laptop Asus VivoBook X507MA N40004GB256GBWin10 %28BR318T%29\asus-x507ma-n4000-4gb-256gb-win10-br318t-xam-1-1-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Laptop\Asus\Laptop Asus VivoBook X507MA N40004GB256GBWin10 %28BR318T%29\asus-x507ma-n4000-4gb-256gb-win10-br318t-xam-2-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Laptop\Asus\Laptop Asus VivoBook X507MA N40004GB256GBWin10 %28BR318T%29\asus-x507ma-n4000-4gb-256gb-win10-br318t-xam-3-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Laptop\Asus\Laptop Asus VivoBook X507MA N40004GB256GBWin10 %28BR318T%29\asus-x507ma-n4000-4gb-256gb-win10-br318t-xam-5-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Laptop\Dell\Laptop Dell Inspiron 3476 i3 8130U4GB1TBWin10%288J61P11%29\dell-inspiron-3476-8j61p11-1-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Laptop\Dell\Laptop Dell Inspiron 3476 i3 8130U4GB1TBWin10%288J61P11%29\dell-inspiron-3476-8j61p11-2-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Laptop\Dell\Laptop Dell Inspiron 3476 i3 8130U4GB1TBWin10%288J61P11%29\dell-inspiron-3476-8j61p11-3-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Laptop\Dell\Laptop Dell Inspiron 3476 i3 8130U4GB1TBWin10%288J61P11%29\dell-inspiron-3476-8j61p11-5-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Laptop\Dell\Laptop Dell Inspiron 3576 i3 8130U4GB1TBWin10%28P63F002N76B%29\dell-inspiron-3576-p63f002n76b-mau-den-1-5-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Laptop\Dell\Laptop Dell Inspiron 3576 i3 8130U4GB1TBWin10%28P63F002N76B%29\dell-inspiron-3576-p63f002n76b-mau-den-2-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Laptop\Dell\Laptop Dell Inspiron 3576 i3 8130U4GB1TBWin10%28P63F002N76B%29\dell-inspiron-3576-p63f002n76b-mau-den-3-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Laptop\Dell\Laptop Dell Inspiron 3576 i3 8130U4GB1TBWin10%28P63F002N76B%29\dell-inspiron-3576-p63f002n76b-mau-den-5-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Laptop\Dell\Laptop Dell Vostro 3468 i3 7020U4GB1TBWin10%2870161069%29\dell-vostro-3468-i3-7020u-70161069-1-1-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Laptop\Dell\Laptop Dell Vostro 3468 i3 7020U4GB1TBWin10%2870161069%29\dell-vostro-3468-i3-7020u-70161069-2-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Laptop\Dell\Laptop Dell Vostro 3468 i3 7020U4GB1TBWin10%2870161069%29\dell-vostro-3468-i3-7020u-70161069-3-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Laptop\Dell\Laptop Dell Vostro 3468 i3 7020U4GB1TBWin10%2870161069%29\dell-vostro-3468-i3-7020u-70161069-5-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Laptop\Dell\Laptop Dell Vostro 3568 i3 7020U4GB1TBWin10%28VTI32072W%29\dell-vostro-3568-vti32072w-den-1-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Laptop\Dell\Laptop Dell Vostro 3568 i3 7020U4GB1TBWin10%28VTI32072W%29\dell-vostro-3568-vti32072w-den-2-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Laptop\Dell\Laptop Dell Vostro 3568 i3 7020U4GB1TBWin10%28VTI32072W%29\dell-vostro-3568-vti32072w-den-3-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Laptop\Dell\Laptop Dell Vostro 3568 i3 7020U4GB1TBWin10%28VTI32072W%29\dell-vostro-3568-vti32072w-den-6-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Laptop\HP\Laptop HP 14 ck0068TU i3 7020U4GB500GBWin10 %284ME90PA%29\hp-14-ck0068tu-i3-7020u-4gb-500gb-14-win10-4me90p-1-2-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Laptop\HP\Laptop HP 14 ck0068TU i3 7020U4GB500GBWin10 %284ME90PA%29\hp-14-ck0068tu-i3-7020u-4gb-500gb-14-win10-4me90p-2-2-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Laptop\HP\Laptop HP 14 ck0068TU i3 7020U4GB500GBWin10 %284ME90PA%29\hp-14-ck0068tu-i3-7020u-4gb-500gb-14-win10-4me90p-3-3-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Laptop\HP\Laptop HP 14 ck0068TU i3 7020U4GB500GBWin10 %284ME90PA%29\hp-14-ck0068tu-i3-7020u-4gb-500gb-14-win10-4me90p-5-1-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Laptop\HP\Laptop HP 14s dk0097au R3 3200U4GB1TBWin10 %287VH92PA%29\hp-14s-amd-ryzen-3-3200u-4gb-1tb-win10-7vh92pa-1-2-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Laptop\HP\Laptop HP 14s dk0097au R3 3200U4GB1TBWin10 %287VH92PA%29\hp-14s-amd-ryzen-3-3200u-4gb-1tb-win10-7vh92pa-2-1-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Laptop\HP\Laptop HP 14s dk0097au R3 3200U4GB1TBWin10 %287VH92PA%29\hp-14s-amd-ryzen-3-3200u-4gb-1tb-win10-7vh92pa-3-1-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Laptop\HP\Laptop HP 14s dk0097au R3 3200U4GB1TBWin10 %287VH92PA%29\hp-14s-amd-ryzen-3-3200u-4gb-1tb-win10-7vh92pa-5-1-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Laptop\HP\Laptop HP 15 da0054TU i3 7020U4GB500GBWin10 %284ME68PA%29\hp-15-da0054tu-4me68pa-1-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Laptop\HP\Laptop HP 15 da0054TU i3 7020U4GB500GBWin10 %284ME68PA%29\hp-15-da0054tu-4me68pa-2-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Laptop\HP\Laptop HP 15 da0054TU i3 7020U4GB500GBWin10 %284ME68PA%29\hp-15-da0054tu-4me68pa-3-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Laptop\HP\Laptop HP 15 da0054TU i3 7020U4GB500GBWin10 %284ME68PA%29\hp-15-da0054tu-4me68pa-4-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Laptop\HP\Laptop HP 15 da0359TU N44174GB500GBWin10 %286KD00PA%29\hp-15-da0359tu-n4417-4gb-500gb-win10-6kd00pa-1-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Laptop\HP\Laptop HP 15 da0359TU N44174GB500GBWin10 %286KD00PA%29\hp-15-da0359tu-n4417-4gb-500gb-win10-6kd00pa-2-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Laptop\HP\Laptop HP 15 da0359TU N44174GB500GBWin10 %286KD00PA%29\hp-15-da0359tu-n4417-4gb-500gb-win10-6kd00pa-3-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Laptop\HP\Laptop HP 15 da0359TU N44174GB500GBWin10 %286KD00PA%29\hp-15-da0359tu-n4417-4gb-500gb-win10-6kd00pa-5-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Laptop\Macbook\Laptop Apple MacBook Air 2017 i5 1.8GHz8GB128GB %28MQD32SAA%29\apple-macbook-air-mqd32sa-a-i5-5350u-600x600.jpg" />
+    <Content Include="UploadedFiles\Images2\Laptop\Macbook\Laptop Apple MacBook Air 2017 i5 1.8GHz8GB128GB %28MQD32SAA%29\apple-macbook-air-mqd32sa-a-i5-5350u-bac-1-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Laptop\Macbook\Laptop Apple MacBook Air 2017 i5 1.8GHz8GB128GB %28MQD32SAA%29\apple-macbook-air-mqd32sa-a-i5-5350u-bac-2-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Laptop\Macbook\Laptop Apple MacBook Air 2017 i5 1.8GHz8GB128GB %28MQD32SAA%29\apple-macbook-air-mqd32sa-a-i5-5350u-bac-3-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Laptop\Macbook\Laptop Apple MacBook Air 2017 i5 1.8GHz8GB128GB %28MQD32SAA%29\apple-macbook-air-mqd32sa-a-i5-5350u-bac-5-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Laptop\Macbook\Laptop Apple MacBook Air 2018 i58GB128GB %28MRE82SAA%29\apple-macbook-air-mre82sa-a-i5-8gb-128gb-2018-1-1-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Laptop\Macbook\Laptop Apple MacBook Air 2018 i58GB128GB %28MRE82SAA%29\apple-macbook-air-mre82sa-a-i5-8gb-128gb-2018-2-1-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Laptop\Macbook\Laptop Apple MacBook Air 2018 i58GB128GB %28MRE82SAA%29\apple-macbook-air-mre82sa-a-i5-8gb-128gb-2018-2-600x600.jpg" />
+    <Content Include="UploadedFiles\Images2\Laptop\Macbook\Laptop Apple MacBook Air 2018 i58GB128GB %28MRE82SAA%29\apple-macbook-air-mre82sa-a-i5-8gb-128gb-2018-3-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Laptop\Macbook\Laptop Apple MacBook Air 2018 i58GB128GB %28MRE82SAA%29\apple-macbook-air-mre82sa-a-i5-8gb-128gb-2018-4-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Laptop\Macbook\Laptop Apple Macbook Air 2019 i5 1.6GHz8GB128GB %28MVFM2SAA%29\apple-macbook-air-2019-i5-16ghz-8gb-128gb-mvfm2sa-1-3-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Laptop\Macbook\Laptop Apple Macbook Air 2019 i5 1.6GHz8GB128GB %28MVFM2SAA%29\apple-macbook-air-2019-i5-16ghz-8gb-128gb-mvfm2sa-13-32-600x600.jpg" />
+    <Content Include="UploadedFiles\Images2\Laptop\Macbook\Laptop Apple Macbook Air 2019 i5 1.6GHz8GB128GB %28MVFM2SAA%29\apple-macbook-air-2019-i5-16ghz-8gb-128gb-mvfm2sa-2-2-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Laptop\Macbook\Laptop Apple Macbook Air 2019 i5 1.6GHz8GB128GB %28MVFM2SAA%29\apple-macbook-air-2019-i5-16ghz-8gb-128gb-mvfm2sa-3-3-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Laptop\Macbook\Laptop Apple Macbook Air 2019 i5 1.6GHz8GB128GB %28MVFM2SAA%29\apple-macbook-air-2019-i5-16ghz-8gb-128gb-mvfm2sa-5-2-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Laptop\Macbook\Laptop Apple MacBook Pro 2018 Touch i5 2.3GHz8GB256GB %28MR9Q2SAA%29\apple-macbook-pro-touch-mr9q2sa-a-2018-1-1-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Laptop\Macbook\Laptop Apple MacBook Pro 2018 Touch i5 2.3GHz8GB256GB %28MR9Q2SAA%29\apple-macbook-pro-touch-mr9q2sa-a-2018-17-600x600.jpg" />
+    <Content Include="UploadedFiles\Images2\Laptop\Macbook\Laptop Apple MacBook Pro 2018 Touch i5 2.3GHz8GB256GB %28MR9Q2SAA%29\apple-macbook-pro-touch-mr9q2sa-a-2018-2-1-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Laptop\Macbook\Laptop Apple MacBook Pro 2018 Touch i5 2.3GHz8GB256GB %28MR9Q2SAA%29\apple-macbook-pro-touch-mr9q2sa-a-2018-3-1-org.jpg" />
+    <Content Include="UploadedFiles\Images2\Laptop\Macbook\Laptop Apple MacBook Pro 2018 Touch i5 2.3GHz8GB256GB %28MR9Q2SAA%29\apple-macbook-pro-touch-mr9q2sa-a-2018-5-1-org.jpg" />
+    <Content Include="UploadedFiles\Images2\slide\hinhnenkm.jpg" />
+    <Content Include="UploadedFiles\Images2\slide\hndong2.PNG" />
+    <Content Include="UploadedFiles\Images2\slide\hnkm2.jpg" />
+    <Content Include="UploadedFiles\Images2\slide\km.PNG" />
+    <Content Include="UploadedFiles\Images2\slide\km1.PNG" />
+    <Content Include="UploadedFiles\Images2\slide\Quangcao1.PNG" />
+    <Content Include="UploadedFiles\Images2\slide\QuangCao2.PNG" />
+    <Content Include="UploadedFiles\images\apple-macbook-air-2019-i5-16ghz-8gb-128gb-mvfm2sa-1-3-org.jpg" />
+    <Content Include="UploadedFiles\images\apple-macbook-air-2019-i5-16ghz-8gb-128gb-mvfm2sa-13-32-600x600.jpg" />
+    <Content Include="UploadedFiles\images\apple-macbook-air-2019-i5-16ghz-8gb-128gb-mvfm2sa-2-2-org.jpg" />
+    <Content Include="UploadedFiles\images\apple-macbook-air-2019-i5-16ghz-8gb-128gb-mvfm2sa-3-3-org.jpg" />
+    <Content Include="UploadedFiles\images\apple-macbook-air-2019-i5-16ghz-8gb-128gb-mvfm2sa-5-2-org.jpg" />
+    <Content Include="UploadedFiles\images\apple-macbook-air-mqd32sa-a-i5-5350u-600x600.jpg" />
+    <Content Include="UploadedFiles\images\apple-macbook-air-mqd32sa-a-i5-5350u-bac-1-org.jpg" />
+    <Content Include="UploadedFiles\images\apple-macbook-air-mqd32sa-a-i5-5350u-bac-2-org.jpg" />
+    <Content Include="UploadedFiles\images\apple-macbook-air-mqd32sa-a-i5-5350u-bac-3-org.jpg" />
+    <Content Include="UploadedFiles\images\apple-macbook-air-mqd32sa-a-i5-5350u-bac-5-org.jpg" />
+    <Content Include="UploadedFiles\images\apple-macbook-air-mre82sa-a-i5-8gb-128gb-2018-1-1-org.jpg" />
+    <Content Include="UploadedFiles\images\apple-macbook-air-mre82sa-a-i5-8gb-128gb-2018-2-1-org.jpg" />
+    <Content Include="UploadedFiles\images\apple-macbook-air-mre82sa-a-i5-8gb-128gb-2018-2-600x600.jpg" />
+    <Content Include="UploadedFiles\images\apple-macbook-air-mre82sa-a-i5-8gb-128gb-2018-3-org.jpg" />
+    <Content Include="UploadedFiles\images\apple-macbook-air-mre82sa-a-i5-8gb-128gb-2018-4-org.jpg" />
+    <Content Include="UploadedFiles\images\apple-macbook-pro-touch-mr9q2sa-a-2018-1-1-org.jpg" />
+    <Content Include="UploadedFiles\images\apple-macbook-pro-touch-mr9q2sa-a-2018-17-600x600.jpg" />
+    <Content Include="UploadedFiles\images\apple-macbook-pro-touch-mr9q2sa-a-2018-2-1-org.jpg" />
+    <Content Include="UploadedFiles\images\apple-macbook-pro-touch-mr9q2sa-a-2018-3-1-org.jpg" />
+    <Content Include="UploadedFiles\images\apple-macbook-pro-touch-mr9q2sa-a-2018-5-1-org.jpg" />
+    <Content Include="UploadedFiles\images\asus-x407ua-bv351t-vang-dong-1-2-org.jpg" />
+    <Content Include="UploadedFiles\images\asus-x407ua-bv351t-vang-dong-2-org.jpg" />
+    <Content Include="UploadedFiles\images\asus-x407ua-bv351t-vang-dong-3-org.jpg" />
+    <Content Include="UploadedFiles\images\asus-x407ua-bv351t-vang-dong-5-org.jpg" />
+    <Content Include="UploadedFiles\images\asus-x407ua-i3-7020u-4gb-1tb-win10-bv309t-vang-1-1-org.jpg" />
+    <Content Include="UploadedFiles\images\asus-x407ua-i3-7020u-4gb-1tb-win10-bv309t-vang-2-org.jpg" />
+    <Content Include="UploadedFiles\images\asus-x407ua-i3-7020u-4gb-1tb-win10-bv309t-vang-3-org.jpg" />
+    <Content Include="UploadedFiles\images\asus-x407ua-i3-7020u-4gb-1tb-win10-bv309t-vang-5-org.jpg" />
+    <Content Include="UploadedFiles\images\asus-x441ma-ga024t-1-1-org.jpg" />
+    <Content Include="UploadedFiles\images\asus-x441ma-ga024t-2-org.jpg" />
+    <Content Include="UploadedFiles\images\asus-x441ma-ga024t-3-org.jpg" />
+    <Content Include="UploadedFiles\images\asus-x441ma-ga024t-5-org.jpg" />
+    <Content Include="UploadedFiles\images\asus-x507ma-n4000-4gb-256gb-win10-br318t-xam-1-1-org.jpg" />
+    <Content Include="UploadedFiles\images\asus-x507ma-n4000-4gb-256gb-win10-br318t-xam-2-org.jpg" />
+    <Content Include="UploadedFiles\images\asus-x507ma-n4000-4gb-256gb-win10-br318t-xam-3-org.jpg" />
+    <Content Include="UploadedFiles\images\asus-x507ma-n4000-4gb-256gb-win10-br318t-xam-5-org.jpg" />
+    <Content Include="UploadedFiles\images\dell-inspiron-3476-8j61p11-1-org.jpg" />
+    <Content Include="UploadedFiles\images\dell-inspiron-3476-8j61p11-2-org.jpg" />
+    <Content Include="UploadedFiles\images\dell-inspiron-3476-8j61p11-3-org.jpg" />
+    <Content Include="UploadedFiles\images\dell-inspiron-3476-8j61p11-5-org.jpg" />
+    <Content Include="UploadedFiles\images\dell-inspiron-3576-p63f002n76b-mau-den-1-5-org.jpg" />
+    <Content Include="UploadedFiles\images\dell-inspiron-3576-p63f002n76b-mau-den-2-org.jpg" />
+    <Content Include="UploadedFiles\images\dell-inspiron-3576-p63f002n76b-mau-den-3-org.jpg" />
+    <Content Include="UploadedFiles\images\dell-inspiron-3576-p63f002n76b-mau-den-5-org.jpg" />
+    <Content Include="UploadedFiles\images\dell-vostro-3468-i3-7020u-70161069-1-1-org.jpg" />
+    <Content Include="UploadedFiles\images\dell-vostro-3468-i3-7020u-70161069-2-org.jpg" />
+    <Content Include="UploadedFiles\images\dell-vostro-3468-i3-7020u-70161069-3-org.jpg" />
+    <Content Include="UploadedFiles\images\dell-vostro-3468-i3-7020u-70161069-5-org.jpg" />
+    <Content Include="UploadedFiles\images\dell-vostro-3568-vti32072w-den-1-org.jpg" />
+    <Content Include="UploadedFiles\images\dell-vostro-3568-vti32072w-den-2-org.jpg" />
+    <Content Include="UploadedFiles\images\dell-vostro-3568-vti32072w-den-3-org.jpg" />
+    <Content Include="UploadedFiles\images\dell-vostro-3568-vti32072w-den-6-org.jpg" />
+    <Content Include="UploadedFiles\images\hp-14-ck0068tu-i3-7020u-4gb-500gb-14-win10-4me90p-1-2-org.jpg" />
+    <Content Include="UploadedFiles\images\hp-14-ck0068tu-i3-7020u-4gb-500gb-14-win10-4me90p-2-2-org.jpg" />
+    <Content Include="UploadedFiles\images\hp-14-ck0068tu-i3-7020u-4gb-500gb-14-win10-4me90p-3-3-org.jpg" />
+    <Content Include="UploadedFiles\images\hp-14-ck0068tu-i3-7020u-4gb-500gb-14-win10-4me90p-5-1-org.jpg" />
+    <Content Include="UploadedFiles\images\hp-14s-amd-ryzen-3-3200u-4gb-1tb-win10-7vh92pa-1-2-org.jpg" />
+    <Content Include="UploadedFiles\images\hp-14s-amd-ryzen-3-3200u-4gb-1tb-win10-7vh92pa-2-1-org.jpg" />
+    <Content Include="UploadedFiles\images\hp-14s-amd-ryzen-3-3200u-4gb-1tb-win10-7vh92pa-3-1-org.jpg" />
+    <Content Include="UploadedFiles\images\hp-14s-amd-ryzen-3-3200u-4gb-1tb-win10-7vh92pa-5-1-org.jpg" />
+    <Content Include="UploadedFiles\images\hp-15-da0054tu-4me68pa-1-org.jpg" />
+    <Content Include="UploadedFiles\images\hp-15-da0054tu-4me68pa-2-org.jpg" />
+    <Content Include="UploadedFiles\images\hp-15-da0054tu-4me68pa-3-org.jpg" />
+    <Content Include="UploadedFiles\images\hp-15-da0054tu-4me68pa-4-org.jpg" />
+    <Content Include="UploadedFiles\images\hp-15-da0359tu-n4417-4gb-500gb-win10-6kd00pa-1-org.jpg" />
+    <Content Include="UploadedFiles\images\hp-15-da0359tu-n4417-4gb-500gb-win10-6kd00pa-2-org.jpg" />
+    <Content Include="UploadedFiles\images\hp-15-da0359tu-n4417-4gb-500gb-win10-6kd00pa-3-org.jpg" />
+    <Content Include="UploadedFiles\images\hp-15-da0359tu-n4417-4gb-500gb-win10-6kd00pa-5-org.jpg" />
+    <Content Include="UploadedFiles\images\iphone-11-pro-256gb-black-400x460.png" />
+    <Content Include="UploadedFiles\images\iphone-11-pro-max-256gb-green-400x460.png" />
+    <Content Include="UploadedFiles\images\iphone-11-pro-max-512gb-bac-1-org.jpg" />
+    <Content Include="UploadedFiles\images\iphone-11-pro-max-512gb-bac-2-org.jpg" />
+    <Content Include="UploadedFiles\images\iphone-11-pro-max-512gb-bac-3-org.jpg" />
+    <Content Include="UploadedFiles\images\iphone-11-pro-max-512gb-bac-4-org.jpg" />
+    <Content Include="UploadedFiles\images\iphone-11-pro-max-512gb-gold-600x600.jpg" />
+    <Content Include="UploadedFiles\images\iphone-11-pro-max-512gb-vang-1-org.jpg" />
+    <Content Include="UploadedFiles\images\iphone-11-pro-max-512gb-vang-2-org.jpg" />
+    <Content Include="UploadedFiles\images\iphone-11-pro-max-512gb-vang-3-org.jpg" />
+    <Content Include="UploadedFiles\images\iphone-11-pro-max-512gb-vang-4-org.jpg" />
+    <Content Include="UploadedFiles\images\iphone-11-pro-max-green-400x460.png" />
+    <Content Include="UploadedFiles\images\oppo-reno-10x-zoom-edition-black-400x460.png" />
+    <Content Include="UploadedFiles\images\oppo-reno-10x-zoom-edition-den-1-org.jpg" />
+    <Content Include="UploadedFiles\images\oppo-reno-10x-zoom-edition-den-2-org.jpg" />
+    <Content Include="UploadedFiles\images\oppo-reno-10x-zoom-edition-den-3-org.jpg" />
+    <Content Include="UploadedFiles\images\oppo-reno-10x-zoom-edition-den-4-org.jpg" />
+    <Content Include="UploadedFiles\images\oppo-reno-pink-400x460.png" />
+    <Content Include="UploadedFiles\images\oppo-reno-xanh-1-org.jpg" />
+    <Content Include="UploadedFiles\images\oppo-reno-xanh-2-org.jpg" />
+    <Content Include="UploadedFiles\images\oppo-reno-xanh-3-org.jpg" />
+    <Content Include="UploadedFiles\images\oppo-reno-xanh-4-org.jpg" />
+    <Content Include="UploadedFiles\images\oppo-reno2-black-mtp1-400x460.png" />
+    <Content Include="UploadedFiles\images\oppo-reno2-den-1-org.jpg" />
+    <Content Include="UploadedFiles\images\oppo-reno2-den-2-org.jpg" />
+    <Content Include="UploadedFiles\images\oppo-reno2-den-3-org.jpg" />
+    <Content Include="UploadedFiles\images\oppo-reno2-den-4-org.jpg" />
+    <Content Include="UploadedFiles\images\oppo-reno2-f-green-mtp-400x460.png" />
+    <Content Include="UploadedFiles\images\oppo-reno2-f-xanh-1-org.jpg" />
+    <Content Include="UploadedFiles\images\oppo-reno2-f-xanh-2-org.jpg" />
+    <Content Include="UploadedFiles\images\oppo-reno2-f-xanh-3-org.jpg" />
+    <Content Include="UploadedFiles\images\oppo-reno2-f-xanh-4-org.jpg" />
+    <Content Include="UploadedFiles\images\samsung-galaxy-note-10-bac-1-org.jpg" />
+    <Content Include="UploadedFiles\images\samsung-galaxy-note-10-bac-2-org.jpg" />
+    <Content Include="UploadedFiles\images\samsung-galaxy-note-10-bac-3-org.jpg" />
+    <Content Include="UploadedFiles\images\samsung-galaxy-note-10-bac-4-org.jpg" />
+    <Content Include="UploadedFiles\images\samsung-galaxy-note-10-pink-400x460.png" />
+    <Content Include="UploadedFiles\images\samsung-galaxy-note-10-plus-bac-1-org.jpg" />
+    <Content Include="UploadedFiles\images\samsung-galaxy-note-10-plus-bac-2-org.jpg" />
+    <Content Include="UploadedFiles\images\samsung-galaxy-note-10-plus-bac-3-org.jpg" />
+    <Content Include="UploadedFiles\images\samsung-galaxy-note-10-plus-bac-4-org.jpg" />
+    <Content Include="UploadedFiles\images\samsung-galaxy-note-10-plus-silver-400x460.png" />
+    <Content Include="UploadedFiles\images\samsung-galaxy-note-9-1-1-org.jpg" />
+    <Content Include="UploadedFiles\images\samsung-galaxy-note-9-2-org.jpg" />
+    <Content Include="UploadedFiles\images\samsung-galaxy-note-9-3-org.jpg" />
+    <Content Include="UploadedFiles\images\samsung-galaxy-note-9-4-org.jpg" />
+    <Content Include="UploadedFiles\images\samsung-galaxy-note-9-black-400x460-400x460.png" />
+    <Content Include="UploadedFiles\images\samsung-galaxy-s10-plus-512gb-den-1-1-org.jpg" />
+    <Content Include="UploadedFiles\images\samsung-galaxy-s10-plus-512gb-den-2-1-org.jpg" />
+    <Content Include="UploadedFiles\images\samsung-galaxy-s10-plus-512gb-den-3-2-org.jpg" />
+    <Content Include="UploadedFiles\images\samsung-galaxy-s10-plus-512gb-den-4-org.jpg" />
+    <Content Include="UploadedFiles\images\sieu-pham-galaxy-s-moi-2-512gb-black-400x460.png" />
+    <Content Include="UploadedFiles\images\xiaomi-mi-9-se-blue-18thangbh-400x460.png" />
+    <Content Include="UploadedFiles\images\xiaomi-mi-9-se-xanh-1-org.jpg" />
+    <Content Include="UploadedFiles\images\xiaomi-mi-9-se-xanh-2-org.jpg" />
+    <Content Include="UploadedFiles\images\xiaomi-mi-9-se-xanh-3-org.jpg" />
+    <Content Include="UploadedFiles\images\xiaomi-mi-9-se-xanh-4-org.jpg" />
+    <Content Include="UploadedFiles\images\xiaomi-mi-9t-do-1-1-org.jpg" />
+    <Content Include="UploadedFiles\images\xiaomi-mi-9t-do-2-1-org.jpg" />
+    <Content Include="UploadedFiles\images\xiaomi-mi-9t-do-3-1-org.jpg" />
+    <Content Include="UploadedFiles\images\xiaomi-mi-9t-do-4-1-org.jpg" />
+    <Content Include="UploadedFiles\images\xiaomi-mi-9t-red-18thangbh-400x460.png" />
+    <Content Include="UploadedFiles\images\xiaomi-redmi-note-8-pro-6gb-128gb-black-18thangbh-400x460.png" />
+    <Content Include="UploadedFiles\images\xiaomi-redmi-note-8-pro-6gb-128gb-xam-1-org.jpg" />
+    <Content Include="UploadedFiles\images\xiaomi-redmi-note-8-pro-6gb-128gb-xam-2-org.jpg" />
+    <Content Include="UploadedFiles\images\xiaomi-redmi-note-8-pro-6gb-128gb-xam-3-org.jpg" />
+    <Content Include="UploadedFiles\images\xiaomi-redmi-note-8-pro-6gb-128gb-xam-4-org.jpg" />
+    <Content Include="UploadedFiles\images\xiaomi-redmi-note-8-pro-6gb-128gb-xanh-duong-1-2-org.jpg" />
+    <Content Include="UploadedFiles\images\xiaomi-redmi-note-8-pro-6gb-128gb-xanh-duong-2-org.jpg" />
+    <Content Include="UploadedFiles\images\xiaomi-redmi-note-8-pro-6gb-128gb-xanh-duong-3-org.jpg" />
+    <Content Include="UploadedFiles\images\xiaomi-redmi-note-8-pro-6gb-128gb-xanh-duong-4-org.jpg" />
+    <Content Include="UploadedFiles\images\xiaomi-redmi-note-8-pro-6gb-128gb-xanh-duong-docquyen-400x460.png" />
+    <Content Include="UploadedFiles\_thumbs\Files\20190611_101319.jpg" />
+    <Content Include="UploadedFiles\_thumbs\Files\dell-vostro-3568-vti32072w-den-2-org.jpg" />
+    <Content Include="UploadedFiles\_thumbs\Files\portrait_18255481810_o.jpg" />
+    <Content Include="UploadedFiles\_thumbs\Images\20190611_101319.jpg" />
+    <Content Include="UploadedFiles\_thumbs\Images\20190611_103647.jpg" />
+    <Content Include="UploadedFiles\_thumbs\Images\asus-x407ua-bv351t-vang-dong-1-2-org.jpg" />
+    <Content Include="UploadedFiles\_thumbs\Images\asus-x407ua-bv351t-vang-dong-3-org.jpg" />
+    <Content Include="UploadedFiles\_thumbs\Images\asus-x407ua-i3-7020u-4gb-1tb-win10-bv309t-vang-1-1-org.jpg" />
+    <Content Include="UploadedFiles\_thumbs\Images\asus-x407ua-i3-7020u-4gb-1tb-win10-bv309t-vang-2-org%281%29.jpg" />
+    <Content Include="UploadedFiles\_thumbs\Images\asus-x407ua-i3-7020u-4gb-1tb-win10-bv309t-vang-2-org.jpg" />
+    <Content Include="UploadedFiles\_thumbs\Images\asus-x407ua-i3-7020u-4gb-1tb-win10-bv309t-vang-3-org.jpg" />
+    <Content Include="UploadedFiles\_thumbs\Images\asus-x407ua-i3-7020u-4gb-1tb-win10-bv309t-vang-5-org.jpg" />
+    <Content Include="UploadedFiles\_thumbs\Images\asus-x441ma-ga024t-1-1-org.jpg" />
+    <Content Include="UploadedFiles\_thumbs\Images\asus-x441ma-ga024t-2-org%281%29.jpg" />
+    <Content Include="UploadedFiles\_thumbs\Images\asus-x441ma-ga024t-2-org.jpg" />
+    <Content Include="UploadedFiles\_thumbs\Images\asus-x441ma-ga024t-3-org.jpg" />
+    <Content Include="UploadedFiles\_thumbs\Images\asus-x441ma-ga024t-5-org.jpg" />
+    <Content Include="UploadedFiles\_thumbs\Images\asus-x507ma-n4000-4gb-256gb-win10-br318t-xam-1-1-org%281%29.jpg" />
+    <Content Include="UploadedFiles\_thumbs\Images\asus-x507ma-n4000-4gb-256gb-win10-br318t-xam-1-1-org.jpg" />
+    <Content Include="UploadedFiles\_thumbs\Images\asus-x507ma-n4000-4gb-256gb-win10-br318t-xam-2-org.jpg" />
+    <Content Include="UploadedFiles\_thumbs\Images\asus-x507ma-n4000-4gb-256gb-win10-br318t-xam-3-org.jpg" />
+    <Content Include="UploadedFiles\_thumbs\Images\asus-x507ma-n4000-4gb-256gb-win10-br318t-xam-5-org.jpg" />
+    <Content Include="UploadedFiles\_thumbs\Images\dell-inspiron-3476-8j61p11-1-org.jpg" />
+    <Content Include="UploadedFiles\_thumbs\Images\dell-inspiron-3476-8j61p11-2-org%281%29.jpg" />
+    <Content Include="UploadedFiles\_thumbs\Images\dell-inspiron-3476-8j61p11-2-org.jpg" />
+    <Content Include="UploadedFiles\_thumbs\Images\dell-inspiron-3476-8j61p11-3-org.jpg" />
+    <Content Include="UploadedFiles\_thumbs\Images\dell-inspiron-3476-8j61p11-5-org.jpg" />
+    <Content Include="UploadedFiles\_thumbs\Images\dell-inspiron-3576-p63f002n76b-mau-den-1-5-org%281%29.jpg" />
+    <Content Include="UploadedFiles\_thumbs\Images\dell-inspiron-3576-p63f002n76b-mau-den-1-5-org.jpg" />
+    <Content Include="UploadedFiles\_thumbs\Images\dell-inspiron-3576-p63f002n76b-mau-den-2-org.jpg" />
+    <Content Include="UploadedFiles\_thumbs\Images\dell-inspiron-3576-p63f002n76b-mau-den-3-org.jpg" />
+    <Content Include="UploadedFiles\_thumbs\Images\dell-inspiron-3576-p63f002n76b-mau-den-5-org.jpg" />
+    <Content Include="UploadedFiles\_thumbs\Images\dell-inspiron-3580-i5-8265u-4gb-1tb-radeon-2gb-70-15-1-600x600.jpg" />
+    <Content Include="UploadedFiles\_thumbs\Images\dell-vostro-3468-i3-7020u-70161069-1-1-org.jpg" />
+    <Content Include="UploadedFiles\_thumbs\Images\dell-vostro-3468-i3-7020u-70161069-2-org.jpg" />
+    <Content Include="UploadedFiles\_thumbs\Images\dell-vostro-3468-i3-7020u-70161069-3-org%281%29.jpg" />
+    <Content Include="UploadedFiles\_thumbs\Images\dell-vostro-3468-i3-7020u-70161069-3-org.jpg" />
+    <Content Include="UploadedFiles\_thumbs\Images\dell-vostro-3468-i3-7020u-70161069-5-org.jpg" />
+    <Content Include="UploadedFiles\_thumbs\Images\dell-vostro-3568-vti32072w-den-2-org.jpg" />
+    <Content Include="UploadedFiles\_thumbs\Images\portraits-2_18376276485_o.jpg" />
+    <Content Include="UploadedFiles\_thumbs\Images\portraits-3_18428111121_o.jpg" />
+    <Content Include="UploadedFiles\_thumbs\Images\portraits_18394664611_o.jpg" />
+    <Content Include="UploadedFiles\_thumbs\Images\portraits_18416703926_o.jpg" />
+    <Content Include="UploadedFiles\_thumbs\Images\portraits_18431062646_o.jpg" />
+    <Content Include="UploadedFiles\_thumbs\Images\portraits_18453207252_o.jpg" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <EntityDeploy Include="ShopModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ShopModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="ShopModel.edmx.diagram">
+      <DependentUpon>ShopModel.edmx</DependentUpon>
+    </Content>
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Account\Detail.cshtml" />
+    <Content Include="Views\Admin\Login.cshtml" />
+    <Content Include="Views\Admin\Dashboard.cshtml" />
+    <Content Include="Views\Admin\Product.cshtml" />
+    <Content Include="Views\Admin\ProductCate.cshtml" />
+    <Content Include="Views\Admin\ListUser.cshtml" />
+    <Content Include="Views\Admin\Manager.cshtml" />
+    <Content Include="Views\Admin\Chart.cshtml" />
+    <Content Include="Views\Admin\Order.cshtml" />
+    <Content Include="Views\Dashboard\Dashboard.cshtml" />
+    <Content Include="Views\Dashboard\Search.cshtml" />
+    <Content Include="Views\Dashboard\Category.cshtml" />
+    <Content Include="Views\Product\Detail.cshtml" />
+    <Content Include="Views\ShoppingCart\ViewCart.cshtml" />
+    <Content Include="Views\Dashboard\Index.cshtml" />
+    <Content Include="Views\Shared\_AdminLayout.cshtml" />
+    <Content Include="Views\Admin\Income.cshtml" />
+    <Content Include="Views\ShoppingCart\MakeOrder.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Models\" />
+    <Folder Include="UploadedFiles\flash\" />
+    <Folder Include="Views\About\" />
+    <Folder Include="Views\Contact\" />
+    <Folder Include="Views\Page\" />
+    <Folder Include="Views\Post\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-theme.min.css.map" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <None Include="packages.config" />
+    <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.3.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>4039</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:4039/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>
