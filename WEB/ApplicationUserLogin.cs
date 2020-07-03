@@ -14,7 +14,7 @@ namespace WEB
     
     public partial class ApplicationUserLogin
     {
-        public string UserId { get; set; }
+        public int UserId { get; set; }
         public string LoginProvider { get; set; }
         public string ProviderKey { get; set; }
         public string ApplicationUser_Id { get; set; }

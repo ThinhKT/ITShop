@@ -27,7 +27,11 @@ namespace WEB.Controllers
             var query = from u in db.ApplicationUsers
                         where u.UserName == username
                         && u.PasswordHash == password
-                        select u;
+                        select u.Id;
+            var query2 = from u in db.ApplicationUsers
+                        where u.UserName == username
+                        && u.PasswordHash == password // First() để lấy phần tử đầu tiên
+                         select u.FullName;
             if (query.Count() == 0)
             {
                 ViewBag.Err = "Đăng nhập sai";
@@ -40,8 +44,8 @@ namespace WEB.Controllers
                 TempCart.ID = new int[100];
                 TempCart.ammount = new int[100];
                 //lưu lại tên user
-                Session["UserID"] = 1;
-                Session["UserName"] = "Thịnh";
+                Session["UserID"] = query.First();
+                Session["UserName"] = query2.First();
                 return RedirectToAction("Dashboard", "Dashboard");
             }
         }

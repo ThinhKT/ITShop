@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ShopModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ShopModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -42,10 +42,11 @@
         </EntityType>
         <EntityType Name="ApplicationUserClaims">
           <Key>
+            <PropertyRef Name="Id" />
             <PropertyRef Name="UserId" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="ClaimType" Type="nvarchar(max)" />
           <Property Name="ClaimValue" Type="nvarchar(max)" />
           <Property Name="ApplicationUser_Id" Type="nvarchar" MaxLength="128" />
@@ -55,24 +56,25 @@
             <PropertyRef Name="UserId" />
             <PropertyRef Name="GroupId" />
           </Key>
-          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="GroupId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="ApplicationUserLogins">
           <Key>
             <PropertyRef Name="UserId" />
+            <PropertyRef Name="ApplicationUser_Id" />
           </Key>
-          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="LoginProvider" Type="nvarchar(max)" />
           <Property Name="ProviderKey" Type="nvarchar(max)" />
-          <Property Name="ApplicationUser_Id" Type="nvarchar" MaxLength="128" />
+          <Property Name="ApplicationUser_Id" Type="nvarchar" MaxLength="128" Nullable="false" />
         </EntityType>
         <EntityType Name="ApplicationUserRoles">
           <Key>
             <PropertyRef Name="UserId" />
             <PropertyRef Name="RoleId" />
           </Key>
-          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="RoleId" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="IdentityRole_Id" Type="nvarchar" MaxLength="128" />
           <Property Name="ApplicationUser_Id" Type="nvarchar" MaxLength="128" />
@@ -81,7 +83,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="FullName" Type="nvarchar" MaxLength="256" />
           <Property Name="Address" Type="nvarchar" MaxLength="256" />
           <Property Name="BirthDay" Type="datetime" />
@@ -182,8 +184,9 @@
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="CreatedBy" Type="nvarchar(max)" />
           <Property Name="PaymentStatus" Type="nvarchar(max)" />
-          <Property Name="Status" Type="bit" Nullable="false" />
-          <Property Name="CustomerId" Type="nvarchar" MaxLength="128" />
+          <Property Name="Status" Type="int" Nullable="false" />
+          <Property Name="CustomerId" Type="int" />
+          <Property Name="TotalPrice" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="Pages">
           <Key>
@@ -336,6 +339,16 @@
           <Property Name="Status" Type="bit" Nullable="false" />
           <Property Name="DisplayOrder" Type="int" />
         </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
         <EntityType Name="SystemConfigs">
           <Key>
             <PropertyRef Name="ID" />
@@ -361,6 +374,54 @@
           <Property Name="VisitedDate" Type="datetime" Nullable="false" />
           <Property Name="IPAddress" Type="nvarchar" MaxLength="50" />
         </EntityType>
+        <Association Name="FK_ApplicationUserClaims_ApplicationUsers">
+          <End Role="ApplicationUsers" Type="Self.ApplicationUsers" Multiplicity="1" />
+          <End Role="ApplicationUserClaims" Type="Self.ApplicationUserClaims" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ApplicationUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ApplicationUserClaims">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ApplicationUserGroups_ApplicationUsers">
+          <End Role="ApplicationUsers" Type="Self.ApplicationUsers" Multiplicity="1" />
+          <End Role="ApplicationUserGroups" Type="Self.ApplicationUserGroups" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ApplicationUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ApplicationUserGroups">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ApplicationUserLogins_ApplicationUsers">
+          <End Role="ApplicationUsers" Type="Self.ApplicationUsers" Multiplicity="1" />
+          <End Role="ApplicationUserLogins" Type="Self.ApplicationUserLogins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ApplicationUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ApplicationUserLogins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ApplicationUserRoles_ApplicationUsers">
+          <End Role="ApplicationUsers" Type="Self.ApplicationUsers" Multiplicity="1" />
+          <End Role="ApplicationUserRoles" Type="Self.ApplicationUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ApplicationUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ApplicationUserRoles">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_dbo_ApplicationRoleGroups_dbo_ApplicationGroups_GroupId">
           <End Role="ApplicationGroups" Type="Self.ApplicationGroups" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -400,56 +461,6 @@
             </Principal>
             <Dependent Role="ApplicationUserGroups">
               <PropertyRef Name="GroupId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_ApplicationUserGroups_dbo_ApplicationUsers_UserId">
-          <End Role="ApplicationUsers" Type="Self.ApplicationUsers" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="ApplicationUserGroups" Type="Self.ApplicationUserGroups" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ApplicationUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ApplicationUserGroups">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_IdentityUserClaims_dbo_ApplicationUsers_ApplicationUser_Id">
-          <End Role="ApplicationUsers" Type="Self.ApplicationUsers" Multiplicity="0..1" />
-          <End Role="ApplicationUserClaims" Type="Self.ApplicationUserClaims" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ApplicationUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ApplicationUserClaims">
-              <PropertyRef Name="ApplicationUser_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_IdentityUserLogins_dbo_ApplicationUsers_ApplicationUser_Id">
-          <End Role="ApplicationUsers" Type="Self.ApplicationUsers" Multiplicity="0..1" />
-          <End Role="ApplicationUserLogins" Type="Self.ApplicationUserLogins" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ApplicationUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ApplicationUserLogins">
-              <PropertyRef Name="ApplicationUser_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_IdentityUserRoles_dbo_ApplicationUsers_ApplicationUser_Id">
-          <End Role="ApplicationUsers" Type="Self.ApplicationUsers" Multiplicity="0..1" />
-          <End Role="ApplicationUserRoles" Type="Self.ApplicationUserRoles" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ApplicationUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ApplicationUserRoles">
-              <PropertyRef Name="ApplicationUser_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -504,18 +515,6 @@
             </Principal>
             <Dependent Role="OrderDetails">
               <PropertyRef Name="ProductID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_Orders_dbo_ApplicationUsers_CustomerId">
-          <End Role="ApplicationUsers" Type="Self.ApplicationUsers" Multiplicity="0..1" />
-          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ApplicationUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Orders">
-              <PropertyRef Name="CustomerId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -603,6 +602,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Orders_ApplicationUsers">
+          <End Role="ApplicationUsers" Type="Self.ApplicationUsers" Multiplicity="0..1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ApplicationUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="ShopModelStoreContainer">
           <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ApplicationGroups" EntityType="Self.ApplicationGroups" Schema="dbo" store:Type="Tables" />
@@ -630,9 +641,26 @@
           <EntitySet Name="ProductTags" EntityType="Self.ProductTags" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Slides" EntityType="Self.Slides" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SupportOnlines" EntityType="Self.SupportOnlines" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SystemConfigs" EntityType="Self.SystemConfigs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tags" EntityType="Self.Tags" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VisitorStatistics" EntityType="Self.VisitorStatistics" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_ApplicationUserClaims_ApplicationUsers" Association="Self.FK_ApplicationUserClaims_ApplicationUsers">
+            <End Role="ApplicationUsers" EntitySet="ApplicationUsers" />
+            <End Role="ApplicationUserClaims" EntitySet="ApplicationUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ApplicationUserGroups_ApplicationUsers" Association="Self.FK_ApplicationUserGroups_ApplicationUsers">
+            <End Role="ApplicationUsers" EntitySet="ApplicationUsers" />
+            <End Role="ApplicationUserGroups" EntitySet="ApplicationUserGroups" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ApplicationUserLogins_ApplicationUsers" Association="Self.FK_ApplicationUserLogins_ApplicationUsers">
+            <End Role="ApplicationUsers" EntitySet="ApplicationUsers" />
+            <End Role="ApplicationUserLogins" EntitySet="ApplicationUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ApplicationUserRoles_ApplicationUsers" Association="Self.FK_ApplicationUserRoles_ApplicationUsers">
+            <End Role="ApplicationUsers" EntitySet="ApplicationUsers" />
+            <End Role="ApplicationUserRoles" EntitySet="ApplicationUserRoles" />
+          </AssociationSet>
           <AssociationSet Name="FK_dbo_ApplicationRoleGroups_dbo_ApplicationGroups_GroupId" Association="Self.FK_dbo_ApplicationRoleGroups_dbo_ApplicationGroups_GroupId">
             <End Role="ApplicationGroups" EntitySet="ApplicationGroups" />
             <End Role="ApplicationRoleGroups" EntitySet="ApplicationRoleGroups" />
@@ -644,22 +672,6 @@
           <AssociationSet Name="FK_dbo_ApplicationUserGroups_dbo_ApplicationGroups_GroupId" Association="Self.FK_dbo_ApplicationUserGroups_dbo_ApplicationGroups_GroupId">
             <End Role="ApplicationGroups" EntitySet="ApplicationGroups" />
             <End Role="ApplicationUserGroups" EntitySet="ApplicationUserGroups" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_ApplicationUserGroups_dbo_ApplicationUsers_UserId" Association="Self.FK_dbo_ApplicationUserGroups_dbo_ApplicationUsers_UserId">
-            <End Role="ApplicationUsers" EntitySet="ApplicationUsers" />
-            <End Role="ApplicationUserGroups" EntitySet="ApplicationUserGroups" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_IdentityUserClaims_dbo_ApplicationUsers_ApplicationUser_Id" Association="Self.FK_dbo_IdentityUserClaims_dbo_ApplicationUsers_ApplicationUser_Id">
-            <End Role="ApplicationUsers" EntitySet="ApplicationUsers" />
-            <End Role="ApplicationUserClaims" EntitySet="ApplicationUserClaims" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_IdentityUserLogins_dbo_ApplicationUsers_ApplicationUser_Id" Association="Self.FK_dbo_IdentityUserLogins_dbo_ApplicationUsers_ApplicationUser_Id">
-            <End Role="ApplicationUsers" EntitySet="ApplicationUsers" />
-            <End Role="ApplicationUserLogins" EntitySet="ApplicationUserLogins" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_IdentityUserRoles_dbo_ApplicationUsers_ApplicationUser_Id" Association="Self.FK_dbo_IdentityUserRoles_dbo_ApplicationUsers_ApplicationUser_Id">
-            <End Role="ApplicationUsers" EntitySet="ApplicationUsers" />
-            <End Role="ApplicationUserRoles" EntitySet="ApplicationUserRoles" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_IdentityUserRoles_dbo_IdentityRoles_IdentityRole_Id" Association="Self.FK_dbo_IdentityUserRoles_dbo_IdentityRoles_IdentityRole_Id">
             <End Role="ApplicationRoles" EntitySet="ApplicationRoles" />
@@ -676,10 +688,6 @@
           <AssociationSet Name="FK_dbo_OrderDetails_dbo_Products_ProductID" Association="Self.FK_dbo_OrderDetails_dbo_Products_ProductID">
             <End Role="Products" EntitySet="Products" />
             <End Role="OrderDetails" EntitySet="OrderDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_Orders_dbo_ApplicationUsers_CustomerId" Association="Self.FK_dbo_Orders_dbo_ApplicationUsers_CustomerId">
-            <End Role="ApplicationUsers" EntitySet="ApplicationUsers" />
-            <End Role="Orders" EntitySet="Orders" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_Posts_dbo_PostCategories_CategoryID" Association="Self.FK_dbo_Posts_dbo_PostCategories_CategoryID">
             <End Role="PostCategories" EntitySet="PostCategories" />
@@ -705,21 +713,108 @@
             <End Role="Tags" EntitySet="Tags" />
             <End Role="ProductTags" EntitySet="ProductTags" />
           </AssociationSet>
+          <AssociationSet Name="FK_Orders_ApplicationUsers" Association="Self.FK_Orders_ApplicationUsers">
+            <End Role="ApplicationUsers" EntitySet="ApplicationUsers" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ShopModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="ShopEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="C__MigrationHistory" EntityType="ShopModel.C__MigrationHistory" />
+          <EntitySet Name="ApplicationGroups" EntityType="ShopModel.ApplicationGroup" />
+          <EntitySet Name="ApplicationRoles" EntityType="ShopModel.ApplicationRole" />
+          <EntitySet Name="ApplicationUserClaims" EntityType="ShopModel.ApplicationUserClaim" />
+          <EntitySet Name="ApplicationUserLogins" EntityType="ShopModel.ApplicationUserLogin" />
+          <EntitySet Name="ApplicationUserRoles" EntityType="ShopModel.ApplicationUserRole" />
+          <EntitySet Name="ApplicationUsers" EntityType="ShopModel.ApplicationUser" />
+          <EntitySet Name="ContactDetails" EntityType="ShopModel.ContactDetail" />
+          <EntitySet Name="Errors" EntityType="ShopModel.Error" />
+          <EntitySet Name="Feedbacks" EntityType="ShopModel.Feedback" />
+          <EntitySet Name="Footers" EntityType="ShopModel.Footer" />
+          <EntitySet Name="MenuGroups" EntityType="ShopModel.MenuGroup" />
+          <EntitySet Name="Menus" EntityType="ShopModel.Menu" />
+          <EntitySet Name="OrderDetails" EntityType="ShopModel.OrderDetail" />
+          <EntitySet Name="Orders" EntityType="ShopModel.Order" />
+          <EntitySet Name="Pages" EntityType="ShopModel.Page" />
+          <EntitySet Name="PostCategories" EntityType="ShopModel.PostCategory" />
+          <EntitySet Name="Posts" EntityType="ShopModel.Post" />
+          <EntitySet Name="ProductCategories" EntityType="ShopModel.ProductCategory" />
+          <EntitySet Name="Products" EntityType="ShopModel.Product" />
+          <EntitySet Name="Slides" EntityType="ShopModel.Slide" />
+          <EntitySet Name="SupportOnlines" EntityType="ShopModel.SupportOnline" />
+          <EntitySet Name="sysdiagrams" EntityType="ShopModel.sysdiagram" />
+          <EntitySet Name="SystemConfigs" EntityType="ShopModel.SystemConfig" />
+          <EntitySet Name="Tags" EntityType="ShopModel.Tag" />
+          <EntitySet Name="VisitorStatistics" EntityType="ShopModel.VisitorStatistic" />
+          <AssociationSet Name="FK_dbo_IdentityUserRoles_dbo_IdentityRoles_IdentityRole_Id" Association="ShopModel.FK_dbo_IdentityUserRoles_dbo_IdentityRoles_IdentityRole_Id">
+            <End Role="ApplicationRole" EntitySet="ApplicationRoles" />
+            <End Role="ApplicationUserRole" EntitySet="ApplicationUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ApplicationUserClaims_ApplicationUsers" Association="ShopModel.FK_ApplicationUserClaims_ApplicationUsers">
+            <End Role="ApplicationUser" EntitySet="ApplicationUsers" />
+            <End Role="ApplicationUserClaim" EntitySet="ApplicationUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ApplicationUserLogins_ApplicationUsers" Association="ShopModel.FK_ApplicationUserLogins_ApplicationUsers">
+            <End Role="ApplicationUser" EntitySet="ApplicationUsers" />
+            <End Role="ApplicationUserLogin" EntitySet="ApplicationUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ApplicationUserRoles_ApplicationUsers" Association="ShopModel.FK_ApplicationUserRoles_ApplicationUsers">
+            <End Role="ApplicationUser" EntitySet="ApplicationUsers" />
+            <End Role="ApplicationUserRole" EntitySet="ApplicationUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_ApplicationUsers" Association="ShopModel.FK_Orders_ApplicationUsers">
+            <End Role="ApplicationUser" EntitySet="ApplicationUsers" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Menus_dbo_MenuGroups_GroupID" Association="ShopModel.FK_dbo_Menus_dbo_MenuGroups_GroupID">
+            <End Role="MenuGroup" EntitySet="MenuGroups" />
+            <End Role="Menu" EntitySet="Menus" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_OrderDetails_dbo_Orders_OrderID" Association="ShopModel.FK_dbo_OrderDetails_dbo_Orders_OrderID">
+            <End Role="Order" EntitySet="Orders" />
+            <End Role="OrderDetail" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_OrderDetails_dbo_Products_ProductID" Association="ShopModel.FK_dbo_OrderDetails_dbo_Products_ProductID">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="OrderDetail" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Posts_dbo_PostCategories_CategoryID" Association="ShopModel.FK_dbo_Posts_dbo_PostCategories_CategoryID">
+            <End Role="PostCategory" EntitySet="PostCategories" />
+            <End Role="Post" EntitySet="Posts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Products_dbo_ProductCategories_CategoryID" Association="ShopModel.FK_dbo_Products_dbo_ProductCategories_CategoryID">
+            <End Role="ProductCategory" EntitySet="ProductCategories" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="ApplicationRoleGroups" Association="ShopModel.ApplicationRoleGroups">
+            <End Role="ApplicationGroup" EntitySet="ApplicationGroups" />
+            <End Role="ApplicationRole" EntitySet="ApplicationRoles" />
+          </AssociationSet>
+          <AssociationSet Name="ApplicationUserGroups" Association="ShopModel.ApplicationUserGroups">
+            <End Role="ApplicationUser" EntitySet="ApplicationUsers" />
+            <End Role="ApplicationGroup" EntitySet="ApplicationGroups" />
+          </AssociationSet>
+          <AssociationSet Name="PostTags" Association="ShopModel.PostTags">
+            <End Role="Post" EntitySet="Posts" />
+            <End Role="Tag" EntitySet="Tags" />
+          </AssociationSet>
+          <AssociationSet Name="ProductTags" Association="ShopModel.ProductTags">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="Tag" EntitySet="Tags" />
+          </AssociationSet>
+        </EntityContainer>
         <EntityType Name="C__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
             <PropertyRef Name="ContextKey" />
           </Key>
-          <Property Name="MigrationId" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ContextKey" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Model" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
-          <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MigrationId" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="ContextKey" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Model" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+          <Property Name="ProductVersion" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="ApplicationGroup">
           <Key>
@@ -728,58 +823,60 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="ApplicationRoles" Relationship="Self.ApplicationRoleGroups" FromRole="ApplicationGroups" ToRole="ApplicationRoles" />
-          <NavigationProperty Name="ApplicationUsers" Relationship="Self.ApplicationUserGroups" FromRole="ApplicationGroups" ToRole="ApplicationUsers" />
+          <NavigationProperty Name="ApplicationRoles" Relationship="ShopModel.ApplicationRoleGroups" FromRole="ApplicationGroup" ToRole="ApplicationRole" />
+          <NavigationProperty Name="ApplicationUsers" Relationship="ShopModel.ApplicationUserGroups" FromRole="ApplicationGroup" ToRole="ApplicationUser" />
         </EntityType>
         <EntityType Name="ApplicationRole">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="Discriminator" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="ApplicationUserRoles" Relationship="Self.FK_dbo_IdentityUserRoles_dbo_IdentityRoles_IdentityRole_Id" FromRole="ApplicationRoles" ToRole="ApplicationUserRoles" />
-          <NavigationProperty Name="ApplicationGroups" Relationship="Self.ApplicationRoleGroups" FromRole="ApplicationRoles" ToRole="ApplicationGroups" />
+          <Property Name="Discriminator" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ApplicationUserRoles" Relationship="ShopModel.FK_dbo_IdentityUserRoles_dbo_IdentityRoles_IdentityRole_Id" FromRole="ApplicationRole" ToRole="ApplicationUserRole" />
+          <NavigationProperty Name="ApplicationGroups" Relationship="ShopModel.ApplicationRoleGroups" FromRole="ApplicationRole" ToRole="ApplicationGroup" />
         </EntityType>
         <EntityType Name="ApplicationUserClaim">
           <Key>
+            <PropertyRef Name="Id" />
             <PropertyRef Name="UserId" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
           <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ApplicationUser_Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="ApplicationUser" Relationship="Self.FK_dbo_IdentityUserClaims_dbo_ApplicationUsers_ApplicationUser_Id" FromRole="ApplicationUserClaims" ToRole="ApplicationUsers" />
+          <NavigationProperty Name="ApplicationUser" Relationship="ShopModel.FK_ApplicationUserClaims_ApplicationUsers" FromRole="ApplicationUserClaim" ToRole="ApplicationUser" />
         </EntityType>
         <EntityType Name="ApplicationUserLogin">
           <Key>
             <PropertyRef Name="UserId" />
+            <PropertyRef Name="ApplicationUser_Id" />
           </Key>
-          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
           <Property Name="LoginProvider" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ProviderKey" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="ApplicationUser_Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="ApplicationUser" Relationship="Self.FK_dbo_IdentityUserLogins_dbo_ApplicationUsers_ApplicationUser_Id" FromRole="ApplicationUserLogins" ToRole="ApplicationUsers" />
+          <Property Name="ApplicationUser_Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ApplicationUser" Relationship="ShopModel.FK_ApplicationUserLogins_ApplicationUsers" FromRole="ApplicationUserLogin" ToRole="ApplicationUser" />
         </EntityType>
         <EntityType Name="ApplicationUserRole">
           <Key>
             <PropertyRef Name="UserId" />
             <PropertyRef Name="RoleId" />
           </Key>
-          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="RoleId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="RoleId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="IdentityRole_Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="ApplicationUser_Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="ApplicationRole" Relationship="Self.FK_dbo_IdentityUserRoles_dbo_IdentityRoles_IdentityRole_Id" FromRole="ApplicationUserRoles" ToRole="ApplicationRoles" />
-          <NavigationProperty Name="ApplicationUser" Relationship="Self.FK_dbo_IdentityUserRoles_dbo_ApplicationUsers_ApplicationUser_Id" FromRole="ApplicationUserRoles" ToRole="ApplicationUsers" />
+          <NavigationProperty Name="ApplicationRole" Relationship="ShopModel.FK_dbo_IdentityUserRoles_dbo_IdentityRoles_IdentityRole_Id" FromRole="ApplicationUserRole" ToRole="ApplicationRole" />
+          <NavigationProperty Name="ApplicationUser" Relationship="ShopModel.FK_ApplicationUserRoles_ApplicationUsers" FromRole="ApplicationUserRole" ToRole="ApplicationUser" />
         </EntityType>
         <EntityType Name="ApplicationUser">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="FullName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="Address" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="BirthDay" Type="DateTime" Precision="3" />
@@ -794,18 +891,18 @@
           <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
           <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
           <Property Name="UserName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="ApplicationUserClaims" Relationship="Self.FK_dbo_IdentityUserClaims_dbo_ApplicationUsers_ApplicationUser_Id" FromRole="ApplicationUsers" ToRole="ApplicationUserClaims" />
-          <NavigationProperty Name="ApplicationUserLogins" Relationship="Self.FK_dbo_IdentityUserLogins_dbo_ApplicationUsers_ApplicationUser_Id" FromRole="ApplicationUsers" ToRole="ApplicationUserLogins" />
-          <NavigationProperty Name="ApplicationUserRoles" Relationship="Self.FK_dbo_IdentityUserRoles_dbo_ApplicationUsers_ApplicationUser_Id" FromRole="ApplicationUsers" ToRole="ApplicationUserRoles" />
-          <NavigationProperty Name="Orders" Relationship="Self.FK_dbo_Orders_dbo_ApplicationUsers_CustomerId" FromRole="ApplicationUsers" ToRole="Orders" />
-          <NavigationProperty Name="ApplicationGroups" Relationship="Self.ApplicationUserGroups" FromRole="ApplicationUsers" ToRole="ApplicationGroups" />
+          <NavigationProperty Name="ApplicationUserClaims" Relationship="ShopModel.FK_ApplicationUserClaims_ApplicationUsers" FromRole="ApplicationUser" ToRole="ApplicationUserClaim" />
+          <NavigationProperty Name="ApplicationUserLogins" Relationship="ShopModel.FK_ApplicationUserLogins_ApplicationUsers" FromRole="ApplicationUser" ToRole="ApplicationUserLogin" />
+          <NavigationProperty Name="ApplicationUserRoles" Relationship="ShopModel.FK_ApplicationUserRoles_ApplicationUsers" FromRole="ApplicationUser" ToRole="ApplicationUserRole" />
+          <NavigationProperty Name="Orders" Relationship="ShopModel.FK_Orders_ApplicationUsers" FromRole="ApplicationUser" ToRole="Order" />
+          <NavigationProperty Name="ApplicationGroups" Relationship="ShopModel.ApplicationUserGroups" FromRole="ApplicationUser" ToRole="ApplicationGroup" />
         </EntityType>
         <EntityType Name="ContactDetail">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Email" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="Website" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
@@ -829,7 +926,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="Email" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="Message" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
@@ -839,29 +936,29 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Content" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="MenuGroup">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Menus" Relationship="Self.FK_dbo_Menus_dbo_MenuGroups_GroupID" FromRole="MenuGroups" ToRole="Menus" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Menus" Relationship="ShopModel.FK_dbo_Menus_dbo_MenuGroups_GroupID" FromRole="MenuGroup" ToRole="Menu" />
         </EntityType>
         <EntityType Name="Menu">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="URL" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="URL" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="DisplayOrder" Type="Int32" />
           <Property Name="GroupID" Type="Int32" Nullable="false" />
           <Property Name="Target" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="Status" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="MenuGroup" Relationship="Self.FK_dbo_Menus_dbo_MenuGroups_GroupID" FromRole="Menus" ToRole="MenuGroups" />
+          <NavigationProperty Name="MenuGroup" Relationship="ShopModel.FK_dbo_Menus_dbo_MenuGroups_GroupID" FromRole="Menu" ToRole="MenuGroup" />
         </EntityType>
         <EntityType Name="OrderDetail">
           <Key>
@@ -871,36 +968,37 @@
           <Property Name="OrderID" Type="Int32" Nullable="false" />
           <Property Name="ProductID" Type="Int32" Nullable="false" />
           <Property Name="Quantity" Type="Int32" Nullable="false" />
-          <Property Name="Price" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
-          <NavigationProperty Name="Order" Relationship="Self.FK_dbo_OrderDetails_dbo_Orders_OrderID" FromRole="OrderDetails" ToRole="Orders" />
-          <NavigationProperty Name="Product" Relationship="Self.FK_dbo_OrderDetails_dbo_Products_ProductID" FromRole="OrderDetails" ToRole="Products" />
+          <Property Name="Price" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <NavigationProperty Name="Order" Relationship="ShopModel.FK_dbo_OrderDetails_dbo_Orders_OrderID" FromRole="OrderDetail" ToRole="Order" />
+          <NavigationProperty Name="Product" Relationship="ShopModel.FK_dbo_OrderDetails_dbo_Products_ProductID" FromRole="OrderDetail" ToRole="Product" />
         </EntityType>
         <EntityType Name="Order">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CustomerName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="CustomerAddress" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="CustomerEmail" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="CustomerMobile" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="CustomerMessage" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CustomerName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerAddress" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerEmail" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerMobile" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerMessage" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="PaymentMethod" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="CreatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="PaymentStatus" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Status" Type="Boolean" Nullable="false" />
-          <Property Name="CustomerId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="ApplicationUser" Relationship="Self.FK_dbo_Orders_dbo_ApplicationUsers_CustomerId" FromRole="Orders" ToRole="ApplicationUsers" />
-          <NavigationProperty Name="OrderDetails" Relationship="Self.FK_dbo_OrderDetails_dbo_Orders_OrderID" FromRole="Orders" ToRole="OrderDetails" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <Property Name="CustomerId" Type="Int32" />
+          <Property Name="TotalPrice" Type="Decimal" Precision="18" Scale="2" />
+          <NavigationProperty Name="ApplicationUser" Relationship="ShopModel.FK_Orders_ApplicationUsers" FromRole="Order" ToRole="ApplicationUser" />
+          <NavigationProperty Name="OrderDetails" Relationship="ShopModel.FK_dbo_OrderDetails_dbo_Orders_OrderID" FromRole="Order" ToRole="OrderDetail" />
         </EntityType>
         <EntityType Name="Page">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Alias" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Alias" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="false" />
           <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="CreatedBy" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
@@ -915,8 +1013,8 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Alias" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Alias" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="false" />
           <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="ParentID" Type="Int32" />
           <Property Name="DisplayOrder" Type="Int32" />
@@ -929,15 +1027,15 @@
           <Property Name="MetaKeyword" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="MetaDescription" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="Status" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Posts" Relationship="Self.FK_dbo_Posts_dbo_PostCategories_CategoryID" FromRole="PostCategories" ToRole="Posts" />
+          <NavigationProperty Name="Posts" Relationship="ShopModel.FK_dbo_Posts_dbo_PostCategories_CategoryID" FromRole="PostCategory" ToRole="Post" />
         </EntityType>
         <EntityType Name="Post">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Alias" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Alias" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="false" />
           <Property Name="CategoryID" Type="Int32" Nullable="false" />
           <Property Name="Image" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
@@ -952,16 +1050,16 @@
           <Property Name="MetaKeyword" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="MetaDescription" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="Status" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="PostCategory" Relationship="Self.FK_dbo_Posts_dbo_PostCategories_CategoryID" FromRole="Posts" ToRole="PostCategories" />
-          <NavigationProperty Name="Tags" Relationship="Self.PostTags" FromRole="Posts" ToRole="Tags" />
+          <NavigationProperty Name="PostCategory" Relationship="ShopModel.FK_dbo_Posts_dbo_PostCategories_CategoryID" FromRole="Post" ToRole="PostCategory" />
+          <NavigationProperty Name="Tags" Relationship="ShopModel.PostTags" FromRole="Post" ToRole="Tag" />
         </EntityType>
         <EntityType Name="ProductCategory">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Alias" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Alias" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="ParentID" Type="Int32" />
           <Property Name="DisplayOrder" Type="Int32" />
@@ -974,19 +1072,19 @@
           <Property Name="MetaKeyword" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="MetaDescription" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="Status" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Products" Relationship="Self.FK_dbo_Products_dbo_ProductCategories_CategoryID" FromRole="ProductCategories" ToRole="Products" />
+          <NavigationProperty Name="Products" Relationship="ShopModel.FK_dbo_Products_dbo_ProductCategories_CategoryID" FromRole="ProductCategory" ToRole="Product" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Alias" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Alias" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="CategoryID" Type="Int32" Nullable="false" />
           <Property Name="Image" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="MoreImages" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Price" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="PromotionPrice" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="Warranty" Type="Int32" />
           <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
@@ -1003,17 +1101,17 @@
           <Property Name="Status" Type="Boolean" Nullable="false" />
           <Property Name="Tags" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Quantity" Type="Int32" Nullable="false" />
-          <Property Name="OriginalPrice" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
-          <NavigationProperty Name="OrderDetails" Relationship="Self.FK_dbo_OrderDetails_dbo_Products_ProductID" FromRole="Products" ToRole="OrderDetails" />
-          <NavigationProperty Name="ProductCategory" Relationship="Self.FK_dbo_Products_dbo_ProductCategories_CategoryID" FromRole="Products" ToRole="ProductCategories" />
-          <NavigationProperty Name="Tags1" Relationship="Self.ProductTags" FromRole="Products" ToRole="Tags" />
+          <Property Name="OriginalPrice" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <NavigationProperty Name="OrderDetails" Relationship="ShopModel.FK_dbo_OrderDetails_dbo_Products_ProductID" FromRole="Product" ToRole="OrderDetail" />
+          <NavigationProperty Name="ProductCategory" Relationship="ShopModel.FK_dbo_Products_dbo_ProductCategories_CategoryID" FromRole="Product" ToRole="ProductCategory" />
+          <NavigationProperty Name="Tags1" Relationship="ShopModel.ProductTags" FromRole="Product" ToRole="Tag" />
         </EntityType>
         <EntityType Name="Slide">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="Image" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="Url" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
@@ -1026,7 +1124,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Department" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Skype" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Mobile" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -1036,12 +1134,22 @@
           <Property Name="Status" Type="Boolean" Nullable="false" />
           <Property Name="DisplayOrder" Type="Int32" />
         </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
         <EntityType Name="SystemConfig">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ValueString" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ValueInt" Type="Int32" />
         </EntityType>
@@ -1049,11 +1157,11 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Posts" Relationship="Self.PostTags" FromRole="Tags" ToRole="Posts" />
-          <NavigationProperty Name="Products" Relationship="Self.ProductTags" FromRole="Tags" ToRole="Products" />
+          <Property Name="ID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Posts" Relationship="ShopModel.PostTags" FromRole="Tag" ToRole="Post" />
+          <NavigationProperty Name="Products" Relationship="ShopModel.ProductTags" FromRole="Tag" ToRole="Product" />
         </EntityType>
         <EntityType Name="VisitorStatistic">
           <Key>
@@ -1064,235 +1172,152 @@
           <Property Name="IPAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_dbo_IdentityUserRoles_dbo_IdentityRoles_IdentityRole_Id">
-          <End Role="ApplicationRoles" Type="Self.ApplicationRole" Multiplicity="0..1" />
-          <End Role="ApplicationUserRoles" Type="Self.ApplicationUserRole" Multiplicity="*" />
+          <End Type="ShopModel.ApplicationRole" Role="ApplicationRole" Multiplicity="0..1" />
+          <End Type="ShopModel.ApplicationUserRole" Role="ApplicationUserRole" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="ApplicationRoles">
+            <Principal Role="ApplicationRole">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="ApplicationUserRoles">
+            <Dependent Role="ApplicationUserRole">
               <PropertyRef Name="IdentityRole_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_dbo_IdentityUserClaims_dbo_ApplicationUsers_ApplicationUser_Id">
-          <End Role="ApplicationUsers" Type="Self.ApplicationUser" Multiplicity="0..1" />
-          <End Role="ApplicationUserClaims" Type="Self.ApplicationUserClaim" Multiplicity="*" />
+        <Association Name="FK_ApplicationUserClaims_ApplicationUsers">
+          <End Type="ShopModel.ApplicationUser" Role="ApplicationUser" Multiplicity="1" />
+          <End Type="ShopModel.ApplicationUserClaim" Role="ApplicationUserClaim" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="ApplicationUsers">
+            <Principal Role="ApplicationUser">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="ApplicationUserClaims">
-              <PropertyRef Name="ApplicationUser_Id" />
+            <Dependent Role="ApplicationUserClaim">
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_dbo_IdentityUserLogins_dbo_ApplicationUsers_ApplicationUser_Id">
-          <End Role="ApplicationUsers" Type="Self.ApplicationUser" Multiplicity="0..1" />
-          <End Role="ApplicationUserLogins" Type="Self.ApplicationUserLogin" Multiplicity="*" />
+        <Association Name="FK_ApplicationUserLogins_ApplicationUsers">
+          <End Type="ShopModel.ApplicationUser" Role="ApplicationUser" Multiplicity="1" />
+          <End Type="ShopModel.ApplicationUserLogin" Role="ApplicationUserLogin" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="ApplicationUsers">
+            <Principal Role="ApplicationUser">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="ApplicationUserLogins">
-              <PropertyRef Name="ApplicationUser_Id" />
+            <Dependent Role="ApplicationUserLogin">
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_dbo_IdentityUserRoles_dbo_ApplicationUsers_ApplicationUser_Id">
-          <End Role="ApplicationUsers" Type="Self.ApplicationUser" Multiplicity="0..1" />
-          <End Role="ApplicationUserRoles" Type="Self.ApplicationUserRole" Multiplicity="*" />
+        <Association Name="FK_ApplicationUserRoles_ApplicationUsers">
+          <End Type="ShopModel.ApplicationUser" Role="ApplicationUser" Multiplicity="1" />
+          <End Type="ShopModel.ApplicationUserRole" Role="ApplicationUserRole" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="ApplicationUsers">
+            <Principal Role="ApplicationUser">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="ApplicationUserRoles">
-              <PropertyRef Name="ApplicationUser_Id" />
+            <Dependent Role="ApplicationUserRole">
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_dbo_Orders_dbo_ApplicationUsers_CustomerId">
-          <End Role="ApplicationUsers" Type="Self.ApplicationUser" Multiplicity="0..1" />
-          <End Role="Orders" Type="Self.Order" Multiplicity="*" />
+        <Association Name="FK_Orders_ApplicationUsers">
+          <End Type="ShopModel.ApplicationUser" Role="ApplicationUser" Multiplicity="0..1" />
+          <End Type="ShopModel.Order" Role="Order" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="ApplicationUsers">
+            <Principal Role="ApplicationUser">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Orders">
+            <Dependent Role="Order">
               <PropertyRef Name="CustomerId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_dbo_Menus_dbo_MenuGroups_GroupID">
-          <End Role="MenuGroups" Type="Self.MenuGroup" Multiplicity="1">
+          <End Type="ShopModel.MenuGroup" Role="MenuGroup" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="Menus" Type="Self.Menu" Multiplicity="*" />
+          <End Type="ShopModel.Menu" Role="Menu" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="MenuGroups">
+            <Principal Role="MenuGroup">
               <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="Menus">
+            <Dependent Role="Menu">
               <PropertyRef Name="GroupID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_dbo_OrderDetails_dbo_Orders_OrderID">
-          <End Role="Orders" Type="Self.Order" Multiplicity="1">
+          <End Type="ShopModel.Order" Role="Order" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="OrderDetails" Type="Self.OrderDetail" Multiplicity="*" />
+          <End Type="ShopModel.OrderDetail" Role="OrderDetail" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Orders">
+            <Principal Role="Order">
               <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="OrderDetails">
+            <Dependent Role="OrderDetail">
               <PropertyRef Name="OrderID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_dbo_OrderDetails_dbo_Products_ProductID">
-          <End Role="Products" Type="Self.Product" Multiplicity="1">
+          <End Type="ShopModel.Product" Role="Product" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="OrderDetails" Type="Self.OrderDetail" Multiplicity="*" />
+          <End Type="ShopModel.OrderDetail" Role="OrderDetail" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Products">
+            <Principal Role="Product">
               <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="OrderDetails">
+            <Dependent Role="OrderDetail">
               <PropertyRef Name="ProductID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_dbo_Posts_dbo_PostCategories_CategoryID">
-          <End Role="PostCategories" Type="Self.PostCategory" Multiplicity="1">
+          <End Type="ShopModel.PostCategory" Role="PostCategory" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="Posts" Type="Self.Post" Multiplicity="*" />
+          <End Type="ShopModel.Post" Role="Post" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="PostCategories">
+            <Principal Role="PostCategory">
               <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="Posts">
+            <Dependent Role="Post">
               <PropertyRef Name="CategoryID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_dbo_Products_dbo_ProductCategories_CategoryID">
-          <End Role="ProductCategories" Type="Self.ProductCategory" Multiplicity="1">
+          <End Type="ShopModel.ProductCategory" Role="ProductCategory" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="Products" Type="Self.Product" Multiplicity="*" />
+          <End Type="ShopModel.Product" Role="Product" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="ProductCategories">
+            <Principal Role="ProductCategory">
               <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="Products">
+            <Dependent Role="Product">
               <PropertyRef Name="CategoryID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="ApplicationRoleGroups">
-          <End Role="ApplicationGroups" Type="Self.ApplicationGroup" Multiplicity="*" />
-          <End Role="ApplicationRoles" Type="Self.ApplicationRole" Multiplicity="*" />
+          <End Type="ShopModel.ApplicationGroup" Role="ApplicationGroup" Multiplicity="*" />
+          <End Type="ShopModel.ApplicationRole" Role="ApplicationRole" Multiplicity="*" />
         </Association>
         <Association Name="ApplicationUserGroups">
-          <End Role="ApplicationGroups" Type="Self.ApplicationGroup" Multiplicity="*" />
-          <End Role="ApplicationUsers" Type="Self.ApplicationUser" Multiplicity="*" />
+          <End Type="ShopModel.ApplicationUser" Role="ApplicationUser" Multiplicity="*" />
+          <End Type="ShopModel.ApplicationGroup" Role="ApplicationGroup" Multiplicity="*" />
         </Association>
         <Association Name="PostTags">
-          <End Role="Posts" Type="Self.Post" Multiplicity="*" />
-          <End Role="Tags" Type="Self.Tag" Multiplicity="*" />
+          <End Type="ShopModel.Post" Role="Post" Multiplicity="*" />
+          <End Type="ShopModel.Tag" Role="Tag" Multiplicity="*" />
         </Association>
         <Association Name="ProductTags">
-          <End Role="Products" Type="Self.Product" Multiplicity="*" />
-          <End Role="Tags" Type="Self.Tag" Multiplicity="*" />
+          <End Type="ShopModel.Product" Role="Product" Multiplicity="*" />
+          <End Type="ShopModel.Tag" Role="Tag" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="ShopEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
-          <EntitySet Name="ApplicationGroups" EntityType="Self.ApplicationGroup" />
-          <EntitySet Name="ApplicationRoles" EntityType="Self.ApplicationRole" />
-          <EntitySet Name="ApplicationUserClaims" EntityType="Self.ApplicationUserClaim" />
-          <EntitySet Name="ApplicationUserLogins" EntityType="Self.ApplicationUserLogin" />
-          <EntitySet Name="ApplicationUserRoles" EntityType="Self.ApplicationUserRole" />
-          <EntitySet Name="ApplicationUsers" EntityType="Self.ApplicationUser" />
-          <EntitySet Name="ContactDetails" EntityType="Self.ContactDetail" />
-          <EntitySet Name="Errors" EntityType="Self.Error" />
-          <EntitySet Name="Feedbacks" EntityType="Self.Feedback" />
-          <EntitySet Name="Footers" EntityType="Self.Footer" />
-          <EntitySet Name="MenuGroups" EntityType="Self.MenuGroup" />
-          <EntitySet Name="Menus" EntityType="Self.Menu" />
-          <EntitySet Name="OrderDetails" EntityType="Self.OrderDetail" />
-          <EntitySet Name="Orders" EntityType="Self.Order" />
-          <EntitySet Name="Pages" EntityType="Self.Page" />
-          <EntitySet Name="PostCategories" EntityType="Self.PostCategory" />
-          <EntitySet Name="Posts" EntityType="Self.Post" />
-          <EntitySet Name="ProductCategories" EntityType="Self.ProductCategory" />
-          <EntitySet Name="Products" EntityType="Self.Product" />
-          <EntitySet Name="Slides" EntityType="Self.Slide" />
-          <EntitySet Name="SupportOnlines" EntityType="Self.SupportOnline" />
-          <EntitySet Name="SystemConfigs" EntityType="Self.SystemConfig" />
-          <EntitySet Name="Tags" EntityType="Self.Tag" />
-          <EntitySet Name="VisitorStatistics" EntityType="Self.VisitorStatistic" />
-          <AssociationSet Name="FK_dbo_IdentityUserRoles_dbo_IdentityRoles_IdentityRole_Id" Association="Self.FK_dbo_IdentityUserRoles_dbo_IdentityRoles_IdentityRole_Id">
-            <End Role="ApplicationRoles" EntitySet="ApplicationRoles" />
-            <End Role="ApplicationUserRoles" EntitySet="ApplicationUserRoles" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_IdentityUserClaims_dbo_ApplicationUsers_ApplicationUser_Id" Association="Self.FK_dbo_IdentityUserClaims_dbo_ApplicationUsers_ApplicationUser_Id">
-            <End Role="ApplicationUsers" EntitySet="ApplicationUsers" />
-            <End Role="ApplicationUserClaims" EntitySet="ApplicationUserClaims" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_IdentityUserLogins_dbo_ApplicationUsers_ApplicationUser_Id" Association="Self.FK_dbo_IdentityUserLogins_dbo_ApplicationUsers_ApplicationUser_Id">
-            <End Role="ApplicationUsers" EntitySet="ApplicationUsers" />
-            <End Role="ApplicationUserLogins" EntitySet="ApplicationUserLogins" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_IdentityUserRoles_dbo_ApplicationUsers_ApplicationUser_Id" Association="Self.FK_dbo_IdentityUserRoles_dbo_ApplicationUsers_ApplicationUser_Id">
-            <End Role="ApplicationUsers" EntitySet="ApplicationUsers" />
-            <End Role="ApplicationUserRoles" EntitySet="ApplicationUserRoles" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_Orders_dbo_ApplicationUsers_CustomerId" Association="Self.FK_dbo_Orders_dbo_ApplicationUsers_CustomerId">
-            <End Role="ApplicationUsers" EntitySet="ApplicationUsers" />
-            <End Role="Orders" EntitySet="Orders" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_Menus_dbo_MenuGroups_GroupID" Association="Self.FK_dbo_Menus_dbo_MenuGroups_GroupID">
-            <End Role="MenuGroups" EntitySet="MenuGroups" />
-            <End Role="Menus" EntitySet="Menus" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_OrderDetails_dbo_Orders_OrderID" Association="Self.FK_dbo_OrderDetails_dbo_Orders_OrderID">
-            <End Role="Orders" EntitySet="Orders" />
-            <End Role="OrderDetails" EntitySet="OrderDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_OrderDetails_dbo_Products_ProductID" Association="Self.FK_dbo_OrderDetails_dbo_Products_ProductID">
-            <End Role="Products" EntitySet="Products" />
-            <End Role="OrderDetails" EntitySet="OrderDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_Posts_dbo_PostCategories_CategoryID" Association="Self.FK_dbo_Posts_dbo_PostCategories_CategoryID">
-            <End Role="PostCategories" EntitySet="PostCategories" />
-            <End Role="Posts" EntitySet="Posts" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_Products_dbo_ProductCategories_CategoryID" Association="Self.FK_dbo_Products_dbo_ProductCategories_CategoryID">
-            <End Role="ProductCategories" EntitySet="ProductCategories" />
-            <End Role="Products" EntitySet="Products" />
-          </AssociationSet>
-          <AssociationSet Name="ApplicationRoleGroups" Association="Self.ApplicationRoleGroups">
-            <End Role="ApplicationGroups" EntitySet="ApplicationGroups" />
-            <End Role="ApplicationRoles" EntitySet="ApplicationRoles" />
-          </AssociationSet>
-          <AssociationSet Name="ApplicationUserGroups" Association="Self.ApplicationUserGroups">
-            <End Role="ApplicationGroups" EntitySet="ApplicationGroups" />
-            <End Role="ApplicationUsers" EntitySet="ApplicationUsers" />
-          </AssociationSet>
-          <AssociationSet Name="PostTags" Association="Self.PostTags">
-            <End Role="Posts" EntitySet="Posts" />
-            <End Role="Tags" EntitySet="Tags" />
-          </AssociationSet>
-          <AssociationSet Name="ProductTags" Association="Self.ProductTags">
-            <End Role="Products" EntitySet="Products" />
-            <End Role="Tags" EntitySet="Tags" />
-          </AssociationSet>
-        </EntityContainer>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -1301,379 +1326,391 @@
           <EntitySetMapping Name="C__MigrationHistory">
             <EntityTypeMapping TypeName="ShopModel.C__MigrationHistory">
               <MappingFragment StoreEntitySet="__MigrationHistory">
-                <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
-                <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
-                <ScalarProperty Name="Model" ColumnName="Model" />
                 <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
+                <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ApplicationGroups">
             <EntityTypeMapping TypeName="ShopModel.ApplicationGroup">
               <MappingFragment StoreEntitySet="ApplicationGroups">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ApplicationRoles">
             <EntityTypeMapping TypeName="ShopModel.ApplicationRole">
               <MappingFragment StoreEntitySet="ApplicationRoles">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Discriminator" ColumnName="Discriminator" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ApplicationUserClaims">
             <EntityTypeMapping TypeName="ShopModel.ApplicationUserClaim">
               <MappingFragment StoreEntitySet="ApplicationUserClaims">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
-                <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
                 <ScalarProperty Name="ApplicationUser_Id" ColumnName="ApplicationUser_Id" />
+                <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ApplicationUserLogins">
             <EntityTypeMapping TypeName="ShopModel.ApplicationUserLogin">
               <MappingFragment StoreEntitySet="ApplicationUserLogins">
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
-                <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
                 <ScalarProperty Name="ApplicationUser_Id" ColumnName="ApplicationUser_Id" />
+                <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+                <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ApplicationUserRoles">
             <EntityTypeMapping TypeName="ShopModel.ApplicationUserRole">
               <MappingFragment StoreEntitySet="ApplicationUserRoles">
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
-                <ScalarProperty Name="IdentityRole_Id" ColumnName="IdentityRole_Id" />
                 <ScalarProperty Name="ApplicationUser_Id" ColumnName="ApplicationUser_Id" />
+                <ScalarProperty Name="IdentityRole_Id" ColumnName="IdentityRole_Id" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ApplicationUsers">
             <EntityTypeMapping TypeName="ShopModel.ApplicationUser">
               <MappingFragment StoreEntitySet="ApplicationUsers">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="FullName" ColumnName="FullName" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="BirthDay" ColumnName="BirthDay" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
-                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
-                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
-                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
-                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
-                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
-                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
-                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
-                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="BirthDay" ColumnName="BirthDay" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ContactDetails">
             <EntityTypeMapping TypeName="ShopModel.ContactDetail">
               <MappingFragment StoreEntitySet="ContactDetails">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Phone" ColumnName="Phone" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Website" ColumnName="Website" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="Other" ColumnName="Other" />
-                <ScalarProperty Name="Lat" ColumnName="Lat" />
-                <ScalarProperty Name="Lng" ColumnName="Lng" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Lng" ColumnName="Lng" />
+                <ScalarProperty Name="Lat" ColumnName="Lat" />
+                <ScalarProperty Name="Other" ColumnName="Other" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Website" ColumnName="Website" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Errors">
             <EntityTypeMapping TypeName="ShopModel.Error">
               <MappingFragment StoreEntitySet="Errors">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Message" ColumnName="Message" />
-                <ScalarProperty Name="StackTrace" ColumnName="StackTrace" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="StackTrace" ColumnName="StackTrace" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Feedbacks">
             <EntityTypeMapping TypeName="ShopModel.Feedback">
               <MappingFragment StoreEntitySet="Feedbacks">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Message" ColumnName="Message" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Footers">
             <EntityTypeMapping TypeName="ShopModel.Footer">
               <MappingFragment StoreEntitySet="Footers">
-                <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="MenuGroups">
             <EntityTypeMapping TypeName="ShopModel.MenuGroup">
               <MappingFragment StoreEntitySet="MenuGroups">
-                <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Menus">
             <EntityTypeMapping TypeName="ShopModel.Menu">
               <MappingFragment StoreEntitySet="Menus">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="URL" ColumnName="URL" />
-                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
-                <ScalarProperty Name="GroupID" ColumnName="GroupID" />
-                <ScalarProperty Name="Target" ColumnName="Target" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Target" ColumnName="Target" />
+                <ScalarProperty Name="GroupID" ColumnName="GroupID" />
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="URL" ColumnName="URL" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="OrderDetails">
             <EntityTypeMapping TypeName="ShopModel.OrderDetail">
               <MappingFragment StoreEntitySet="OrderDetails">
-                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
-                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Orders">
             <EntityTypeMapping TypeName="ShopModel.Order">
               <MappingFragment StoreEntitySet="Orders">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
-                <ScalarProperty Name="CustomerAddress" ColumnName="CustomerAddress" />
-                <ScalarProperty Name="CustomerEmail" ColumnName="CustomerEmail" />
-                <ScalarProperty Name="CustomerMobile" ColumnName="CustomerMobile" />
-                <ScalarProperty Name="CustomerMessage" ColumnName="CustomerMessage" />
-                <ScalarProperty Name="PaymentMethod" ColumnName="PaymentMethod" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="PaymentStatus" ColumnName="PaymentStatus" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
                 <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="PaymentStatus" ColumnName="PaymentStatus" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="PaymentMethod" ColumnName="PaymentMethod" />
+                <ScalarProperty Name="CustomerMessage" ColumnName="CustomerMessage" />
+                <ScalarProperty Name="CustomerMobile" ColumnName="CustomerMobile" />
+                <ScalarProperty Name="CustomerEmail" ColumnName="CustomerEmail" />
+                <ScalarProperty Name="CustomerAddress" ColumnName="CustomerAddress" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Pages">
             <EntityTypeMapping TypeName="ShopModel.Page">
               <MappingFragment StoreEntitySet="Pages">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Alias" ColumnName="Alias" />
-                <ScalarProperty Name="Content" ColumnName="Content" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-                <ScalarProperty Name="MetaKeyword" ColumnName="MetaKeyword" />
-                <ScalarProperty Name="MetaDescription" ColumnName="MetaDescription" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="MetaDescription" ColumnName="MetaDescription" />
+                <ScalarProperty Name="MetaKeyword" ColumnName="MetaKeyword" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="Alias" ColumnName="Alias" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="PostCategories">
             <EntityTypeMapping TypeName="ShopModel.PostCategory">
               <MappingFragment StoreEntitySet="PostCategories">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Alias" ColumnName="Alias" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="ParentID" ColumnName="ParentID" />
-                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
-                <ScalarProperty Name="Image" ColumnName="Image" />
-                <ScalarProperty Name="HomeFlag" ColumnName="HomeFlag" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-                <ScalarProperty Name="MetaKeyword" ColumnName="MetaKeyword" />
-                <ScalarProperty Name="MetaDescription" ColumnName="MetaDescription" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="MetaDescription" ColumnName="MetaDescription" />
+                <ScalarProperty Name="MetaKeyword" ColumnName="MetaKeyword" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="HomeFlag" ColumnName="HomeFlag" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="ParentID" ColumnName="ParentID" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Alias" ColumnName="Alias" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Posts">
             <EntityTypeMapping TypeName="ShopModel.Post">
               <MappingFragment StoreEntitySet="Posts">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Alias" ColumnName="Alias" />
-                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
-                <ScalarProperty Name="Image" ColumnName="Image" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Content" ColumnName="Content" />
-                <ScalarProperty Name="HomeFlag" ColumnName="HomeFlag" />
-                <ScalarProperty Name="HotFlag" ColumnName="HotFlag" />
-                <ScalarProperty Name="ViewCount" ColumnName="ViewCount" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-                <ScalarProperty Name="MetaKeyword" ColumnName="MetaKeyword" />
-                <ScalarProperty Name="MetaDescription" ColumnName="MetaDescription" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="MetaDescription" ColumnName="MetaDescription" />
+                <ScalarProperty Name="MetaKeyword" ColumnName="MetaKeyword" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ViewCount" ColumnName="ViewCount" />
+                <ScalarProperty Name="HotFlag" ColumnName="HotFlag" />
+                <ScalarProperty Name="HomeFlag" ColumnName="HomeFlag" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="Alias" ColumnName="Alias" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ProductCategories">
             <EntityTypeMapping TypeName="ShopModel.ProductCategory">
               <MappingFragment StoreEntitySet="ProductCategories">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Alias" ColumnName="Alias" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="ParentID" ColumnName="ParentID" />
-                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
-                <ScalarProperty Name="Image" ColumnName="Image" />
-                <ScalarProperty Name="HomeFlag" ColumnName="HomeFlag" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-                <ScalarProperty Name="MetaKeyword" ColumnName="MetaKeyword" />
-                <ScalarProperty Name="MetaDescription" ColumnName="MetaDescription" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="MetaDescription" ColumnName="MetaDescription" />
+                <ScalarProperty Name="MetaKeyword" ColumnName="MetaKeyword" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="HomeFlag" ColumnName="HomeFlag" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="ParentID" ColumnName="ParentID" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Alias" ColumnName="Alias" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="ShopModel.Product">
               <MappingFragment StoreEntitySet="Products">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Alias" ColumnName="Alias" />
-                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
-                <ScalarProperty Name="Image" ColumnName="Image" />
-                <ScalarProperty Name="MoreImages" ColumnName="MoreImages" />
-                <ScalarProperty Name="Price" ColumnName="Price" />
-                <ScalarProperty Name="PromotionPrice" ColumnName="PromotionPrice" />
-                <ScalarProperty Name="Warranty" ColumnName="Warranty" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Content" ColumnName="Content" />
-                <ScalarProperty Name="HomeFlag" ColumnName="HomeFlag" />
-                <ScalarProperty Name="HotFlag" ColumnName="HotFlag" />
-                <ScalarProperty Name="ViewCount" ColumnName="ViewCount" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-                <ScalarProperty Name="MetaKeyword" ColumnName="MetaKeyword" />
-                <ScalarProperty Name="MetaDescription" ColumnName="MetaDescription" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="Tags" ColumnName="Tags" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="OriginalPrice" ColumnName="OriginalPrice" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Tags" ColumnName="Tags" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="MetaDescription" ColumnName="MetaDescription" />
+                <ScalarProperty Name="MetaKeyword" ColumnName="MetaKeyword" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ViewCount" ColumnName="ViewCount" />
+                <ScalarProperty Name="HotFlag" ColumnName="HotFlag" />
+                <ScalarProperty Name="HomeFlag" ColumnName="HomeFlag" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Warranty" ColumnName="Warranty" />
+                <ScalarProperty Name="PromotionPrice" ColumnName="PromotionPrice" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="MoreImages" ColumnName="MoreImages" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="Alias" ColumnName="Alias" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Slides">
             <EntityTypeMapping TypeName="ShopModel.Slide">
               <MappingFragment StoreEntitySet="Slides">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Image" ColumnName="Image" />
-                <ScalarProperty Name="Url" ColumnName="Url" />
-                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="SupportOnlines">
             <EntityTypeMapping TypeName="ShopModel.SupportOnline">
               <MappingFragment StoreEntitySet="SupportOnlines">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Department" ColumnName="Department" />
-                <ScalarProperty Name="Skype" ColumnName="Skype" />
-                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Yahoo" ColumnName="Yahoo" />
-                <ScalarProperty Name="Facebook" ColumnName="Facebook" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Facebook" ColumnName="Facebook" />
+                <ScalarProperty Name="Yahoo" ColumnName="Yahoo" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="Skype" ColumnName="Skype" />
+                <ScalarProperty Name="Department" ColumnName="Department" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="ShopModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="SystemConfigs">
             <EntityTypeMapping TypeName="ShopModel.SystemConfig">
               <MappingFragment StoreEntitySet="SystemConfigs">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Code" ColumnName="Code" />
-                <ScalarProperty Name="ValueString" ColumnName="ValueString" />
                 <ScalarProperty Name="ValueInt" ColumnName="ValueInt" />
+                <ScalarProperty Name="ValueString" ColumnName="ValueString" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Tags">
             <EntityTypeMapping TypeName="ShopModel.Tag">
               <MappingFragment StoreEntitySet="Tags">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="VisitorStatistics">
             <EntityTypeMapping TypeName="ShopModel.VisitorStatistic">
               <MappingFragment StoreEntitySet="VisitorStatistics">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="VisitedDate" ColumnName="VisitedDate" />
                 <ScalarProperty Name="IPAddress" ColumnName="IPAddress" />
+                <ScalarProperty Name="VisitedDate" ColumnName="VisitedDate" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <AssociationSetMapping Name="ApplicationRoleGroups" TypeName="ShopModel.ApplicationRoleGroups" StoreEntitySet="ApplicationRoleGroups">
-            <EndProperty Name="ApplicationGroups">
-              <ScalarProperty Name="ID" ColumnName="GroupId" />
-            </EndProperty>
-            <EndProperty Name="ApplicationRoles">
+            <EndProperty Name="ApplicationRole">
               <ScalarProperty Name="Id" ColumnName="RoleId" />
+            </EndProperty>
+            <EndProperty Name="ApplicationGroup">
+              <ScalarProperty Name="ID" ColumnName="GroupId" />
             </EndProperty>
           </AssociationSetMapping>
           <AssociationSetMapping Name="ApplicationUserGroups" TypeName="ShopModel.ApplicationUserGroups" StoreEntitySet="ApplicationUserGroups">
-            <EndProperty Name="ApplicationGroups">
+            <EndProperty Name="ApplicationGroup">
               <ScalarProperty Name="ID" ColumnName="GroupId" />
             </EndProperty>
-            <EndProperty Name="ApplicationUsers">
+            <EndProperty Name="ApplicationUser">
               <ScalarProperty Name="Id" ColumnName="UserId" />
             </EndProperty>
           </AssociationSetMapping>
           <AssociationSetMapping Name="PostTags" TypeName="ShopModel.PostTags" StoreEntitySet="PostTags">
-            <EndProperty Name="Posts">
-              <ScalarProperty Name="ID" ColumnName="PostID" />
-            </EndProperty>
-            <EndProperty Name="Tags">
+            <EndProperty Name="Tag">
               <ScalarProperty Name="ID" ColumnName="TagID" />
+            </EndProperty>
+            <EndProperty Name="Post">
+              <ScalarProperty Name="ID" ColumnName="PostID" />
             </EndProperty>
           </AssociationSetMapping>
           <AssociationSetMapping Name="ProductTags" TypeName="ShopModel.ProductTags" StoreEntitySet="ProductTags">
-            <EndProperty Name="Products">
-              <ScalarProperty Name="ID" ColumnName="ProductID" />
-            </EndProperty>
-            <EndProperty Name="Tags">
+            <EndProperty Name="Tag">
               <ScalarProperty Name="ID" ColumnName="TagID" />
+            </EndProperty>
+            <EndProperty Name="Product">
+              <ScalarProperty Name="ID" ColumnName="ProductID" />
             </EndProperty>
           </AssociationSetMapping>
         </EntityContainerMapping>

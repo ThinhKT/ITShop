@@ -24,7 +24,7 @@ namespace WEB
             this.ApplicationGroups = new HashSet<ApplicationGroup>();
         }
     
-        public string Id { get; set; }
+        public int Id { get; set; }
         public string FullName { get; set; }
         public string Address { get; set; }
         public Nullable<System.DateTime> BirthDay { get; set; }
