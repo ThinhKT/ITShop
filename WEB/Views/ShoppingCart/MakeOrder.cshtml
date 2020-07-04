@@ -11,46 +11,35 @@
         <form action="/ShoppingCart/MakeOrder" method="post">
             <div class="row">
                 <div class="col-lg-8 col-md-6">
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div class="checkout__input">
-                                <input type="text" placeholder="Họ*">
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="checkout__input">
-                                <input type="text" placeholder="Tên*" value="@item.FullName">
-                            </div>
-                        </div>
+                    <div class="checkout__input">
+                        <p>Họ và tên <span>*</span></p>
+                        <input name="fullname" type="text" placeholder="Địa chỉ nhận hàng" value="@item.FullName" required>
                     </div>
                     <div class="checkout__input">
-                        <input type="text" placeholder="Địa chỉ nhận hàng" value="@item.Address">
+                        <p>Địa chỉ <span>*</span></p>
+                        <input name="address" type="text" placeholder="Địa chỉ nhận hàng" value="@item.Address" required>
                     </div>
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="checkout__input">
-                                <input type="text" placeholder="Số điện thoại*" value="@item.PhoneNumber">
+                                <p>Số điện thoại <span>*</span></p>
+                                <input name="phone" type="text" placeholder="Số điện thoại*" value="@item.PhoneNumber" required>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="checkout__input">
-                                <input type="text" placeholder="Email*" value="@item.Email">
+                                <p>Email <span>*</span></p>
+                                <input name="email" type="text" placeholder="Email*" value="@item.Email" required>
                             </div>
                         </div>
                     </div>
-                    <div class="checkout__input">
-                        <input type="text" placeholder="Nhập lại mật khẩu để xác minh*">
-                    </div>
-                    <div class="checkout__input__checkbox" hidden>
-                        <label for="diff-acc">
-                            Ship to a different address?
-                            <input type="checkbox" id="diff-acc">
-                            <span class="checkmark"></span>
-                        </label>
+                    <div class="checkout__input" hidden>
+                        <p>Nhập lại mật khẩu để xác minh <span>*</span></p>
+                        <input type="text" placeholder=" " >
                     </div>
                     <div class="checkout__input">
-                        <p>Tin nhắn<span>*</span></p>
-                        <input type="text"
+                        <p>Tin nhắn</p>
+                        <input name="message" type="text"
                                placeholder="Notes about your order, e.g. special notes for delivery.">
                     </div>
                 </div>
@@ -77,9 +66,10 @@
                         <div class="checkout__order__subtotal">Tổng tiền sản phẩm<span>@ViewBag.TotalPrice VND</span></div>
                         <div class="checkout__order__total">Thêm phí ship<span>@ViewBag.TotalPrice VND</span></div>
                         <div class="checkout__input__checkbox">
-                            <input type="radio" name="payment" checked> Thanh toán khi nhận hàng
+                            <input type="text" name="price" value="@ViewBag.TotalPrice" hidden/>
+                            <input type="radio" name="payment" value="Thanh toán khi nhận hàng" checked> Thanh toán khi nhận hàng
                             <br />
-                            <input type="radio" name="payment"> Thanh toán online
+                            <input type="radio" name="payment" value="Thanh toán online"> Thanh toán online
                         </div>
                         <button type="submit" class="site-btn">Đặt hàng</button>
                     </div>
