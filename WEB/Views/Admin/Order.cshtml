@@ -2,36 +2,78 @@
 @{
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-<h1>Danh sách đơn hàng</h1>
 <div class="tm-bg-primary-dark tm-block tm-block-taller tm-block-scroll">
-    <h2 class="tm-block-title">Orders List</h2>
+    <h2 class="tm-block-title">Danh sách đơn hàng</h2>
     <table class="table">
         <thead>
             <tr>
                 <th scope="col">MÃ</th>
-                <th scope="col">TÊN KH</th>
-                <th scope="col">DỊA CHỈ KH</th>
+                <th scope="col">TRẠNG THÁI</th>
+                <th scope="col">TÁC VỤ</th>
+                <th scope="col">KHÁCH HÀNG</th>
+                <th scope="col">ĐỊA CHỈ KH</th>
                 <th scope="col">EMAIL KH</th>
                 <th scope="col">SĐT</th>
-                <th scope="col">GIÁ SẢN PHẨM</th>
-                <th scope="col">SỐ LƯỢNG</th>
+                <th scope="col">TỔNG GIÁ</th>
+                <th scope="col">NGÀY TẠO</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in ViewBag.OrderList)
             {
-                <tr>
-                    <th scope="row"><b>@item.ID</b></th>
+            <tr>
+                <th scope="row"><b>@item.ID</b></th>
+                @if (item.Status == 1)
+                {
                     <td>
-                        @*<div class="tm-status-circle moving">*@
-                        @item.CustomerName
+                        <div class="tm-status-circle cancelled">
+                        </div>
+                        Chưa xác nhận
                     </td>
-                    <td><b>@item.CustomerAddress</b></td>
-                    <td><b>@item.CustomerEmail</b></td>
-                    <td><b>@item.CustomerMobile</b></td>
-                    <td><b>@item.Price</b></td>
-                    <td><b>@item.Quantity</b></td>
-                </tr>
+                    <td>
+                        <a href="/Admin/TakeOrder/@item.ID">Tiếp nhận đơn hàng</a>
+                    </td>
+                }
+                else if (item.Status == 2)
+                {
+                    <td>
+                        <div class="tm-status-circle pending">
+                        </div>
+                        Đã đóng gói
+                    </td>
+                    <td>
+                        <a href="/Admin/Pending/@item.ID">Gửi hàng đi</a>
+                    </td>
+                }
+                else if (item.Status == 3)
+                {
+                    <td>
+                        <div class="tm-status-circle pending">
+                        </div>
+                        Đang vận chuyển
+                    </td>
+                    <td>
+                        <a href="/Admin/Checkout/@item.ID">Thanh toán</a>
+                    </td>
+                }
+                else if (item.Status == 4)
+                {
+                    <td>
+                        <div class="tm-status-circle moving">
+                        </div>
+                        Đã nhận hàng
+                    </td>
+                    <td>
+
+                    </td>
+                }
+                <td><b>@item.CustomerName</b></td>
+                <td><b>@item.CustomerAddress</b></td>
+                <td><b>@item.CustomerEmail</b></td>
+                <td><b>@item.CustomerMobile</b></td>
+                <td><b>@item.TotalPrice</b></td>
+                <td><b>@item.CreatedDate.ToString()</b></td>
+            </tr>
             }
         </tbody>
     </table>

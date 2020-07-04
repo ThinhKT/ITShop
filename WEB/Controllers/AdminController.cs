@@ -65,16 +65,34 @@ namespace WEB.Controllers
         public ActionResult Order()
         {
             Session["View"] = "Order";
-            //var query = from od in db.Orders
-            //            join odd in db.OrderDetails on od.ID equals odd.OrderID
-            //            select new { Table1 = od, Table2 = odd };
-            //ViewBag.OrderList = query.ToList();
+            string str = "select * from Orders order by ID DESC";
+            var query = db.Orders.SqlQuery(str);
+            ViewBag.OrderList = query.ToList();
             return View();
+        }
+        public ActionResult TakeOrder(int id)
+        {
+            string str = "update Orders set Status = 2 where ID = " + id.ToString();
+            var query = db.Database.ExecuteSqlCommand(str);
+            return RedirectToAction("Order","Admin");
+        }
+        public ActionResult Pending(int id)
+        {
+            string str = "update Orders set Status = 3 where ID = " + id.ToString();
+            var query = db.Database.ExecuteSqlCommand(str);
+            return RedirectToAction("Order", "Admin");
+        }
+        public ActionResult Checkout(int id)
+        {
+            string str = "update Orders set Status = 4 where ID = " + id.ToString();
+            var query = db.Database.ExecuteSqlCommand(str);
+            return RedirectToAction("Order", "Admin");
         }
         public ActionResult Income()
         {
             Session["View"] = "Income";
             return View();
         }
+
     }
 }
