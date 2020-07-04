@@ -17,7 +17,6 @@ namespace WEB
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public ApplicationRole()
         {
-            this.ApplicationUserRoles = new HashSet<ApplicationUserRole>();
             this.ApplicationGroups = new HashSet<ApplicationGroup>();
         }
     
@@ -26,8 +25,6 @@ namespace WEB
         public string Description { get; set; }
         public string Discriminator { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ApplicationUserRole> ApplicationUserRoles { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ApplicationGroup> ApplicationGroups { get; set; }
     }

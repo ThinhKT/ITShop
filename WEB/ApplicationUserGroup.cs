@@ -12,12 +12,10 @@ namespace WEB
     using System;
     using System.Collections.Generic;
     
-    public partial class ApplicationUserRole
+    public partial class ApplicationUserGroup
     {
-        public string UserId { get; set; }
-        public string RoleId { get; set; }
-        public Nullable<int> IdentityRole_Id { get; set; }
-        public Nullable<int> ApplicationUser_Id { get; set; }
+        public int UserId { get; set; }
+        public int GroupId { get; set; }
     
         public virtual ApplicationUser ApplicationUser { get; set; }
     }

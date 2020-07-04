@@ -18,37 +18,37 @@ namespace WEB
         public ApplicationUser()
         {
             this.ApplicationUserClaims = new HashSet<ApplicationUserClaim>();
+            this.ApplicationUserGroups = new HashSet<ApplicationUserGroup>();
             this.ApplicationUserLogins = new HashSet<ApplicationUserLogin>();
             this.ApplicationUserRoles = new HashSet<ApplicationUserRole>();
             this.Orders = new HashSet<Order>();
-            this.ApplicationGroups = new HashSet<ApplicationGroup>();
         }
     
-        public string Id { get; set; }
+        public int Id { get; set; }
         public string FullName { get; set; }
         public string Address { get; set; }
         public Nullable<System.DateTime> BirthDay { get; set; }
         public string Email { get; set; }
-        public bool EmailConfirmed { get; set; }
+        public Nullable<bool> EmailConfirmed { get; set; }
         public string PasswordHash { get; set; }
         public string SecurityStamp { get; set; }
         public string PhoneNumber { get; set; }
-        public bool PhoneNumberConfirmed { get; set; }
-        public bool TwoFactorEnabled { get; set; }
+        public Nullable<bool> PhoneNumberConfirmed { get; set; }
+        public Nullable<bool> TwoFactorEnabled { get; set; }
         public Nullable<System.DateTime> LockoutEndDateUtc { get; set; }
-        public bool LockoutEnabled { get; set; }
-        public int AccessFailedCount { get; set; }
+        public Nullable<bool> LockoutEnabled { get; set; }
+        public Nullable<int> AccessFailedCount { get; set; }
         public string UserName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ApplicationUserClaim> ApplicationUserClaims { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ApplicationUserGroup> ApplicationUserGroups { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ApplicationUserLogin> ApplicationUserLogins { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ApplicationUserRole> ApplicationUserRoles { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Order> Orders { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ApplicationGroup> ApplicationGroups { get; set; }
     }
 }

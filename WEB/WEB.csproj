@@ -139,6 +139,9 @@
     <Compile Include="ApplicationUserClaim.cs">
       <DependentUpon>ShopModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ApplicationUserGroup.cs">
+      <DependentUpon>ShopModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="ApplicationUserLogin.cs">
       <DependentUpon>ShopModel.tt</DependentUpon>
     </Compile>
@@ -413,6 +416,7 @@
     <Content Include="Assets\Admin\webfonts\fa-solid-900.ttf" />
     <Content Include="Assets\Admin\webfonts\fa-solid-900.woff" />
     <Content Include="Assets\Admin\webfonts\fa-solid-900.woff2" />
+    <Content Include="EmailTemplate\Text.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -429,6 +433,7 @@
       <LastGenOutput>ShopModel.Context.cs</LastGenOutput>
       <DependentUpon>ShopModel.edmx</DependentUpon>
     </Content>
+    <Content Include="ShopModel.edmx.sql" />
     <Content Include="ShopModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ShopModel.edmx</DependentUpon>
@@ -862,6 +867,8 @@
     <Content Include="Views\Shared\_AdminLayout.cshtml" />
     <Content Include="Views\Admin\Income.cshtml" />
     <Content Include="Views\ShoppingCart\MakeOrder.cshtml" />
+    <Content Include="Views\Account\Confirm.cshtml" />
+    <Content Include="Views\Account\AfterLogin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

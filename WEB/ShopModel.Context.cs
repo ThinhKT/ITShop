@@ -29,6 +29,7 @@ namespace WEB
         public virtual DbSet<ApplicationGroup> ApplicationGroups { get; set; }
         public virtual DbSet<ApplicationRole> ApplicationRoles { get; set; }
         public virtual DbSet<ApplicationUserClaim> ApplicationUserClaims { get; set; }
+        public virtual DbSet<ApplicationUserGroup> ApplicationUserGroups { get; set; }
         public virtual DbSet<ApplicationUserLogin> ApplicationUserLogins { get; set; }
         public virtual DbSet<ApplicationUserRole> ApplicationUserRoles { get; set; }
         public virtual DbSet<ApplicationUser> ApplicationUsers { get; set; }

@@ -18,7 +18,7 @@ namespace WEB
         public string UserId { get; set; }
         public string ClaimType { get; set; }
         public string ClaimValue { get; set; }
-        public string ApplicationUser_Id { get; set; }
+        public Nullable<int> ApplicationUser_Id { get; set; }
     
         public virtual ApplicationUser ApplicationUser { get; set; }
     }

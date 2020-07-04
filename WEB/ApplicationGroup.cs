@@ -18,7 +18,6 @@ namespace WEB
         public ApplicationGroup()
         {
             this.ApplicationRoles = new HashSet<ApplicationRole>();
-            this.ApplicationUsers = new HashSet<ApplicationUser>();
         }
     
         public int ID { get; set; }
@@ -27,7 +26,5 @@ namespace WEB
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ApplicationRole> ApplicationRoles { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ApplicationUser> ApplicationUsers { get; set; }
     }
 }
