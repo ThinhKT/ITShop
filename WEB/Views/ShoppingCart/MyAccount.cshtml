@@ -1,0 +1,106 @@
+﻿
+@{
+    ViewBag.Title = "MyAccount";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3>Danh sách đơn hàng</h3>
+<hr/>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="shoping__cart__table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Đơn hàng</th>
+                        <th>Tổng giá</th>
+                        <th>Ngày tạo</th>
+                        <th>Trạng thái</th>
+                        <th>Phương thức thanh toán</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in ViewBag.Order)
+                    {
+                    <tr>
+                        <td class="shoping__cart__table">
+                            <h5>@item.ID</h5>
+                        </td>
+                        <td class="shoping__cart__table">
+                            @item.TotalPrice VND
+                        </td>
+                        <td class="shoping__cart__table">
+                            @item.CreatedDate.ToString()
+                        </td>
+                        <td class="shoping__cart__table">
+                            @if(item.Status == 1)
+                            {
+                            <h5>Chờ xác nhận</h5>
+                            }
+                            else if(item.Status == 2)
+                            {
+                                <h5>Đã đóng gói</h5>
+                            }
+                            else if (item.Status == 3)
+                            {
+                                <h5>Đang vận chuyển</h5>
+                            }
+                            else if (item.Status == 4)
+                            {
+                                <h5>Đã nhận hàng</h5>
+                            }
+                        </td>
+                        <td class="shoping__cart__table">
+                            @item.PaymentMethod
+                        </td>
+                        <td class="shoping__cart__table">
+                            <a href="/ShoppingCart/OrderDetail/@item.ID">Xem chi tiết</a>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<h3>Thông tin cá nhân</h3>
+<hr/>
+<div class="col-lg-8 col-md-6">
+    @foreach (var item in ViewBag.Info)
+    {
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="checkout__input">
+                    <p>Họ tên</p>
+                    <input type="text" placeholder="Họ Tên*" value="@item.FullName">
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="checkout__input">
+                    <p>Ngày sinh</p>
+                    <input type="text" placeholder="Ngày sinh*" value="@item.BirthDay.ToString()">
+                </div>
+            </div>
+        </div>
+        <div class="checkout__input">
+            <p>Địa chỉ</p>
+            <input type="text" placeholder="Số nhà, tên đường, quận, huyện,..." class="checkout__input__add" value="@item.Address">
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="checkout__input">
+                    <p>Số điện thoại</p>
+                    <input type="text" placeholder="Số điện thoại*" value="@item.PhoneNumber">
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="checkout__input">
+                    <p>Email</p>
+                    <input type="text" placeholder="Email*" value="@item.Email">
+                </div>
+            </div>
+        </div>
+    }
+</div>

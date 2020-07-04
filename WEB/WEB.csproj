@@ -226,6 +226,9 @@
     <Compile Include="SupportOnline.cs">
       <DependentUpon>ShopModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="sysdiagram.cs">
+      <DependentUpon>ShopModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="SystemConfig.cs">
       <DependentUpon>ShopModel.tt</DependentUpon>
     </Compile>
@@ -434,6 +437,9 @@
       <DependentUpon>ShopModel.edmx</DependentUpon>
       <LastGenOutput>ShopModel.cs</LastGenOutput>
     </Content>
+    <Content Include="UploadedFiles\bannerDellVostro.jpg" />
+    <Content Include="UploadedFiles\bannerDellVostro2.jpg" />
+    <Content Include="UploadedFiles\dell-inspiron-3476.jpg" />
     <Content Include="UploadedFiles\files\20190611_101319.jpg" />
     <Content Include="UploadedFiles\files\apple-macbook-air-2019-i5-16ghz-8gb-128gb-mvfm2sa-1-3-org.jpg" />
     <Content Include="UploadedFiles\files\apple-macbook-air-2019-i5-16ghz-8gb-128gb-mvfm2sa-13-32-600x600.jpg" />
@@ -1007,6 +1013,8 @@
     <Content Include="Views\Shared\_AdminLayout.cshtml" />
     <Content Include="Views\Admin\Income.cshtml" />
     <Content Include="Views\ShoppingCart\MakeOrder.cshtml" />
+    <Content Include="Views\ShoppingCart\MyAccount.cshtml" />
+    <Content Include="Views\ShoppingCart\OrderDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

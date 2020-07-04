@@ -12,14 +12,12 @@ namespace WEB
     using System;
     using System.Collections.Generic;
     
-    public partial class ApplicationUserRole
+    public partial class sysdiagram
     {
-        public int UserId { get; set; }
-        public string RoleId { get; set; }
-        public string IdentityRole_Id { get; set; }
-        public string ApplicationUser_Id { get; set; }
-    
-        public virtual ApplicationRole ApplicationRole { get; set; }
-        public virtual ApplicationUser ApplicationUser { get; set; }
+        public string name { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }
