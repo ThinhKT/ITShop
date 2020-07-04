@@ -6,7 +6,11 @@
 {
     <h2>@ViewBag.None</h2>
 }
-
+@if (Session["CartOverload"] != null)
+{
+    <h2 style="color:red">@Session["CartOverload"].ToString()</h2>
+    Session["CartOverload"] = null;
+}
 <!-- Shoping Cart Section Begin -->
 <section class="shoping-cart spad">
     <div class="container">
@@ -29,7 +33,7 @@
                                 foreach (var item in ViewBag.Cart)
                                 {
                             <tr>
-                                <td class="shoping__cart__item">
+                                <td class="shoping__cart__table">
                                     <img src="@item.Image" alt="Hình SP">
                                     <h5>@item.Name</h5>
                                 </td>
@@ -91,7 +95,14 @@
                         <li>Tổng tiền sản phẩm<span>@ViewBag.TotalPrice VND</span></li>
                         <li>Tổng tiền cuối (thêm phí ship)<span>@ViewBag.TotalPrice VND</span></li>
                     </ul>
-                    <a href="/ShoppingCart/MakeOrder" class="primary-btn">Đặt hàng</a>
+                    @if (ViewBag.TotalPrice == null)
+                    {
+                        <a href="/ShoppingCart/MakeOrder" class="primary-btn" hidden>Đặt hàng</a>
+                    }
+                    else
+                    {
+                        <a href="/ShoppingCart/MakeOrder" class="primary-btn">Đặt hàng</a>
+                    }
                 </div>
             </div>
         </div>

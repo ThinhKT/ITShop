@@ -129,13 +129,69 @@ namespace WEB.Controllers
         [HttpPost]
         public ActionResult MakeOrder(FormCollection fc)
         {
-            //string sql = "insert into Orders (CustomerName,CustomerAddress,CustomerEmail," +
-            //    "CustomerMobile,CustomerMessage,PaymentMethod,CreatedDate,CreatedBy,PaymentStatus," +
-            //    "Status,CustomerId)" +
-            //    "values" +
-            //    "(@CustomerName, @CustomerAddress, @CustomerEmail,@CustomerMobile, @CustomerMessage, " +
-            //    "@PaymentMethod, @CreatedDate, @CreatedBy,@PaymentStatus, @Status, @CustomerId)";
-            return View();
+            string sql = "Select * from Products where ID = ";
+            for (int i = 0; i < TempCart.count; i++)
+            {
+                sql = sql + TempCart.ID[i].ToString() + " or ID = ";
+            }
+            sql = sql + TempCart.ID[TempCart.count].ToString();
+            var query = db.Products.SqlQuery(sql).ToList();
+            foreach (var item in query)
+            {
+                for (int i = 0; i < TempCart.count; i++)
+                {
+                    if (item.ID == TempCart.ID[i])
+                    {
+                        if (item.Quantity < TempCart.ammount[i])
+                        {
+                            Session["CartOverload"] = "Không đủ sản phẩm" + item.Name.ToString();
+                            return RedirectToAction("ViewCart", "ShoppingCart");
+                        }
+                    }
+                }
+            }
+            //nếu không return ở trên, thì còn hàng, trừ hàng ra
+            foreach (var item in query)
+            {
+                for (int i = 0; i < TempCart.count; i++)
+                {
+                    if (item.ID == TempCart.ID[i])
+                    {
+                        string strin = "update Products set Quantity = Quantity - " + TempCart.ammount[i].ToString() +
+                            "where ID = " + TempCart.ID[i].ToString();
+                        var queryy = db.Database.ExecuteSqlCommand(strin);
+                    }
+                }
+            }
+            //thêm đơn hàng
+            string sql2 = "insert into Orders (CustomerName,CustomerAddress,CustomerEmail," +
+                "CustomerMobile,CustomerMessage,PaymentMethod,CreatedDate,CreatedBy,PaymentStatus," +
+                "Status,CustomerId,TotalPrice)" +
+                "values" +
+                "(N'"+ fc["fullname"].ToString() +"', N'" + fc["address"] + "', '" + fc["email"].ToString() + 
+                "', '" + fc["phone"].ToString()+ "', N'" + fc["message"].ToString() +"', " +
+                "N'" + fc["payment"].ToString() + "', GETDATE(), ' ', ' ', 1, " + Session["UserID"].ToString() + ", " + fc["price"] + ")";
+            var query2 = db.Database.ExecuteSqlCommand(sql2);
+            //thêm OrderDetail
+            var RecentOrder = db.Orders.SqlQuery("select * from Orders order by ID DESC").First();
+            foreach (var item in query)
+            {
+                for (int i = 0; i < TempCart.count; i++)
+                {
+                    if (item.ID == TempCart.ID[i])
+                    {
+                        string strin = "insert into OrderDetails(OrderID, ProductID, Quantity, Price) values " +
+                            "(" + RecentOrder.ID.ToString() + ", " + item.ID.ToString() + ", " + TempCart.ammount[i].ToString() +
+                            ", " + (TempCart.ammount[i] * item.Price).ToString() + ")";
+                        var queryy = db.Database.ExecuteSqlCommand(strin);
+                    }
+                }
+            }
+            //sau khi thêm đơn hàng, xóa giỏ hàng đi
+            TempCart.count = 1;
+            TempCart.ID = new int[100];
+            TempCart.ammount = new int[100];
+            return RedirectToAction("ViewCart", "ShoppingCart");
         }
         public ActionResult MyAccount()
         {
@@ -154,6 +210,12 @@ namespace WEB.Controllers
         public ActionResult OrderDetail(int id)
         {
             return View();
+        }
+        public ActionResult DeleteOrder(int id)
+        {
+            string sql = "Delete from Orders where ID = " + id.ToString();
+            var query = db.Database.ExecuteSqlCommand(sql);
+            return RedirectToAction("MyAccount","ShoppingCart");
         }
     }
 }

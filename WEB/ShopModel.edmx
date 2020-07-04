@@ -179,7 +179,7 @@
           <Property Name="CustomerAddress" Type="nvarchar" MaxLength="256" Nullable="false" />
           <Property Name="CustomerEmail" Type="nvarchar" MaxLength="256" Nullable="false" />
           <Property Name="CustomerMobile" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="CustomerMessage" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="CustomerMessage" Type="nvarchar" MaxLength="256" />
           <Property Name="PaymentMethod" Type="nvarchar" MaxLength="256" />
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="CreatedBy" Type="nvarchar(max)" />
@@ -981,7 +981,7 @@
           <Property Name="CustomerAddress" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="CustomerEmail" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="CustomerMobile" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CustomerMessage" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerMessage" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="PaymentMethod" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="CreatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
