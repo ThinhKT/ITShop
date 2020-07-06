@@ -51,7 +51,7 @@
                             else if (item.Status == 2)
                             {
                                 <h5>Đã được duyệt</h5>
-                                @if (item.PaymentMethod = "Thanh toán khi nhận hàng")
+                                if (item.PaymentMethod == "Thanh toán khi nhận hàng")
                                 {
                                     <a href="#">Xác nhận mua</a>
                                 }
