@@ -100,7 +100,7 @@
                                 </td>
                             }
                             <td>
-                                <a href="#">Xem kho</a>
+                                <a style="color:red" target="_blank" href="/Shipper/WareHouse/@item.ID">Xem kho</a>
                                 @* xem kho bằng trang mới, khi xem kho thì kiểm hàng (chắc kèo đủ hàng), xong sẽ có thao tác đóng gói*@ 
                             </td>
                         }
@@ -111,7 +111,7 @@
                                 </div>
                                 Đã đóng gói
                             </td>
-                            <td><a href="#">Bắt đầu ship</a></td>
+                            <td><a style="color:red" href="/Shipper/Ship/@item.ID">Bắt đầu ship</a></td>
                         }
                         else if (item.Status == 5)
                         {
@@ -121,7 +121,7 @@
                                 Đang vận chuyển
                             </td>
                             <td>
-                                <a href="#">Hoàn thành giao hàng</a>
+                                <a style="color:red" href="/Shipper/Checkout/@item.ID">Hoàn thành giao hàng</a>
                             </td>
                         }
                         else if (item.Status == 6)

@@ -39,6 +39,9 @@ namespace WEB
         public bool LockoutEnabled { get; set; }
         public int AccessFailedCount { get; set; }
         public string UserName { get; set; }
+        public Nullable<bool> IsAdmin { get; set; }
+        public Nullable<bool> IsShipper { get; set; }
+        public Nullable<decimal> Money { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ApplicationUserClaim> ApplicationUserClaims { get; set; }

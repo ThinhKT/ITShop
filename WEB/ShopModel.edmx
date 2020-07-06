@@ -98,6 +98,9 @@
           <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
           <Property Name="AccessFailedCount" Type="int" Nullable="false" />
           <Property Name="UserName" Type="nvarchar(max)" />
+          <Property Name="IsAdmin" Type="bit" />
+          <Property Name="IsShipper" Type="bit" />
+          <Property Name="Money" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="ContactDetails">
           <Key>
@@ -280,10 +283,10 @@
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
-          <Property Name="Alias" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="Alias" Type="nvarchar" MaxLength="256" />
           <Property Name="CategoryID" Type="int" Nullable="false" />
           <Property Name="Image" Type="nvarchar" MaxLength="256" />
-          <Property Name="MoreImages" Type="xml" />
+          <Property Name="MoreImages" Type="nvarchar(max)" />
           <Property Name="Price" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="PromotionPrice" Type="decimal" Precision="18" Scale="2" />
           <Property Name="Warranty" Type="int" />
@@ -896,6 +899,9 @@
           <NavigationProperty Name="ApplicationUserRoles" Relationship="ShopModel.FK_ApplicationUserRoles_ApplicationUsers" FromRole="ApplicationUser" ToRole="ApplicationUserRole" />
           <NavigationProperty Name="Orders" Relationship="ShopModel.FK_Orders_ApplicationUsers" FromRole="ApplicationUser" ToRole="Order" />
           <NavigationProperty Name="ApplicationGroups" Relationship="ShopModel.ApplicationUserGroups" FromRole="ApplicationUser" ToRole="ApplicationGroup" />
+          <Property Name="IsAdmin" Type="Boolean" />
+          <Property Name="IsShipper" Type="Boolean" />
+          <Property Name="Money" Type="Decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="ContactDetail">
           <Key>
@@ -1080,7 +1086,7 @@
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="Alias" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Alias" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="CategoryID" Type="Int32" Nullable="false" />
           <Property Name="Image" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="MoreImages" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -1386,6 +1392,9 @@
           <EntitySetMapping Name="ApplicationUsers">
             <EntityTypeMapping TypeName="ShopModel.ApplicationUser">
               <MappingFragment StoreEntitySet="ApplicationUsers">
+                <ScalarProperty Name="Money" ColumnName="Money" />
+                <ScalarProperty Name="IsShipper" ColumnName="IsShipper" />
+                <ScalarProperty Name="IsAdmin" ColumnName="IsAdmin" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
                 <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
