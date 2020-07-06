@@ -37,7 +37,7 @@
                             @if (item.Status == 1)
                             {
                                 <h5>Chưa được duyệt</h5>
-                                <a href="/ShoppingCart/DeleteOrder/@item.ID">Xóa</a>
+                                <a style="color:red" href="/ShoppingCart/DeleteOrder/@item.ID">Xóa</a>
                             }
                             else if (item.Status == 0)
                             {
@@ -46,18 +46,18 @@
                             else if (item.Status == -1)
                             {
                                 <h5>Không đủ hàng</h5>
-                                <a href="/ShoppingCart/DeleteOrder/@item.ID">Xóa đơn hàng</a>
+                                <a style="color:red" href="/ShoppingCart/DeleteOrder/@item.ID">Xóa đơn hàng</a>
                             }
                             else if (item.Status == 2)
                             {
                                 <h5>Đã được duyệt</h5>
                                 if (item.PaymentMethod == "Thanh toán khi nhận hàng")
                                 {
-                                    <a href="#">Xác nhận mua</a>
+                                    <a style="color:red" href="/ShoppingCart/Buy/@item.ID">Xác nhận mua</a>
                                 }
                                 else
                                 {
-                                    <a href="#">Đi thanh toán</a>
+                                    <a target="_blank" style="color:red" href="/ShoppingCart/Pay/@item.ID">Đi thanh toán</a>
                                 }
                             }
                             else if (item.Status == 3)
@@ -81,7 +81,7 @@
                             @item.PaymentMethod
                         </td>
                         <td class="shoping__cart__table">
-                            <a href="/ShoppingCart/OrderDetail/@item.ID">Xem chi tiết</a>
+                            <a style="color:red" target="_blank" href="/ShoppingCart/OrderDetail/@item.ID">Xem chi tiết</a>
                         </td>
                     </tr>
                     }
@@ -113,6 +113,10 @@
         <div class="checkout__input">
             <p>Địa chỉ</p>
             <input type="text" placeholder="Số nhà, tên đường, quận, huyện,..." class="checkout__input__add" value="@item.Address">
+        </div>
+        <div class="checkout__input">
+            <p>Số dư tài khoản </p>
+            <input type="text" class="checkout__input__add" value="@item.Money VND">
         </div>
         <div class="row">
             <div class="col-lg-6">

@@ -195,6 +195,44 @@ namespace WEB.Controllers
             TempCart.ammount = new int[100];
             return RedirectToAction("ViewCart", "ShoppingCart");
         }
+        public ActionResult Buy(int id)
+        {
+            string sql = "Update Orders set Status = 3 where ID = " + id.ToString();
+            var query = db.Database.ExecuteSqlCommand(sql);
+            return RedirectToAction("MyAccount", "ShoppingCart");
+        }
+        public ActionResult Paid(int id)
+        {
+            string sql = "Update Orders set Status = 3 where ID = " + id.ToString();
+            var query = db.Database.ExecuteSqlCommand(sql);
+            return RedirectToAction("MyAccount", "ShoppingCart");
+        }
+        public ActionResult Pay(int id)
+        {
+            var query = (from x in db.OrderDetails
+                         where x.OrderID == id
+                         select x).ToList();
+
+            string str = "select * from Products where ID = ";
+            for (int i = 0; i < query.Count - 1; i++)
+            {
+                str = str + query[i].ProductID.ToString() + " or ID = ";
+            }
+            str = str + query[query.Count - 1].ProductID.ToString();
+            var query2 = db.Products.SqlQuery(str);
+
+            string n = Session["UserID"].ToString();
+            var query3 = (from x in db.ApplicationUsers
+                          where x.Id.ToString() == n
+                          select x.Money).First();
+
+            ViewBag.Quantity = query;
+            ViewBag.Product = query2.ToList();
+            ViewBag.OrderNo = id.ToString();
+            ViewBag.MoneyPay = 0;
+            ViewBag.MyMoney = query3;
+            return View();
+        }
         public ActionResult MyAccount()
         {
             int id = int.Parse(Session["UserID"].ToString());
@@ -211,6 +249,22 @@ namespace WEB.Controllers
         }
         public ActionResult OrderDetail(int id)
         {
+            var query = (from x in db.OrderDetails
+                        where x.OrderID == id
+                        select x).ToList();
+
+            string str = "select * from Products where ID = ";
+            for(int i = 0; i < query.Count - 1; i++)
+            {
+                str = str + query[i].ProductID.ToString() + " or ID = "; 
+            }
+            str = str + query[query.Count - 1].ProductID.ToString();
+            var query2 = db.Products.SqlQuery(str);
+
+            ViewBag.Quantity = query;
+            ViewBag.Product = query2.ToList();
+            ViewBag.OrderNo = id.ToString();
+
             return View();
         }
         public ActionResult DeleteOrder(int id)

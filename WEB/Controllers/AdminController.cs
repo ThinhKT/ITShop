@@ -70,14 +70,42 @@ namespace WEB.Controllers
             ViewBag.OrderList = query.ToList();
             return View();
         }
+        //xem kho
+        public ActionResult WareHouse(int id)
+        {
+            var query = (from x in db.OrderDetails
+                         where x.OrderID == id
+                         select x).ToList();
+
+            string str = "select * from Products where ID = ";
+            for (int i = 0; i < query.Count - 1; i++)
+            {
+                str = str + query[i].ProductID.ToString() + " or ID = ";
+            }
+            str = str + query[query.Count - 1].ProductID.ToString();
+            var query2 = db.Products.SqlQuery(str);
+
+            ViewBag.Quantity = query;
+            ViewBag.Product = query2.ToList();
+            ViewBag.OrderNo = id;
+            ViewBag.AbleToSale = true;
+            return View();
+        }
         public ActionResult TakeOrder(int id)
         {
             string str = "update Orders set Status = 2 where ID = " + id.ToString();
             var query = db.Database.ExecuteSqlCommand(str);
             return RedirectToAction("Order","Admin");
         }
+        public ActionResult RemoveOrder(int id)
+        {
+            string str = "update Orders set Status = -1 where ID = " + id.ToString();
+            var query = db.Database.ExecuteSqlCommand(str);
+            return RedirectToAction("Order", "Admin");
+        }
         public ActionResult Pending(int id)
         {
+            //không dùng
             string str = "update Orders set Status = 3 where ID = " + id.ToString();
             var query = db.Database.ExecuteSqlCommand(str);
             return RedirectToAction("Order", "Admin");

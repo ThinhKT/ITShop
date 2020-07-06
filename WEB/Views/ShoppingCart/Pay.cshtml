@@ -1,9 +1,10 @@
 ﻿
 @{
-    ViewBag.Title = "OrderDetail";
+    ViewBag.Title = "Pay";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h2>Chi tiết đơn hàng @ViewBag.OrderNo</h2>
+
+<h2>Thanh toán online - Đơn hàng @ViewBag.OrderNo</h2>
 <div class="row">
     <div class="col-lg-12">
         <div class="shoping__cart__table">
@@ -24,7 +25,7 @@
                         {
                             <tr>
                                 <td class="shoping__cart__table">
-                                    <img src="@item.Image" alt="Hình SP">
+                                    <img src="@item.Image" alt="Hình SP" hidden>
                                     <h5>@item.Name</h5>
                                 </td>
                                 <td class="shoping__cart__price">
@@ -34,6 +35,7 @@
                                 {
                                     if (item.ID == ViewBag.Quantity[i].ProductID)
                                     {
+                                        ViewBag.MoneyPay = (item.Price * ViewBag.Quantity[i].Quantity);
                                         <td class="shoping__cart__quantity">
                                             <div class="quantity">
                                                 <div class="pro-qty">
@@ -58,3 +60,27 @@
         </div>
     </div>
 </div>
+    <div class="col-lg-12">
+        <div class="checkout__input">
+            <p>Tài khoản còn : @ViewBag.MyMoney VND</p>
+        </div>
+        <div class="checkout__input">
+            <p>Số tiền cần trả : @ViewBag.MoneyPay VND</p>
+        </div>
+        @if (ViewBag.MyMoney < ViewBag.MoneyPay)
+        {
+            <div class="checkout__input">
+                <p style="color:red">Còn lại : @(ViewBag.MyMoney - ViewBag.MoneyPay) VND</p>
+                <p style="color:red">Tài khoản không đủ chi trả !</p>
+            </div>
+            <a href="#" class="primary-btn">Nạp thêm tiền</a>
+        }
+        else
+        {
+            <div class="checkout__input">
+                <p style="color:red">Còn lại : @(ViewBag.MyMoney - ViewBag.MoneyPay) VND</p>
+            </div>
+            <a href="#" class="primary-btn">Thanh toán</a>
+        }
+    </div>
+
