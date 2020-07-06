@@ -34,20 +34,45 @@
                             @item.CreatedDate.ToString()
                         </td>
                         <td class="shoping__cart__table">
-                            @if(item.Status == 1)
+                            @if (item.Status == 1)
                             {
-                            <h5>Chờ xác nhận</h5>
-                            <a href="/ShoppingCart/DeleteOrder/@item.ID">Xóa</a>
+                                <h5>Chưa được duyệt</h5>
+                                <a href="/ShoppingCart/DeleteOrder/@item.ID">Xóa</a>
                             }
-                            else if(item.Status == 2)
+                            else if (item.Status == 0)
                             {
-                                <h5>Đã đóng gói</h5>
+                                <h5>Đã hủy</h5>
+                            }
+                            else if (item.Status == -1)
+                            {
+                                <h5>Không đủ hàng</h5>
+                                <a href="/ShoppingCart/DeleteOrder/@item.ID">Xóa đơn hàng</a>
+                            }
+                            else if (item.Status == 2)
+                            {
+                                <h5>Đã được duyệt</h5>
+                                @if (item.PaymentMethod = "Thanh toán khi nhận hàng")
+                                {
+                                    <a href="#">Xác nhận mua</a>
+                                }
+                                else
+                                {
+                                    <a href="#">Đi thanh toán</a>
+                                }
                             }
                             else if (item.Status == 3)
                             {
-                                <h5>Đang vận chuyển</h5>
+                                <h5>Đã xác nhận mua</h5>
                             }
                             else if (item.Status == 4)
+                            {
+                                <h5>Đã đóng gói</h5>
+                            }
+                            else if (item.Status == 5)
+                            {
+                                <h5>Đang vận chuyển</h5>
+                            }
+                            else if (item.Status == 6)
                             {
                                 <h5>Đã nhận hàng</h5>
                             }

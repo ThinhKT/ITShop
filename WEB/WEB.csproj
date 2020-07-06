@@ -161,6 +161,7 @@
     <Compile Include="Controllers\PageController.cs" />
     <Compile Include="Controllers\PostController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\ShipperController.cs" />
     <Compile Include="Controllers\ShoppingCartController.cs" />
     <Compile Include="C__MigrationHistory.cs">
       <DependentUpon>ShopModel.tt</DependentUpon>
@@ -1015,6 +1016,8 @@
     <Content Include="Views\ShoppingCart\MakeOrder.cshtml" />
     <Content Include="Views\ShoppingCart\MyAccount.cshtml" />
     <Content Include="Views\ShoppingCart\OrderDetail.cshtml" />
+    <Content Include="Views\Shipper\Login.cshtml" />
+    <Content Include="Views\Shipper\Dashboard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

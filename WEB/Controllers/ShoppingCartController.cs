@@ -129,6 +129,7 @@ namespace WEB.Controllers
         [HttpPost]
         public ActionResult MakeOrder(FormCollection fc)
         {
+            //lấy danh sách sản phẩm có trong giỏ hàng
             string sql = "Select * from Products where ID = ";
             for (int i = 0; i < TempCart.count; i++)
             {
@@ -136,33 +137,34 @@ namespace WEB.Controllers
             }
             sql = sql + TempCart.ID[TempCart.count].ToString();
             var query = db.Products.SqlQuery(sql).ToList();
-            foreach (var item in query)
-            {
-                for (int i = 0; i < TempCart.count; i++)
-                {
-                    if (item.ID == TempCart.ID[i])
-                    {
-                        if (item.Quantity < TempCart.ammount[i])
-                        {
-                            Session["CartOverload"] = "Không đủ sản phẩm" + item.Name.ToString();
-                            return RedirectToAction("ViewCart", "ShoppingCart");
-                        }
-                    }
-                }
-            }
-            //nếu không return ở trên, thì còn hàng, trừ hàng ra
-            foreach (var item in query)
-            {
-                for (int i = 0; i < TempCart.count; i++)
-                {
-                    if (item.ID == TempCart.ID[i])
-                    {
-                        string strin = "update Products set Quantity = Quantity - " + TempCart.ammount[i].ToString() +
-                            "where ID = " + TempCart.ID[i].ToString();
-                        var queryy = db.Database.ExecuteSqlCommand(strin);
-                    }
-                }
-            }
+            ////quy trình kiểm tra còn hàng không
+            //foreach (var item in query)
+            //{
+            //    for (int i = 0; i < TempCart.count; i++)
+            //    {
+            //        if (item.ID == TempCart.ID[i])
+            //        {
+            //            if (item.Quantity < TempCart.ammount[i])
+            //            {
+            //                Session["CartOverload"] = "Không đủ sản phẩm" + item.Name.ToString();
+            //                return RedirectToAction("ViewCart", "ShoppingCart");
+            //            }
+            //        }
+            //    }
+            //}
+            ////nếu không return ở trên, thì còn hàng, trừ hàng ra
+            //foreach (var item in query)
+            //{
+            //    for (int i = 0; i < TempCart.count; i++)
+            //    {
+            //        if (item.ID == TempCart.ID[i])
+            //        {
+            //            string strin = "update Products set Quantity = Quantity - " + TempCart.ammount[i].ToString() +
+            //                "where ID = " + TempCart.ID[i].ToString();
+            //            var queryy = db.Database.ExecuteSqlCommand(strin);
+            //        }
+            //    }
+            //}
             //thêm đơn hàng
             string sql2 = "insert into Orders (CustomerName,CustomerAddress,CustomerEmail," +
                 "CustomerMobile,CustomerMessage,PaymentMethod,CreatedDate,CreatedBy,PaymentStatus," +
@@ -213,7 +215,7 @@ namespace WEB.Controllers
         }
         public ActionResult DeleteOrder(int id)
         {
-            string sql = "Delete from Orders where ID = " + id.ToString();
+            string sql = "Update Orders set Status = 0 where ID = " + id.ToString();
             var query = db.Database.ExecuteSqlCommand(sql);
             return RedirectToAction("MyAccount","ShoppingCart");
         }

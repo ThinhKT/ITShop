@@ -20,6 +20,12 @@ namespace WEB
             );
 
             routes.MapRoute(
+                name: "Shipper",
+                url: "Shipper/{action}/{id}",
+                defaults: new { controller = "Shipper", action = "Login", id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Dashboard", action = "Dashboard", id = UrlParameter.Optional }

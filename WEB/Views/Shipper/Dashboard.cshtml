@@ -1,0 +1,175 @@
+﻿
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Order Page - Shipper Mode</title>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Roboto:400,700" />
+    <!-- https://fonts.google.com/specimen/Open+Sans -->
+    <link rel="stylesheet" href="/Assets/Admin/css/fontawesome.min.css" />
+    <!-- https://fontawesome.com/ -->
+    <link rel="stylesheet" href="/Assets/Admin/css/bootstrap.min.css" />
+    <!-- https://getbootstrap.com/ -->
+    <link rel="stylesheet" href="/Assets/Admin/css/templatemo-style.css">
+    <!--
+    Product Admin CSS Template
+    https://templatemo.com/tm-524-product-admin
+    -->
+</head>
+
+<body>
+    <a href="/Shipper/Logout" style="margin-top:10px;color:white;float:right"><h5>Shipper Thịnh - đăng xuất</h5></a>
+    <div style="clear:both"></div>
+    <div class="tm-bg-primary-dark tm-block tm-block-taller tm-block-scroll">
+        <h2 class="tm-block-title">Danh sách đơn hàng</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">MÃ</th>
+                    <th scope="col">TRẠNG THÁI</th>
+                    <th scope="col">TÁC VỤ</th>
+                    <th scope="col">KHÁCH HÀNG</th>
+                    <th scope="col">ĐỊA CHỈ KH</th>
+                    <th scope="col">EMAIL KH</th>
+                    <th scope="col">SĐT</th>
+                    <th scope="col">TỔNG GIÁ</th>
+                    <th scope="col">NGÀY TẠO</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in ViewBag.OrderList)
+                {
+                    <tr>
+                        <th scope="row"><b>@item.ID</b></th>
+                        @if (item.Status == 1)
+                        {
+                            <td>
+                                <div class="tm-status-circle cancelled">
+                                </div>
+                                Chưa được duyệt
+                            </td>
+                            <td>
+                                <a href="#" hidden></a>
+                                @*mở trang mới để xem kho, trong xem kho sẽ có duyệt đơn hàng hoặc thông báo không đủ hàng*@
+                            </td>
+                        }
+                        else if (item.Status == 0)
+                        {
+                            <td>
+                                <div class="tm-status-circle cancelled">
+                                </div>
+                                Đã hủy
+                            </td>
+                            <td>
+                                <a href="#" hidden></a>
+                            </td>
+                        }
+                        else if (item.Status == 2)
+                        {
+                            <td>
+                                <div class="tm-status-circle pending">
+                                </div>
+                                Đã được duyệt
+                            </td>
+                            <td>
+                                <a href="#" hidden></a>
+                            </td>
+                        }
+                        else if (item.Status == 3)
+                        {
+                            if (item.PaymentMethod = "Thanh toán khi nhận hàng")
+                            {
+                                <td>
+                                    <div class="tm-status-circle pending">
+                                    </div>
+                                    Đã xác nhận mua
+                                </td>
+                            }
+                            else
+                            {
+                                <td>
+                                    <div class="tm-status-circle pending">
+                                    </div>
+                                    Đã thanh toán
+                                </td>
+                            }
+                            <td>
+                                <a href="#">Xem kho</a>
+                                @* xem kho bằng trang mới, khi xem kho thì kiểm hàng (chắc kèo đủ hàng), xong sẽ có thao tác đóng gói*@ 
+                            </td>
+                        }
+                        else if (item.Status == 4)
+                        {
+                            <td>
+                                <div class="tm-status-circle pending">
+                                </div>
+                                Đã đóng gói
+                            </td>
+                            <td><a href="#">Bắt đầu ship</a></td>
+                        }
+                        else if (item.Status == 5)
+                        {
+                            <td>
+                                <div class="tm-status-circle moving">
+                                </div>
+                                Đang vận chuyển
+                            </td>
+                            <td>
+                                <a href="#">Hoàn thành giao hàng</a>
+                            </td>
+                        }
+                        else if (item.Status == 6)
+                        {
+                            if (item.PaymentMethod = "Thanh toán khi nhận hàng")
+                            {
+                                <td>
+                                    <div class="tm-status-circle moving">
+                                    </div>
+                                    Đã nhận hàng và thanh toán
+                                </td>
+                            }
+                            else
+                            {
+                                <td>
+                                    <div class="tm-status-circle moving">
+                                    </div>
+                                    Đã nhận hàng
+                                </td>
+                            }
+                            <td>
+                                <a href="#" hidden></a>
+                            </td>
+                        }
+                        <td><b>@item.CustomerName</b></td>
+                        <td><b>@item.CustomerAddress</b></td>
+                        <td><b>@item.CustomerEmail</b></td>
+                        <td><b>@item.CustomerMobile</b></td>
+                        <td><b>@item.TotalPrice</b></td>
+                        <td><b>@item.CreatedDate.ToString()</b></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <footer class="tm-footer row tm-mt-small">
+        <div class="col-12 font-weight-light">
+            <p class="text-center text-white mb-0 px-4 small">
+                Copyright &copy; <b>2018</b> All rights reserved.
+
+                Design: <a rel="nofollow noopener" href="https://templatemo.com" class="tm-footer-link">Template Mo</a>
+            </p>
+        </div>
+    </footer>
+    <script src="/Assets/Admin/js/jquery-3.3.1.min.js"></script>
+    <!-- https://jquery.com/download/ -->
+    <script src="/Assets/Admin/js/bootstrap.min.js"></script>
+    <!-- https://getbootstrap.com/ -->
+</body>
+</html>

@@ -28,10 +28,22 @@
                     <td>
                         <div class="tm-status-circle cancelled">
                         </div>
-                        Chưa xác nhận
+                        Chưa được duyệt
                     </td>
                     <td>
-                        <a href="/Admin/TakeOrder/@item.ID">Tiếp nhận đơn hàng</a>
+                        <a href="/Admin/TakeOrder/@item.ID">Xem kho</a>
+                        @*mở trang mới để xem kho, trong xem kho sẽ có duyệt đơn hàng hoặc thông báo không đủ hàng*@
+                    </td>
+                }
+                else if (item.Status == 0)
+                {
+                    <td>
+                        <div class="tm-status-circle cancelled">
+                        </div>
+                        Đã hủy
+                    </td>
+                    <td>
+                        <a href="#" hidden></a>
                     </td>
                 }
                 else if (item.Status == 2)
@@ -39,21 +51,32 @@
                     <td>
                         <div class="tm-status-circle pending">
                         </div>
-                        Đã đóng gói
+                        Đã được duyệt
                     </td>
                     <td>
-                        <a href="/Admin/Pending/@item.ID">Gửi hàng đi</a>
+                        <a href="#" hidden></a>
                     </td>
                 }
                 else if (item.Status == 3)
                 {
+                    if (item.PaymentMethod = "Thanh toán khi nhận hàng")
+                    {
+                        <td>
+                            <div class="tm-status-circle pending">
+                            </div>
+                            Đã xác nhận mua
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            <div class="tm-status-circle pending">
+                            </div>
+                            Đã thanh toán
+                        </td>
+                    }
                     <td>
-                        <div class="tm-status-circle pending">
-                        </div>
-                        Đang vận chuyển
-                    </td>
-                    <td>
-                        <a href="/Admin/Checkout/@item.ID">Thanh toán</a>
+                        <a href="#">Giao cho shipper</a>
                     </td>
                 }
                 else if (item.Status == 4)
@@ -61,10 +84,41 @@
                     <td>
                         <div class="tm-status-circle moving">
                         </div>
-                        Đã nhận hàng
+                        Đã đóng gói
+                    </td>
+                    <td></td>
+                }
+                else if (item.Status == 5)
+                {
+                    <td>
+                        <div class="tm-status-circle moving">
+                        </div>
+                        Đang vận chuyển
                     </td>
                     <td>
-
+                        <a href="#" hidden>Gửi hàng đi</a>
+                    </td>
+                }
+                else if (item.Status == 6)
+                {
+                    if (item.PaymentMethod = "Thanh toán khi nhận hàng")
+                    {
+                        <td>
+                            <div class="tm-status-circle moving">
+                            </div>
+                            Đã nhận hàng và thanh toán
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            <div class="tm-status-circle moving">
+                            </div>
+                            Đã nhận hàng
+                        </td>
+                    }
+                    <td>
+                        <a href="#" hidden></a>
                     </td>
                 }
                 <td><b>@item.CustomerName</b></td>

@@ -93,6 +93,5 @@ namespace WEB.Controllers
             Session["View"] = "Income";
             return View();
         }
-
     }
 }
