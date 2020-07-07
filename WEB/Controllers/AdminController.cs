@@ -57,6 +57,49 @@ namespace WEB.Controllers
             Session["View"] = "Other";
             return View();
         }
+        #region Shipper
+        public ActionResult Shipper()
+        {
+            Session["View"] = "Other";
+            var query = from pd in db.ApplicationUsers
+                        where pd.IsShipper == true
+                        select pd;
+            ViewBag.UserList = query.ToList();
+            return View();
+        }
+        public ActionResult AddShipper()
+        {
+            Session["View"] = "Other";
+            return View();
+        }
+        [HttpPost]
+        public ActionResult AddShipper(FormCollection fc)
+        {
+            //kiểm tra trước
+            //kiểm tra password và re-pasword
+            if (fc["password"] != fc["re_password"])
+            {
+                ViewBag.PassNotMatch = "Mật khẩu nhập lại không trùng khớp !";
+                return View();
+            }
+            //kiểm tra trùng username
+            string username = fc["username"].ToString();
+            var query = (from x in db.ApplicationUsers
+                        where x.UserName == username && x.IsShipper == true
+                        select x).ToList();
+            if(query.Count != 0)
+            {
+                ViewBag.ExistUsername = "Tên đăng nhập đã tồn tại";
+                return View();
+            }
+            string str = "INSERT INTO ApplicationUsers (FullName,BirthDay,Email,PhoneNumber,UserName,IsAdmin,IsShipper,Money,PasswordHash)" +
+                " VALUES (N'" + fc["name"] + "', " + fc["birthday"].ToString() + ", '" + fc["email"] + "', '" + fc["phone"] +
+                "', '" + fc["username"] + "', 0, 1, 0,'" + fc["password"].ToString() + "')";
+            var query2 = db.Database.ExecuteSqlCommand(str);
+            ViewBag.Sucsess = "Thêm shipper thành công !";
+            return View();
+        }
+        #endregion
         public ActionResult Chart()
         {
             Session["View"] = "Other";
