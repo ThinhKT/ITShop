@@ -12,6 +12,7 @@ namespace WEB.Controllers
         public ShopEntities db = new ShopEntities();
         public ActionResult Dashboard()
         {
+            Session["View"] = "Order";
             string str = "select * from Orders order by ID DESC";
             var query = db.Orders.SqlQuery(str);
             ViewBag.OrderList = query.ToList();
@@ -77,6 +78,11 @@ namespace WEB.Controllers
             string str = "update Orders set Status = 6 where ID = " + id.ToString();
             var query = db.Database.ExecuteSqlCommand(str);
             return RedirectToAction("Dashboard", "Shipper");
+        }
+        public ActionResult MyAccount()
+        {
+            Session["View"] = "MyAccount";
+            return View();
         }
     }
 }
