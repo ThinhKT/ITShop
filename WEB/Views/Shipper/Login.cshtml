@@ -38,6 +38,10 @@
                             <form action="/Shipper/Login" method="post" class="tm-login-form">
                                 <div class="form-group">
                                     <label for="username">Username</label>
+                                    @if (ViewBag.WrongAccount != null)
+                                    {
+                                        <h6 style="color:red">@ViewBag.WrongAccount</h6>
+                                    }
                                     <input name="username"
                                            type="text"
                                            class="form-control validate"
@@ -47,6 +51,10 @@
                                 </div>
                                 <div class="form-group mt-3">
                                     <label for="password">Password</label>
+                                    @if (ViewBag.WrongPass != null)
+                                    {
+                                        <h6 style="color:red">@ViewBag.WrongPass</h6>
+                                    }
                                     <input name="password"
                                            type="password"
                                            class="form-control validate"

@@ -15,57 +15,60 @@
         </div>
     </div>
     <div class="tm-block-col tm-col-account-settings">
+        @foreach (var item in ViewBag.MyInfo)
+        {
         <div class="tm-bg-primary-dark tm-block tm-block-settings">
             <h2 class="tm-block-title">Thông tin của tôi</h2>
-            <form action="#" method="post" class="tm-signup-form row">
+            @if (Session["Sucsess"] != null)
+            {
+                <h6 style="color:red">@Session["Sucsess"]</h6>
+                Session["Sucsess"] = null;
+            }
+            <form action="/Shipper/ChangeInfo" method="post" class="tm-signup-form row">
                 <div class="form-group col-lg-6">
                     <label for="name">Tên</label>
                     <input id="name"
                            name="name"
                            type="text"
-                           class="form-control validate" required />
+                           class="form-control validate" required value="@item.FullName" />
                 </div>
                 <div class="form-group col-lg-6">
                     <label for="birthday">Ngày sinh</label>
                     <input id="birthday"
                            name="birthday"
                            type="date"
-                           class="form-control validate" required />
+                           class="form-control validate" value="@item.BirthDay" />
                 </div>
                 <div class="form-group col-lg-6">
                     <label for="email">Email</label>
                     <input id="email"
                            name="email"
                            type="email"
-                           class="form-control validate" required />
+                           class="form-control validate" required value="@item.Email" />
                 </div>
                 <div class="form-group col-lg-6">
                     <label for="phone">Số điện thoại</label>
                     <input id="phone"
                            name="phone"
                            type="tel"
-                           class="form-control validate" required />
+                           class="form-control validate" required value="@item.PhoneNumber" />
                 </div>
-                <div class="form-group col-lg-6">
+                <div class="form-group col-lg-6" hidden>
                     <label for="username">Tên đăng nhập</label>
-                    @if (ViewBag.ExistUsername != null)
-                    {
-                        <h6 style="color:red">@ViewBag.ExistUsername</h6>
-                    }
                     <input id="username"
                            name="username"
                            type="text"
-                           class="form-control validate" required />
+                           class="form-control validate" value="@item.UserName" />
                 </div>
-                <div class="form-group col-lg-6">
+                <div class="form-group col-lg-6" hidden>
                     <label for="password">Mật khẩu</label>
                     <input id="password"
                            name="password"
                            type="password"
-                           class="form-control validate"/>
+                           class="form-control validate" value="@item.PasswordHash" />
                 </div>
                 <div class="form-group col-lg-6"></div>
-                <div class="form-group col-lg-6">
+                <div class="form-group col-lg-6" hidden>
                     <label for="password">Nhập lại mật khẩu</label>
                     @if (ViewBag.PassNotMatch != null)
                     {
@@ -74,16 +77,20 @@
                     <input id="re_password"
                            name="re_password"
                            type="password"
-                           class="form-control validate"/>
+                           class="form-control validate" />
                 </div>
                 <div class="col-12">
                     <button type="submit"
                             class="btn btn-primary btn-block text-uppercase">
                         Sửa thông tin
                     </button>
+                    <a href="/Shipper/ChangePassword" class="btn btn-primary btn-block text-uppercase">
+                        Đổi mật khẩu
+                    </a>
                 </div>
             </form>
         </div>
+        }
     </div>
 </div>
 
