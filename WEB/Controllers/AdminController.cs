@@ -99,6 +99,12 @@ namespace WEB.Controllers
             ViewBag.Sucsess = "Thêm shipper thành công !";
             return View();
         }
+        public ActionResult DeleteShipper(int id)
+        {
+            string str = "update ApplicationUsers set IsShipper = 0 where ID = " + id.ToString();
+            var query = db.Database.ExecuteSqlCommand(str);
+            return RedirectToAction("Shipper", "Admin");
+        }
         #endregion
         public ActionResult Chart()
         {

@@ -70,9 +70,18 @@
                     </ul>
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link d-block" href="/Shipper/Login">
-                                Shipper Name, <b>Đăng xuất</b>
-                            </a>
+                            @if (Session["Name"] != null)
+                            {
+                                <a class="nav-link d-block" href="/Shipper/Logout">
+                                    @Session["name"] - Đăng xuất
+                                </a>
+                            }
+                            else
+                            {
+                                <a class="nav-link d-block" href="/Shipper/Logout">
+                                    Chưa đăng nhập
+                                </a>
+                            }
                         </li>
                     </ul>
                 </div>
