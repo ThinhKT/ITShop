@@ -1,0 +1,13 @@
+diff a/WEB/Web.config b/WEB/Web.config	(rejected hunks)
+@@ -57,11 +57,7 @@
+     </compilers>
+   </system.codedom>
+   <connectionStrings>
+-<<<<<<< HEAD
+     <add name="ShopEntities" connectionString="metadata=res://*/ShopModel.csdl|res://*/ShopModel.ssdl|res://*/ShopModel.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=DESKTOP-ME2BVCP\SQLEXPRESS;initial catalog=Shop;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework&quot;" providerName="System.Data.EntityClient" />
+-=======
+-    <add name="ShopEntities" connectionString="metadata=res://*/ShopModel.csdl|res://*/ShopModel.ssdl|res://*/ShopModel.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=DESKTOP-Q6195BH;initial catalog=Shop;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework&quot;" providerName="System.Data.EntityClient" />
+->>>>>>> 690eea9dbb60dcd4019b048447e10cad7481acf6
+   </connectionStrings>
+   <entityFramework>
+     <defaultConnectionFactory type="System.Data.Entity.Infrastructure.SqlConnectionFactory, EntityFramework" />
