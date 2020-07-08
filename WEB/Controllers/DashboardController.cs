@@ -26,7 +26,7 @@ namespace WEB.Controllers
         [HttpPost]
         public ActionResult Search(FormCollection fc)
         {
-            var str = fc.ToString();
+            var str = fc["input"].ToString();
             var query = from pd in db.Products
                         where pd.Name.Contains(str)
                         select pd;
