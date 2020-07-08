@@ -203,8 +203,14 @@ namespace WEB.Controllers
         }
         public ActionResult Paid(int id)
         {
-            string sql = "Update Orders set Status = 3 where ID = " + id.ToString();
+            //trừ tiền
+            //string moneypay = Session["MoneyPay"].ToString();
+            string sql = "Update ApplicationUsers set Money = Money - " + Session["MoneyPay"].ToString() + " where Id = " + Session["UserID"].ToString();
             var query = db.Database.ExecuteSqlCommand(sql);
+
+            //thay đổi trạng thái đơn hàng
+            string sql2 = "Update Orders set Status = 3 where ID = " + id.ToString();
+            var query2 = db.Database.ExecuteSqlCommand(sql2);
             return RedirectToAction("MyAccount", "ShoppingCart");
         }
         public ActionResult Pay(int id)
@@ -238,6 +244,7 @@ namespace WEB.Controllers
             int id = int.Parse(Session["UserID"].ToString());
             var query = from o in db.Orders
                         where o.CustomerId == id
+                        orderby o.ID descending
                         select o;
             ViewBag.Order = query.ToList();
 
