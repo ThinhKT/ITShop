@@ -1,0 +1,45 @@
+﻿
+@{
+    ViewBag.Title = "Shipper";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="tm-bg-primary-dark tm-block tm-block-taller tm-block-scroll">
+    <h2 class="tm-block-title">DANH SÁCH SHIPPER</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">MÃ</th>
+                <th scope="col">HỌ TÊN</th>
+                <th scope="col">TÊN TK</th>
+                <th scope="col">NGÀY SINH</th>
+                <th scope="col">EMAIL</th>
+                <th scope="col">SDT</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in ViewBag.UserList)
+            {
+                <tr>
+                    <th scope="row"><b>@item.Id</b></th>
+                    <td>
+                        @*<div class="tm-status-circle moving">*@
+                        @item.FullName
+                    </td>
+                    <td><b>@item.UserName</b></td>
+                    <td><b>@item.BirthDay.ToString()</b></td>
+                    <td>@item.Email</td>
+                    <td>@item.PhoneNumber</td>
+                    <td class="text-center">
+                        <a href="/Admin/DeleteShipper/@item.Id" class="tm-product-delete-link">
+                            <i class="far fa-trash-alt tm-product-delete-icon"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<a href="/Admin/AddShipper" class="btn btn-primary btn-block text-uppercase mb-3">
+    Thêm
+</a>

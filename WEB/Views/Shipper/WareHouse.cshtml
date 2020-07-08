@@ -1,0 +1,79 @@
+﻿
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Warehouse Page - Shipper Mode</title>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Roboto:400,700" />
+    <!-- https://fonts.google.com/specimen/Open+Sans -->
+    <link rel="stylesheet" href="/Assets/Admin/css/fontawesome.min.css" />
+    <!-- https://fontawesome.com/ -->
+    <link rel="stylesheet" href="/Assets/Admin/css/bootstrap.min.css" />
+    <!-- https://getbootstrap.com/ -->
+    <link rel="stylesheet" href="/Assets/Admin/css/templatemo-style.css">
+    <!--
+    Product Admin CSS Template
+    https://templatemo.com/tm-524-product-admin
+    -->
+</head>
+
+<body>
+    <div style="clear:both"></div>
+    <div class="tm-bg-primary-dark tm-block tm-block-taller tm-block-scroll">
+        <h4 style="color:white">Đơn hàng @ViewBag.OrderNo</h4>
+        <div class="tm-product-table-container">
+            <table class="table table-hover tm-table-small tm-product-table">
+                <thead>
+                    <tr>
+                        <th scope="col">Sản phẩm</th>
+                        <th scope="col">Hình sản phẩm</th>
+                        <th scope="col">Số lượng</th>
+                        <th scope="col">Đơn giá</th>
+                        <th scope="col">Trong kho còn</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in ViewBag.Product)
+                    {
+                        <tr>
+                            <td class="tm-product-name">@item.Name</td>
+                            <td><img src="@item.Image" style="width: 100px;height: 100px"></td>
+                            @for (int i = 0; i < ViewBag.Quantity.Count; i++)
+                            {
+                                if (item.ID == ViewBag.Quantity[i].ProductID)
+                                {
+                                    <td>@ViewBag.Quantity[i].Quantity</td>
+                                }
+                            }
+                            <td>@item.Price</td>
+                            <td>@item.Quantity</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <a href="/Shipper/Wrapper/@ViewBag.OrderNo" class="btn btn-primary btn-block text-uppercase mb-3">Xuất kho</a>
+        </div>
+    </div>
+
+
+    <footer class="tm-footer row tm-mt-small">
+        <div class="col-12 font-weight-light">
+            <p class="text-center text-white mb-0 px-4 small">
+                Copyright &copy; <b>2018</b> All rights reserved.
+
+                Design: <a rel="nofollow noopener" href="https://templatemo.com" class="tm-footer-link">Template Mo</a>
+            </p>
+        </div>
+    </footer>
+    <script src="/Assets/Admin/js/jquery-3.3.1.min.js"></script>
+    <!-- https://jquery.com/download/ -->
+    <script src="/Assets/Admin/js/bootstrap.min.js"></script>
+    <!-- https://getbootstrap.com/ -->
+</body>
+</html>

@@ -923,6 +923,8 @@
     <Content Include="UploadedFiles\images\xiaomi-redmi-note-8-pro-6gb-128gb-xanh-duong-docquyen-400x460.png" />
     <Content Include="UploadedFiles\images\xiaomi1.png" />
     <Content Include="UploadedFiles\images\xiaomi2.png" />
+    <Content Include="UploadedFiles\logo.png" />
+    <Content Include="UploadedFiles\shipper.jpg" />
     <Content Include="UploadedFiles\_thumbs\Files\20190611_101319.jpg" />
     <Content Include="UploadedFiles\_thumbs\Files\dell-vostro-3568-vti32072w-den-2-org.jpg" />
     <Content Include="UploadedFiles\_thumbs\Files\portrait_18255481810_o.jpg" />
@@ -1021,6 +1023,14 @@
     <Content Include="Views\Admin\EditProduct.cshtml" />
     <Content Include="Views\Admin\AddProductCate.cshtml" />
     <Content Include="Views\Admin\EditProductCate.cshtml" />
+    <Content Include="Views\ShoppingCart\Pay.cshtml" />
+    <Content Include="Views\Shipper\WareHouse.cshtml" />
+    <Content Include="Views\Admin\WareHouse.cshtml" />
+    <Content Include="Views\Admin\Shipper.cshtml" />
+    <Content Include="Views\Admin\AddShipper.cshtml" />
+    <Content Include="Views\Shared\_ShipperLayout.cshtml" />
+    <Content Include="Views\Shipper\MyAccount.cshtml" />
+    <Content Include="Views\Shipper\ChangePassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
