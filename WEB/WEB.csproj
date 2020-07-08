@@ -163,6 +163,7 @@
     <Compile Include="C__MigrationHistory.cs">
       <DependentUpon>ShopModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Dao\ProductDao.cs" />
     <Compile Include="Error.cs">
       <DependentUpon>ShopModel.tt</DependentUpon>
     </Compile>
@@ -284,6 +285,7 @@
     <Content Include="Assets\User\css\bootstrap.min.css" />
     <Content Include="Assets\User\css\elegant-icons.css" />
     <Content Include="Assets\User\css\font-awesome.min.css" />
+    <Content Include="Assets\User\css\jquery-ui.css" />
     <Content Include="Assets\User\css\jquery-ui.min.css" />
     <Content Include="Assets\User\css\nice-select.css" />
     <Content Include="Assets\User\css\owl.carousel.min.css" />
@@ -356,8 +358,11 @@
     <Content Include="Assets\User\img\product\product-7.jpg" />
     <Content Include="Assets\User\img\product\product-8.jpg" />
     <Content Include="Assets\User\img\product\product-9.jpg" />
+    <Content Include="Assets\User\js\BaseController.js" />
     <Content Include="Assets\User\js\bootstrap.min.js" />
+    <Content Include="Assets\User\js\jquery-1.12.4.js" />
     <Content Include="Assets\User\js\jquery-3.3.1.min.js" />
+    <Content Include="Assets\User\js\jquery-ui.js" />
     <Content Include="Assets\User\js\jquery-ui.min.js" />
     <Content Include="Assets\User\js\jquery.nice-select.min.js" />
     <Content Include="Assets\User\js\jquery.slicknav.js" />

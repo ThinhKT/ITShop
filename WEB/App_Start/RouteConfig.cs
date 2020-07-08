@@ -24,12 +24,18 @@ namespace WEB
                 url: "Shipper/{action}/{id}",
                 defaults: new { controller = "Shipper", action = "Login", id = UrlParameter.Optional }
             );
+            routes.MapRoute(
+                name: "Search",
+                url: "tim-kiem",
+                defaults: new { controller = "Dashboard", action = "Search", id = UrlParameter.Optional }
+            );
 
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Dashboard", action = "Dashboard", id = UrlParameter.Optional }
             );
+
         }
     }
 }

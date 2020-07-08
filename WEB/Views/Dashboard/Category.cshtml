@@ -2,8 +2,10 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h2>CATEGORY</h2>
+@foreach (var item in ViewBag.Name)
+{
+    <h2>Danh mục @item.Name</h2>
+}
 <div class="container">
     <div class="row featured__filter">
         @foreach (var item in ViewBag.Category)

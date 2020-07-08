@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WEB.Assets.User;
+using WEB.Dao;
 
 namespace WEB.Controllers
 {
@@ -25,7 +26,7 @@ namespace WEB.Controllers
         [HttpPost]
         public ActionResult Search(FormCollection fc)
         {
-            string str = fc["input"].ToString();
+            var str = fc["input"].ToString();
             var query = from pd in db.Products
                         where pd.Name.Contains(str)
                         select pd;
@@ -37,8 +38,22 @@ namespace WEB.Controllers
             var query = from pd in db.Products
                         where pd.CategoryID == id
                         select pd;
+            var categoryName = from cate in db.ProductCategories
+                               where cate.ID == id
+                               select cate;
             ViewBag.Category = query.ToList();
+            ViewBag.Name = categoryName.ToList();
             return View();
         }
+        public JsonResult ListName(string q)
+        {
+            var data = new ProductDao().ListName(q);
+            return Json(new
+            {
+                data = data,
+                status = true
+            }, JsonRequestBehavior.AllowGet);
+        }
+
     }
 }
