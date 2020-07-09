@@ -253,9 +253,9 @@ namespace WEB.Controllers
                 ViewBag.ExistUsername = "Tên đăng nhập đã tồn tại";
                 return View();
             }
-            string str = "INSERT INTO ApplicationUsers (FullName,BirthDay,Email,PhoneNumber,UserName,IsAdmin,IsShipper,Money,PasswordHash)" +
+            string str = "INSERT INTO ApplicationUsers (FullName,BirthDay,Email,PhoneNumber,UserName,IsAdmin,IsShipper,Money,PasswordHash,Money)" +
                 " VALUES (N'" + fc["name"] + "', " + fc["birthday"].ToString() + ", '" + fc["email"] + "', '" + fc["phone"] +
-                "', '" + fc["username"] + "', 0, 1, 0,'" + fc["password"].ToString() + "')";
+                "', '" + fc["username"] + "', 0, 1, 0,'" + fc["password"].ToString() + "', 0)";
             var query2 = db.Database.ExecuteSqlCommand(str);
             ViewBag.Sucsess = "Thêm shipper thành công !";
             return View();
@@ -365,6 +365,17 @@ namespace WEB.Controllers
         public ActionResult Income()
         {
             Session["View"] = "Income";
+            return View();
+        }
+
+        //lịch sử bán hàng
+        public ActionResult ShipHistory()
+        {
+            Session["View"] = "Other";
+            var query = from x in db.ShipHistories
+                        select x;
+            ViewBag.ShipHistory = query.ToList();
+
             return View();
         }
 

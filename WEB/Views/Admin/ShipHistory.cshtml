@@ -1,0 +1,52 @@
+﻿
+@{
+    ViewBag.Title = "ShipHistory";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="tm-bg-primary-dark tm-block tm-block-taller tm-block-scroll">
+    <h2 class="tm-block-title">Lịch sử bán hàng</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">MÃ ĐƠN HÀNG</th>
+                <th scope="col">THỜI GIAN</th>
+                <th scope="col">SỐ TIỀN</th>
+                <th scope="col">TRẠNG THÁI</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in ViewBag.ShipHistory)
+            {
+                if (item.ShipperID == 3)
+                {
+                    <tr>
+                        <th scope="row"><b>@item.OrderID</b><br /><a target="_blank" style="color:red" href="/Admin/OrderDetail/@item.OrderID">Chi_tiết</a></th>
+                        <td><b>@item.Date.ToString()</b></td>
+                        <td><b>@item.RecievedMoney</b></td>
+                        <td><b>Thanh toán online - đã nhận tiền</b></td>
+                    </tr>
+                }
+                else
+                {
+                    <tr>
+                        <th scope="row"><b>@item.OrderID</b><br /><a target="_blank" style="color:red" href="/Admin/OrderDetail/@item.OrderID">Chi_tiết</a></th>
+                        <td><b>@item.Date.ToString()</b></td>
+                        <td><b>@item.RecievedMoney</b></td>
+                        @if (item.Status == false)
+                        {
+                            <td>
+                                <b>Chưa gửi cho admin</b><br />
+                                <a style="color:red" href="/Shipper/Transfer/@item.OrderID">Shipper chưa chuyển tiền</a>
+                            </td>
+                        }
+                        else
+                        {
+                            <td><b>Đã nhận tiền từ shipper</b></td>
+                        }
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+

@@ -45,6 +45,7 @@
         <AssociationConnector Association="ShopModel.ApplicationUserGroups" />
         <AssociationConnector Association="ShopModel.PostTags" />
         <AssociationConnector Association="ShopModel.ProductTags" />
+        <EntityTypeShape EntityType="ShopModel.ShipHistory" Width="1.5" PointX="14.375" PointY="3.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

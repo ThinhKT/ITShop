@@ -1,0 +1,40 @@
+﻿
+@{
+    ViewBag.Title = "MyShip";
+    Layout = "~/Views/Shared/_ShipperLayout.cshtml";
+}
+<div class="tm-bg-primary-dark tm-block tm-block-taller tm-block-scroll">
+    <h2 class="tm-block-title">Lịch sử ship của tôi</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">MÃ ĐƠN HÀNG</th>
+                <th scope="col">THỜI GIAN</th>
+                <th scope="col">SỐ TIỀN ĐÃ NHẬN</th>
+                <th scope="col">GIAO CHO ADMIN</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in ViewBag.ShipHistory)
+            {
+            <tr>
+                <th scope="row"><b>@item.OrderID</b><br /><a target="_blank" style="color:red" href="/Shipper/OrderDetail/@item.OrderID">Chi_tiết</a></th>
+                <td><b>@item.Date.ToString()</b></td>
+                <td><b>@item.RecievedMoney</b></td>
+                @if (item.Status == false)
+                {
+                <td>
+                    <b>Chưa gửi cho admin</b><br/>
+                    <a style="color:red" href="/Shipper/Transfer/@item.OrderID">Gửi cho admin</a>
+                </td>
+                }
+                else
+                {
+                <td><b>Đã gửi cho admin</b></td>
+                }
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
