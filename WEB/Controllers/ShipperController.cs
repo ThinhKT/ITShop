@@ -50,6 +50,7 @@ namespace WEB.Controllers
             Session["ID"] = query2[0].Id;
             return RedirectToAction("Dashboard","Shipper");
         }
+
         public ActionResult Logout()
         {
             Session["Name"] = null;
@@ -133,6 +134,16 @@ namespace WEB.Controllers
         //checkout - hoàn thành giao hàng
         public ActionResult Checkout(int id)
         {
+            //shipper nhận tiền và thêm vào lịch sử ship
+            var order = (from x in db.Orders
+                         where x.ID == id
+                         select x).ToList()[0];
+            string strr = "INSERT INTO ShipHistory (ShipperID,OrderID,RecievedMoney,Status,Date) " +
+                "VALUES (" + Session["ID"].ToString() + ", " + id.ToString() + ", " 
+                + order.TotalPrice.ToString() + ", 0, GETDATE() )";
+            var queryy = db.Database.ExecuteSqlCommand(strr);
+
+            //thay đổi trạng thái đơn hàng
             string str = "update Orders set Status = 6 where ID = " + id.ToString();
             var query = db.Database.ExecuteSqlCommand(str);
             return RedirectToAction("Dashboard", "Shipper");
@@ -282,6 +293,43 @@ namespace WEB.Controllers
             var query2 = db.Database.ExecuteSqlCommand(str);
             ViewBag.Sucsess = "Đổi mật khẩu thành công !";
             return View();
+        }
+
+        //xem tiền trong tài khoản (có từ các đơn hàng đã ship)
+        public ActionResult MyShip()
+        {
+            Session["View"] = "MyShip";
+
+            int id = int.Parse(Session["ID"].ToString());
+            var query = from x in db.ShipHistories
+                        where x.ShipperID == id
+                        select x;
+            ViewBag.ShipHistory = query.ToList();
+
+            return View();
+        }
+
+        //chuyển khoản cho admin
+        public ActionResult Transfer(int id)
+        {
+            //lấy thông tin lịch sử ship
+            var query = (from x in db.ShipHistories
+                         where x.OrderID == id
+                         select x).ToList()[0];
+
+            //thêm tiền cho admin
+            string str2 = "update ApplicationUsers set Money = Money + " + query.RecievedMoney.ToString() + " where Id = 3";
+            var query2 = db.Database.ExecuteSqlCommand(str2);
+
+            //trừ tiền của shipper
+            string str3 = "update ApplicationUsers set Money = Money - " + query.RecievedMoney.ToString() + " where Id = " + Session["ID"].ToString();
+            var query3 = db.Database.ExecuteSqlCommand(str3);
+
+            //thay đổi trạng thái của lịch sử ship
+            string str4 = "update ShipHistory set Status = 1 where OrderID = " + id.ToString();
+            var query4 = db.Database.ExecuteSqlCommand(str4);
+
+            return RedirectToAction("MyShip","Shipper");
         }
     }
 }

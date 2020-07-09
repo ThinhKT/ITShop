@@ -7,7 +7,7 @@
 <h3>Danh sách đơn hàng</h3>
 <hr/>
 <div class="row">
-    <div class="col-lg-12">
+    <div class="col-lg-12 pre-scrollable">
         <div class="shoping__cart__table">
             <table>
                 <thead>
@@ -54,10 +54,14 @@
                                 if (item.PaymentMethod == "Thanh toán khi nhận hàng")
                                 {
                                     <a style="color:red" href="/ShoppingCart/Buy/@item.ID">Xác nhận mua</a>
+                                    <span>/</span>
+                                    <a style="color:red" href="/ShoppingCart/DeleteOrder/@item.ID">Hủy đơn hàng</a>
                                 }
                                 else
                                 {
                                     <a target="_blank" style="color:red" href="/ShoppingCart/Pay/@item.ID">Đi thanh toán</a>
+                                    <span>/</span>
+                                    <a style="color:red" href="/ShoppingCart/DeleteOrder/@item.ID">Hủy đơn hàng</a>
                                 }
                             }
                             else if (item.Status == 3)
@@ -91,46 +95,65 @@
     </div>
 </div>
 
+<hr/>
 <h3>Thông tin cá nhân</h3>
 <hr/>
-<div class="col-lg-8 col-md-6">
-    @foreach (var item in ViewBag.Info)
-    {
-        <div class="row">
-            <div class="col-lg-6">
-                <div class="checkout__input">
-                    <p>Họ tên</p>
-                    <input type="text" placeholder="Họ Tên*" value="@item.FullName">
+
+<div class="row">
+    <div class="col-lg-8 col-md-6">
+        @foreach (var item in ViewBag.Info)
+        {
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="checkout__input">
+                        <p>Họ tên</p>
+                        <input style="color:black" type="text" placeholder="Họ Tên*" value="@item.FullName" required>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="checkout__input">
+                        <p>Ngày sinh</p>
+                        <input style="color:black" type="text" placeholder="Ngày sinh*" value="@item.BirthDay.ToString()" required>
+                    </div>
                 </div>
             </div>
-            <div class="col-lg-6">
-                <div class="checkout__input">
-                    <p>Ngày sinh</p>
-                    <input type="text" placeholder="Ngày sinh*" value="@item.BirthDay.ToString()">
+            <div class="checkout__input">
+                <p>Địa chỉ</p>
+                <input style="color:black" type="text" placeholder="Số nhà, tên đường, quận, huyện,..." class="checkout__input__add" value="@item.Address" required>
+            </div>
+            <div class="checkout__input">
+                <p>Số dư tài khoản </p>
+                <input style="color:red" type="text" class="checkout__input__add" value="@item.Money VND" readonly>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="checkout__input">
+                        <p>Số điện thoại</p>
+                        <input style="color:black" type="text" placeholder="Số điện thoại*" value="@item.PhoneNumber" required>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="checkout__input">
+                        <p>Email</p>
+                        <input style="color:black" type="email" placeholder="Email*" value="@item.Email" required>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="checkout__input">
-            <p>Địa chỉ</p>
-            <input type="text" placeholder="Số nhà, tên đường, quận, huyện,..." class="checkout__input__add" value="@item.Address">
-        </div>
-        <div class="checkout__input">
-            <p>Số dư tài khoản </p>
-            <input type="text" class="checkout__input__add" value="@item.Money VND">
-        </div>
-        <div class="row">
-            <div class="col-lg-6">
-                <div class="checkout__input">
-                    <p>Số điện thoại</p>
-                    <input type="text" placeholder="Số điện thoại*" value="@item.PhoneNumber">
-                </div>
+        }
+    </div>
+    <div class="col-lg-4 col-md-6">
+        <div class="checkout__order">
+            <div>
+                <a href="#" style="color:white" class="primary-btn">Sửa thông tin</a>
             </div>
-            <div class="col-lg-6">
-                <div class="checkout__input">
-                    <p>Email</p>
-                    <input type="text" placeholder="Email*" value="@item.Email">
-                </div>
+            <hr/>
+            <div>
+                <a href="#" style="color:white" class="primary-btn">Đổi mật khẩu</a>
+            </div>
+            <hr/>
+            <div>
+                <a href="/ShoppingCart/GetMoney" style="color:white" class="primary-btn">Nạp tiền</a>
             </div>
         </div>
-    }
+    </div>
 </div>
