@@ -15,6 +15,8 @@ namespace WEB.Controllers
         {
             return View();
         }
+
+        //đăng nhập
         public ActionResult Login()
         {
             return View();
@@ -24,12 +26,15 @@ namespace WEB.Controllers
         {
             return RedirectToAction("Dashboard", "Admin");
         }
+
+        //trang chủ
         public ActionResult Dashboard()
         {
             Session["View"] = "Dashboard";
             return View();
         }
-        
+
+        #region product
         //Load Sản Phẩm và Danh Mục Sản Phẩm
         public ActionResult Product()
         {
@@ -94,7 +99,9 @@ namespace WEB.Controllers
             db.SaveChanges();
             return RedirectToAction("Product");
         }
+        #endregion
 
+        #region productCate
         //Thêm Danh Mục Sản Phẩm
         public ActionResult AddProductCate()
         {
@@ -144,8 +151,10 @@ namespace WEB.Controllers
             Session["View"] = "Other";
             return View();
         }
+        #endregion
 
-        //Load Ngưới Dùng
+        #region User 
+        //Load Người Dùng
         public ActionResult ListUser()
         {
             Session["View"] = "ListUser";
@@ -204,7 +213,10 @@ namespace WEB.Controllers
             Session["View"] = "Other";
             return View();
         }
+        #endregion
+
         #region Shipper
+        //xem danh sách Shipper
         public ActionResult Shipper()
         {
             Session["View"] = "Other";
@@ -214,6 +226,8 @@ namespace WEB.Controllers
             ViewBag.UserList = query.ToList();
             return View();
         }
+
+        //Thêm Shipper
         public ActionResult AddShipper()
         {
             Session["View"] = "Other";
@@ -239,13 +253,15 @@ namespace WEB.Controllers
                 ViewBag.ExistUsername = "Tên đăng nhập đã tồn tại";
                 return View();
             }
-            string str = "INSERT INTO ApplicationUsers (FullName,BirthDay,Email,PhoneNumber,UserName,IsAdmin,IsShipper,Money,PasswordHash)" +
+            string str = "INSERT INTO ApplicationUsers (FullName,BirthDay,Email,PhoneNumber,UserName,IsAdmin,IsShipper,Money,PasswordHash,Money)" +
                 " VALUES (N'" + fc["name"] + "', " + fc["birthday"].ToString() + ", '" + fc["email"] + "', '" + fc["phone"] +
-                "', '" + fc["username"] + "', 0, 1, 0,'" + fc["password"].ToString() + "')";
+                "', '" + fc["username"] + "', 0, 1, 0,'" + fc["password"].ToString() + "', 0)";
             var query2 = db.Database.ExecuteSqlCommand(str);
             ViewBag.Sucsess = "Thêm shipper thành công !";
             return View();
         }
+
+        //Xóa Shipper
         public ActionResult DeleteShipper(int id)
         {
             string str = "update ApplicationUsers set IsShipper = 0 where ID = " + id.ToString();
@@ -253,11 +269,9 @@ namespace WEB.Controllers
             return RedirectToAction("Shipper", "Admin");
         }
         #endregion
-        public ActionResult Chart()
-        {
-            Session["View"] = "Other";
-            return View();
-        }
+
+        #region order
+        //xem danh sách đơn hàng
         public ActionResult Order()
         {
             Session["View"] = "Order";
@@ -266,6 +280,33 @@ namespace WEB.Controllers
             ViewBag.OrderList = query.ToList();
             return View();
         }
+
+        //xem chi tiết đơn hàng
+        public ActionResult OrderDetail(int id)
+        {
+            var query = (from x in db.OrderDetails
+                         where x.OrderID == id
+                         select x).ToList();
+
+            string str = "select * from Products where ID = ";
+            for (int i = 0; i < query.Count - 1; i++)
+            {
+                str = str + query[i].ProductID.ToString() + " or ID = ";
+            }
+            str = str + query[query.Count - 1].ProductID.ToString();
+            var query2 = db.Products.SqlQuery(str);
+
+            var query3 = from x in db.Orders
+                         where x.ID == id
+                         select x;
+
+            ViewBag.Quantity = query;
+            ViewBag.Product = query2.ToList();
+            ViewBag.OrderNo = id;
+            ViewBag.Status = query3.ToList()[0];
+            return View();
+        }
+
         //xem kho
         public ActionResult WareHouse(int id)
         {
@@ -287,18 +328,23 @@ namespace WEB.Controllers
             ViewBag.AbleToSale = true;
             return View();
         }
+
+        //tiếp nhận, duyệt đơn hàng
         public ActionResult TakeOrder(int id)
         {
             string str = "update Orders set Status = 2 where ID = " + id.ToString();
             var query = db.Database.ExecuteSqlCommand(str);
             return RedirectToAction("Order","Admin");
         }
+
+        //kho không đủ, hủy đơn hàng
         public ActionResult RemoveOrder(int id)
         {
             string str = "update Orders set Status = -1 where ID = " + id.ToString();
             var query = db.Database.ExecuteSqlCommand(str);
             return RedirectToAction("Order", "Admin");
         }
+
         public ActionResult Pending(int id)
         {
             //không dùng
@@ -306,15 +352,36 @@ namespace WEB.Controllers
             var query = db.Database.ExecuteSqlCommand(str);
             return RedirectToAction("Order", "Admin");
         }
+
+        //cái này là admin cũng có thể tự đóng gói để giao cho shipper
         public ActionResult Checkout(int id)
         {
             string str = "update Orders set Status = 4 where ID = " + id.ToString();
             var query = db.Database.ExecuteSqlCommand(str);
             return RedirectToAction("Order", "Admin");
         }
+        #endregion
+
         public ActionResult Income()
         {
             Session["View"] = "Income";
+            return View();
+        }
+
+        //lịch sử bán hàng
+        public ActionResult ShipHistory()
+        {
+            Session["View"] = "Other";
+            var query = from x in db.ShipHistories
+                        select x;
+            ViewBag.ShipHistory = query.ToList();
+
+            return View();
+        }
+
+        public ActionResult Chart()
+        {
+            Session["View"] = "Other";
             return View();
         }
     }

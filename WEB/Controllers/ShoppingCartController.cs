@@ -15,6 +15,8 @@ namespace WEB.Controllers
         {
             return View();
         }
+
+        //thêm sản phẩm vào giỏ hàng
         public ActionResult AddToCart(int id)
         {
             if (Session["UserName"] == null)
@@ -38,6 +40,8 @@ namespace WEB.Controllers
                 return RedirectToAction("Dashboard", "Dashboard");
             }
         }
+
+        //xem giỏ hàng
         public ActionResult ViewCart()
         {
             if (Session["UserName"] == null)
@@ -79,6 +83,8 @@ namespace WEB.Controllers
                 return View();
             } 
         }
+
+        //xóa sản phẩm khỏi giỏ hàng
         public ActionResult RemoveProduct(int id)
         {
             for(int i = 0; i < TempCart.count; i++)
@@ -91,6 +97,8 @@ namespace WEB.Controllers
             }
             return View("ViewCart");
         }
+
+        //tạo đơn hàng
         public ActionResult MakeOrder()
         {
             int id = int.Parse(Session["UserID"].ToString());
@@ -195,18 +203,40 @@ namespace WEB.Controllers
             TempCart.ammount = new int[100];
             return RedirectToAction("ViewCart", "ShoppingCart");
         }
+
+        //xác nhận mua hàng
         public ActionResult Buy(int id)
         {
             string sql = "Update Orders set Status = 3 where ID = " + id.ToString();
             var query = db.Database.ExecuteSqlCommand(sql);
             return RedirectToAction("MyAccount", "ShoppingCart");
         }
+
+        //thanh toán online
         public ActionResult Paid(int id)
         {
-            string sql = "Update Orders set Status = 3 where ID = " + id.ToString();
+            //trừ tiền
+            //string moneypay = Session["MoneyPay"].ToString();
+            string sql = "Update ApplicationUsers set Money = Money - " + Session["MoneyPay"].ToString() + " where Id = " + Session["UserID"].ToString();
             var query = db.Database.ExecuteSqlCommand(sql);
+
+            //cộng tiền cho admin
+            string str2 = "update ApplicationUsers set Money = Money + " + Session["MoneyPay"].ToString() + " where Id = 3";
+            var query2 = db.Database.ExecuteSqlCommand(str2);
+
+            //thêm vào lịch sử ship
+            string strr = "INSERT INTO ShipHistory (ShipperID,OrderID,RecievedMoney,Status,Date) " +
+                "VALUES ( 3, " + id.ToString() + ", "
+                + Session["MoneyPay"].ToString() + ", 1, GETDATE() )";
+            var queryy = db.Database.ExecuteSqlCommand(strr);
+
+            //thay đổi trạng thái đơn hàng
+            string sql3 = "Update Orders set Status = 3 where ID = " + id.ToString();
+            var query3 = db.Database.ExecuteSqlCommand(sql3);
             return RedirectToAction("MyAccount", "ShoppingCart");
         }
+
+        //trang hiển thị thanh toán online
         public ActionResult Pay(int id)
         {
             var query = (from x in db.OrderDetails
@@ -233,11 +263,14 @@ namespace WEB.Controllers
             ViewBag.MyMoney = query3;
             return View();
         }
+
+        //xem danh sách đơn hàng và thông tin tài khoản
         public ActionResult MyAccount()
         {
             int id = int.Parse(Session["UserID"].ToString());
             var query = from o in db.Orders
                         where o.CustomerId == id
+                        orderby o.ID descending
                         select o;
             ViewBag.Order = query.ToList();
 
@@ -247,6 +280,8 @@ namespace WEB.Controllers
             ViewBag.Info = query2.ToList();
             return View();
         }
+
+        //xem chi tiết đơn hàng
         public ActionResult OrderDetail(int id)
         {
             var query = (from x in db.OrderDetails
@@ -267,11 +302,42 @@ namespace WEB.Controllers
 
             return View();
         }
+
+        //hủy đơn hàng
         public ActionResult DeleteOrder(int id)
         {
             string sql = "Update Orders set Status = 0 where ID = " + id.ToString();
             var query = db.Database.ExecuteSqlCommand(sql);
             return RedirectToAction("MyAccount","ShoppingCart");
+        }
+
+        //nạp tiền
+        public ActionResult GetMoney()
+        {
+            //lấy thông tin người dùng
+            int id = int.Parse(Session["UserID"].ToString());
+            var query = from us in db.ApplicationUsers
+                         where us.Id == id
+                         select us;
+            ViewBag.Info = query.ToList()[0];
+
+            return View();
+        }
+        [HttpPost]
+        public ActionResult GetMoney(FormCollection fc)
+        {
+            try
+            {
+                string str = "update ApplicationUsers set Money = Money + " + fc["money"].ToString() + " where Id = " + Session["UserID"].ToString();
+                var query = db.Database.ExecuteSqlCommand(str);
+                Session["Message"] = "Nạp thêm thành công !";
+                return RedirectToAction("GetMoney","ShoppingCart");
+            }
+            catch
+            {
+                Session["Message"] = "Nạp thêm thất bại !";
+                return RedirectToAction("GetMoney", "ShoppingCart");
+            }
         }
     }
 }

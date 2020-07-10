@@ -88,19 +88,19 @@
           <Property Name="Address" Type="nvarchar" MaxLength="256" />
           <Property Name="BirthDay" Type="date" />
           <Property Name="Email" Type="nvarchar(max)" />
-          <Property Name="EmailConfirmed" Type="bit" />
-          <Property Name="PasswordHash" Type="nvarchar(max)" />
-          <Property Name="SecurityStamp" Type="nvarchar(max)" />
           <Property Name="PhoneNumber" Type="nvarchar(max)" />
+          <Property Name="PasswordHash" Type="nvarchar(max)" />
+          <Property Name="UserName" Type="nvarchar(max)" />
+          <Property Name="IsAdmin" Type="bit" />
+          <Property Name="IsShipper" Type="bit" />
+          <Property Name="Money" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="EmailConfirmed" Type="bit" />
+          <Property Name="SecurityStamp" Type="nvarchar(max)" />
           <Property Name="PhoneNumberConfirmed" Type="bit" />
           <Property Name="TwoFactorEnabled" Type="bit" />
           <Property Name="LockoutEndDateUtc" Type="datetime" />
           <Property Name="LockoutEnabled" Type="bit" />
           <Property Name="AccessFailedCount" Type="int" />
-          <Property Name="UserName" Type="nvarchar(max)" />
-          <Property Name="IsAdmin" Type="bit" />
-          <Property Name="IsShipper" Type="bit" />
-          <Property Name="Money" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="ContactDetails">
           <Key>
@@ -313,6 +313,17 @@
           </Key>
           <Property Name="ProductID" Type="int" Nullable="false" />
           <Property Name="TagID" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ShipHistory">
+          <Key>
+            <PropertyRef Name="ShipperID" />
+            <PropertyRef Name="OrderID" />
+          </Key>
+          <Property Name="ShipperID" Type="int" Nullable="false" />
+          <Property Name="OrderID" Type="int" Nullable="false" />
+          <Property Name="RecievedMoney" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Status" Type="bit" Nullable="false" />
+          <Property Name="Date" Type="datetime" />
         </EntityType>
         <EntityType Name="Slides">
           <Key>
@@ -642,6 +653,7 @@
           <EntitySet Name="ProductCategories" EntityType="Self.ProductCategories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductTags" EntityType="Self.ProductTags" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ShipHistory" EntityType="Self.ShipHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Slides" EntityType="Self.Slides" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SupportOnlines" EntityType="Self.SupportOnlines" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
@@ -808,6 +820,7 @@
             <End Role="Product" EntitySet="Products" />
             <End Role="Tag" EntitySet="Tags" />
           </AssociationSet>
+          <EntitySet Name="ShipHistories" EntityType="ShopModel.ShipHistory" />
         </EntityContainer>
         <EntityType Name="C__MigrationHistory">
           <Key>
@@ -1323,6 +1336,17 @@
           <End Type="ShopModel.Product" Role="Product" Multiplicity="*" />
           <End Type="ShopModel.Tag" Role="Tag" Multiplicity="*" />
         </Association>
+        <EntityType Name="ShipHistory">
+          <Key>
+            <PropertyRef Name="ShipperID" />
+            <PropertyRef Name="OrderID" />
+          </Key>
+          <Property Name="ShipperID" Type="Int32" Nullable="false" />
+          <Property Name="OrderID" Type="Int32" Nullable="false" />
+          <Property Name="RecievedMoney" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Status" Type="Boolean" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1722,6 +1746,17 @@
               <ScalarProperty Name="ID" ColumnName="ProductID" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="ShipHistories">
+            <EntityTypeMapping TypeName="ShopModel.ShipHistory">
+              <MappingFragment StoreEntitySet="ShipHistory">
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="RecievedMoney" ColumnName="RecievedMoney" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="ShipperID" ColumnName="ShipperID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

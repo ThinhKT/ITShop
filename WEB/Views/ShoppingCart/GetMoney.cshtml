@@ -1,0 +1,35 @@
+﻿
+@{
+    ViewBag.Title = "GetMoney";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!-- Checkout Section Begin -->
+<section class="checkout spad">
+    <div class="container">
+        <div class="checkout__form">
+            <h4>@ViewBag.Info.FullName - Nạp tiền</h4>
+            <form action="/ShoppingCart/GetMoney" method="post">
+                @if (Session["Message"] != null)
+                {
+                    <h5 style="color:red">@Session["Message"]</h5>
+                    Session["Message"] = null;
+                }
+                <div class="row">
+                    <div class="col-lg-8 col-md-6">
+                        <div class="checkout__input">
+                            <b>Số dư hiện tại :</b>
+                            <input type="text" name="MyMoney" readonly value="@ViewBag.Info.Money">
+                        </div>
+                        <div class="checkout__input">
+                            <b>Số tiền muốn nạp thêm :</b>
+                            <input type="number" name="money" required>
+                        </div>
+                        <button type="submit" class="site-btn">Nạp</button>
+                        <a href="/ShoppingCart/MyAccount" class="site-btn">Về tài khoản</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+<!-- Checkout Section End -->

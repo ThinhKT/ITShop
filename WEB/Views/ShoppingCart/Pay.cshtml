@@ -35,7 +35,7 @@
                                 {
                                     if (item.ID == ViewBag.Quantity[i].ProductID)
                                     {
-                                        ViewBag.MoneyPay = (item.Price * ViewBag.Quantity[i].Quantity);
+                                        ViewBag.MoneyPay = ViewBag.MoneyPay + (item.Price * ViewBag.Quantity[i].Quantity);
                                         <td class="shoping__cart__quantity">
                                             <div class="quantity">
                                                 <div class="pro-qty">
@@ -77,10 +77,11 @@
         }
         else
         {
+            Session["MoneyPay"] = ViewBag.MoneyPay;
             <div class="checkout__input">
                 <p style="color:red">Còn lại : @(ViewBag.MyMoney - ViewBag.MoneyPay) VND</p>
             </div>
-            <a href="#" class="primary-btn">Thanh toán</a>
+            <a href="/ShoppingCart/Paid/@ViewBag.OrderNo" class="primary-btn">Thanh toán</a>
         }
     </div>
 

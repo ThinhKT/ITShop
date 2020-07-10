@@ -23,7 +23,7 @@
             @foreach (var item in ViewBag.OrderList)
             {
             <tr>
-                <th scope="row"><b>@item.ID</b></th>
+                <th scope="row"><b>@item.ID</b><br/><a target="_blank" style="color:red" href="/Admin/OrderDetail/@item.ID">Chi_tiết</a></th>
                 @if (item.Status == 1)
                 {
                     <td>
