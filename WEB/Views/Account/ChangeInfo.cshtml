@@ -1,0 +1,49 @@
+﻿
+@{
+    ViewBag.Title = "ChangeInfo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<hr/>
+<h4>@Session["UserName"] - Thay đổi thông tin</h4>
+<hr/>
+@if (Session["Message"] != null)
+{
+    <h4 style="color:red">@Session["Message"].ToString()</h4>
+    Session["Message"] = null;
+}
+<form action="/Account/ChangeInfo" method="post">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="checkout__input">
+                <p>Họ tên</p>
+                <input style="color:black" name="fullname" type="text" placeholder="Họ Tên*" value="@ViewBag.Info.FullName" required>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="checkout__input">
+                <p>Ngày sinh</p>
+                <input style="color:black" name="birthday" type="text" placeholder="Ngày sinh*" value="@ViewBag.Info.BirthDay.ToString()" required>
+            </div>
+        </div>
+    </div>
+    <div class="checkout__input">
+        <p>Địa chỉ</p>
+        <input style="color:black" type="text" name="address" placeholder="Số nhà, tên đường, quận, huyện,..." class="checkout__input__add" value="@ViewBag.Info.Address" required>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="checkout__input">
+                <p>Số điện thoại</p>
+                <input style="color:black" name="phone" type="text" placeholder="Số điện thoại*" value="@ViewBag.Info.PhoneNumber" required>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="checkout__input">
+                <p>Email</p>
+                <input style="color:black" name="email" type="email" placeholder="Email*" value="@ViewBag.Info.Email" required>
+            </div>
+        </div>
+    </div>
+    <button type="submit" class="primary-btn">Lưu thay đổi</button>
+</form>
+
