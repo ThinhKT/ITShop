@@ -52,5 +52,6 @@ namespace WEB
         public virtual DbSet<SystemConfig> SystemConfigs { get; set; }
         public virtual DbSet<Tag> Tags { get; set; }
         public virtual DbSet<VisitorStatistic> VisitorStatistics { get; set; }
+        public virtual DbSet<PurchaseHistory> PurchaseHistories { get; set; }
     }
 }
