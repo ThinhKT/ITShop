@@ -24,7 +24,33 @@ namespace WEB.Controllers
         [HttpPost]
         public ActionResult Login(FormCollection fc)
         {
+            string username = fc["username"].ToString();
+            string pass = fc["password"].ToString();
+            var query = (from x in db.ApplicationUsers
+                         where x.IsAdmin == true && x.UserName == username
+                         select x.PasswordHash).ToList();
+            if (query.Count == 0)
+            {
+                ViewBag.WrongAccount = "Tài khoản không tồn tại !";
+                return View();
+            }
+            if (query[0].ToString() != pass)
+            {
+                ViewBag.WrongPass = "Sai mật khẩu !";
+                return View();
+            }
+            var query2 = (from x in db.ApplicationUsers
+                          where x.IsAdmin == true && x.UserName == username
+                          select x).ToList();
+            Session["Name"] = query2[0].FullName;
+            Session["ID"] = query2[0].Id;
             return RedirectToAction("Dashboard", "Admin");
+        }
+        public ActionResult Logout()
+        {
+            Session["Name"] = null;
+            Session["ID"] = null;
+            return View("Login");
         }
 
         //trang chủ
