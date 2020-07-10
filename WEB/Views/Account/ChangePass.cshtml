@@ -1,0 +1,41 @@
+﻿
+@{
+    ViewBag.Title = "ChangePass";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<hr />
+<h4>@Session["UserName"] - Đổi mật khẩu</h4>
+<hr />
+@if (Session["Message"] != null)
+{
+    <h4 style="color:red">@Session["Message"].ToString()</h4>
+    Session["Message"] = null;
+}
+    <form action="/Account/ChangePass" method="post">
+        <div class="checkout__input">
+            <p>Mật khẩu cũ</p>
+            @if (ViewBag.WrongPass != null)
+            {
+                <h6 style="color:red">@ViewBag.WrongPass</h6>
+            }
+            <input style="color:black" type="password" name="password" class="checkout__input__add" required>
+        </div>
+        <div class="checkout__input">
+            <p>Mật khẩu mới</p>
+            @if (ViewBag.PassEqual != null)
+            {
+                <h6 style="color:red">@ViewBag.PassEqual</h6>
+            }
+            <input style="color:black" type="password" name="new_password" class="checkout__input__add" required>
+        </div>
+        <div class="checkout__input">
+            <p>Nhập lại mật khẩu</p>
+            @if (ViewBag.PassNotMatch != null)
+            {
+                <h6 style="color:red">@ViewBag.PassNotMatch</h6>
+            }
+            <input style="color:black" type="password" name="re_password" class="checkout__input__add" required>
+        </div>
+        <button type="submit" class="primary-btn">Lưu thay đổi</button>
+    </form>
+

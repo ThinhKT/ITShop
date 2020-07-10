@@ -165,7 +165,7 @@ namespace WEB.Controllers
         public JsonResult CheckValidUser(ApplicationUser model)
         {
             string result = "1";
-            var DataItem = db.ApplicationUsers.Where(x => x.Email == model.Email && x.PasswordHash == model.PasswordHash && x.LockoutEnabled == true).FirstOrDefault();
+            var DataItem = db.ApplicationUsers.Where(x => x.UserName == model.Email && x.PasswordHash == model.PasswordHash && x.LockoutEnabled == true).FirstOrDefault();
             if (DataItem != null)
             {
                 Session["UserID"] = DataItem.Id.ToString();
@@ -207,6 +207,74 @@ namespace WEB.Controllers
         }
         public ActionResult Detail()
         {
+            return View();
+        }
+
+        //phần xử lý sau khi đăng nhập
+
+        //thay đổi các thông tin của User
+        public ActionResult ChangeInfo()
+        {
+            int id = int.Parse(Session["UserID"].ToString());
+            var query = (from x in db.ApplicationUsers
+                         where x.Id == id
+                         select x).ToList()[0];
+            ViewBag.Info = query;
+
+            return View();
+        }
+        [HttpPost]
+        public ActionResult ChangeInfo(FormCollection fc)
+        {
+            try
+            {
+                string str = "update ApplicationUsers set Fullname = N'" + fc["fullname"] +
+                    "', BirthDay = CONVERT(date,'" + fc["birthday"].ToString() + "'), Address = N'" + fc["address"] +
+                    "' , PhoneNumber = '" + fc["phone"] + "', Email = '" + fc["email"] + "' where Id = " + Session["UserID"].ToString();
+                var query = db.Database.ExecuteSqlCommand(str);
+                Session["Message"] = "Thay đổi thông tin thành công";
+                return RedirectToAction("ChangeInfo", "Account");
+            }
+            catch
+            {
+                Session["Message"] = "Đã xảy ra lỗi, thay đổi thất bại !";
+                return RedirectToAction("ChangeInfo", "Account");
+            }
+        }
+
+        //đổi mật khẩu
+        public ActionResult ChangePass()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult ChangePass(FormCollection fc)
+        {
+            int id = int.Parse(Session["UserID"].ToString());
+            var query = (from x in db.ApplicationUsers
+                         where x.Id == id
+                         select x).ToList();
+            //kiểm tra mật khẩu cũ
+            if (query[0].PasswordHash != fc["password"])
+            {
+                ViewBag.WrongPass = "Nhập sai mật khẩu !";
+                return View();
+            }
+            //kiểm tra trùng lặp mật khẩu
+            if (query[0].PasswordHash == fc["new_password"])
+            {
+                ViewBag.PassEqual = "Mật khẩu mới trùng với mật khẩu cũ !";
+                return View();
+            }
+            //Kiểm tra mật khẩu nhập lại
+            if (fc["re_password"] != fc["new_password"])
+            {
+                ViewBag.PassNotMatch = "Mật khẩu nhập lại không trùng khớp !";
+                return View();
+            }
+            string str = "update ApplicationUsers set PasswordHash = '" + fc["new_password"].ToString() + "' where id = " + id.ToString();
+            var query2 = db.Database.ExecuteSqlCommand(str);
+            Session["Message"] = "Đổi mật khẩu thành công !";
             return View();
         }
     }
