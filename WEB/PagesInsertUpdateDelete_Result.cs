@@ -10,22 +10,19 @@
 namespace WEB
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Order
+    public partial class PagesInsertUpdateDelete_Result
     {
         public int ID { get; set; }
-        public string CustomerName { get; set; }
-        public string CustomerAddress { get; set; }
-        public string CustomerEmail { get; set; }
-        public string CustomerMobile { get; set; }
-        public string CustomerMessage { get; set; }
-        public string PaymentMethod { get; set; }
+        public string Name { get; set; }
+        public string Alias { get; set; }
+        public string Content { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public string CreatedBy { get; set; }
-        public string PaymentStatus { get; set; }
-        public int Status { get; set; }
-        public Nullable<int> CustomerId { get; set; }
-        public Nullable<decimal> TotalPrice { get; set; }
+        public Nullable<System.DateTime> UpdatedDate { get; set; }
+        public string UpdatedBy { get; set; }
+        public string MetaKeyword { get; set; }
+        public string MetaDescription { get; set; }
+        public bool Status { get; set; }
     }
 }

@@ -10,15 +10,11 @@
 namespace WEB
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class OrderDetail
+    public partial class TagsInsertUpdateDelete_Result
     {
-        public int OrderID { get; set; }
-        public int ProductID { get; set; }
-        public int Quantity { get; set; }
-        public decimal Price { get; set; }
-    
-        public virtual Product Product { get; set; }
+        public string ID { get; set; }
+        public string Name { get; set; }
+        public string Type { get; set; }
     }
 }

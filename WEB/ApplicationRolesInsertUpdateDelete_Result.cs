@@ -10,15 +10,12 @@
 namespace WEB
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class OrderDetail
+    public partial class ApplicationRolesInsertUpdateDelete_Result
     {
-        public int OrderID { get; set; }
-        public int ProductID { get; set; }
-        public int Quantity { get; set; }
-        public decimal Price { get; set; }
-    
-        public virtual Product Product { get; set; }
+        public string Id { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public string Discriminator { get; set; }
     }
 }

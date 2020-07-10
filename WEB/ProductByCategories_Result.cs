@@ -10,15 +10,10 @@
 namespace WEB
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class OrderDetail
+    public partial class ProductByCategories_Result
     {
-        public int OrderID { get; set; }
-        public int ProductID { get; set; }
-        public int Quantity { get; set; }
-        public decimal Price { get; set; }
-    
-        public virtual Product Product { get; set; }
+        public int CategoryID { get; set; }
+        public Nullable<int> SLSP { get; set; }
     }
 }
