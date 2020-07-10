@@ -353,11 +353,46 @@ namespace WEB.Controllers
             return RedirectToAction("Order", "Admin");
         }
 
-        //cái này là admin cũng có thể tự đóng gói để giao cho shipper
+        //admin đóng gói để giao cho shipper
         public ActionResult Checkout(int id)
         {
-            string str = "update Orders set Status = 4 where ID = " + id.ToString();
-            var query = db.Database.ExecuteSqlCommand(str);
+            var query = (from x in db.OrderDetails
+                         where x.OrderID == id
+                         select x).ToList();
+
+            string str = "select * from Products where ID = ";
+            for (int i = 0; i < query.Count - 1; i++)
+            {
+                str = str + query[i].ProductID.ToString() + " or ID = ";
+            }
+            str = str + query[query.Count - 1].ProductID.ToString();
+            var query2 = db.Products.SqlQuery(str);
+
+            ViewBag.Quantity = query;
+            ViewBag.Product = query2.ToList();
+            ViewBag.OrderNo = id;
+            return View();
+
+            //string str = "update Orders set Status = 4 where ID = " + id.ToString();
+            //var query = db.Database.ExecuteSqlCommand(str);
+            //return RedirectToAction("Order", "Admin");
+        }
+
+        //hàm xuất kho + đóng gói
+        public ActionResult Wrapper(int id)
+        {
+            var query = (from x in db.OrderDetails
+                         where x.OrderID == id
+                         select x).ToList();
+            string str;
+            foreach (var item in query)
+            {
+                str = "update Products set Quantity = Quantity - " +
+                    item.Quantity.ToString() + "where ID = " + item.ProductID.ToString();
+                var query2 = db.Database.ExecuteSqlCommand(str);
+            }
+            str = "update Orders set Status = 4 where ID = " + id.ToString();
+            var query3 = db.Database.ExecuteSqlCommand(str);
             return RedirectToAction("Order", "Admin");
         }
         #endregion
