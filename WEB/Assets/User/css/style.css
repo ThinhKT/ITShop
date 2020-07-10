@@ -787,6 +787,7 @@ ol {
 }
 
 .categories__slider.owl-carousel .owl-nav button {
+    hidden;
 	font-size: 18px;
 	color: #1c1c1c;
 	height: 70px;
@@ -964,7 +965,8 @@ ol {
 	top: -75px;
 }
 
-.latest-product__slider.owl-carousel .owl-nav button {
+/*.latest-product__slider.owl-carousel .owl-nav button {
+    hidden;
 	height: 30px;
 	width: 30px;
 	background: #F3F6FA;
@@ -974,7 +976,7 @@ ol {
 	margin-right: 10px;
 	line-height: 30px;
 	text-align: center;
-}
+}*/
 
 .latest-product__slider.owl-carousel .owl-nav button span {
 	font-weight: 700;
