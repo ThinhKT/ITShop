@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using WEB.Assets.User;
+<!DOCTYPE html>
 <html lang="zxx">
 
 <head>
@@ -64,7 +65,13 @@
                 }
             </div>
             <div class="header__top__right__auth">
-                <a href="/ShoppingCart/ViewCart"><i class="fa fa-shopping-bag"></i> <span>3</span></a>
+                <a href="/ShoppingCart/ViewCart">
+                    <i class="fa fa-shopping-bag"></i>
+                    @if (Session["UserName"] != null)
+                    {
+                    <span style="color:red;font-weight:bold">@(TempCart.count - 1 )</span>
+                    }
+                </a>
             </div>
         </div>
         <nav class="humberger__menu__nav mobile-menu">
@@ -141,7 +148,13 @@
 
                             </div>
                             <div class="header__top__right__auth">
-                                <a href="/ShoppingCart/ViewCart"><i class="fa fa-shopping-bag"></i> <span></span></a>
+                                <a href="/ShoppingCart/ViewCart">
+                                    <i class="fa fa-shopping-bag"></i>
+                                    @if (Session["UserName"] != null)
+                                    {
+                                        <span style="color:red;font-weight:bold">@(TempCart.count -1 )</span>
+                                    }
+                                </a>
                             </div>
                         </div>
                     </div>
