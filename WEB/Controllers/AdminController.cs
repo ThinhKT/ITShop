@@ -56,7 +56,12 @@ namespace WEB.Controllers
         //trang chủ
         public ActionResult Dashboard()
         {
+            //lấy các đơn hàng không bị hủy để show ra
+            string str = "select * from Orders where Status = 4 or Status = 5 or Status = 6 order by ID DESC";
+            var query = db.Orders.SqlQuery(str);
+            ViewBag.OrderList = query.ToList();
             Session["View"] = "Dashboard";
+
             return View();
         }
 
@@ -234,6 +239,29 @@ namespace WEB.Controllers
             db.SaveChanges();
             return RedirectToAction("ListUser");
         }
+
+        public ActionResult Purchase()
+        {
+            Session["View"] = "Other";
+            var query = from x in db.PurchaseHistories
+                        orderby x.ID descending
+                        select x;
+            ViewBag.PurchaseInfo = query.ToList();
+            return View();
+        }
+        public ActionResult DoPurchase(int id)
+        {
+            var query = (from x in db.PurchaseHistories
+                        where x.ID == id
+                        select x).ToList()[0];
+            string str = "update ApplicationUsers set Money = Money + " + query.Value.ToString() + " where Id = " + query.UserID.ToString();
+            var query2 = db.Database.ExecuteSqlCommand(str);
+            string str2 = "update PurchaseHistory set Status = 1 where ID = " + query.ID.ToString();
+            var query3 = db.Database.ExecuteSqlCommand(str2);
+
+            return RedirectToAction("Purchase","Admin");
+        }
+
         public ActionResult Manager()
         {
             Session["View"] = "Other";
