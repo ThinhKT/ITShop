@@ -45,12 +45,12 @@ namespace WEB
         public virtual DbSet<Post> Posts { get; set; }
         public virtual DbSet<ProductCategory> ProductCategories { get; set; }
         public virtual DbSet<Product> Products { get; set; }
+        public virtual DbSet<ShipHistory> ShipHistories { get; set; }
         public virtual DbSet<Slide> Slides { get; set; }
         public virtual DbSet<SupportOnline> SupportOnlines { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<SystemConfig> SystemConfigs { get; set; }
         public virtual DbSet<Tag> Tags { get; set; }
         public virtual DbSet<VisitorStatistic> VisitorStatistics { get; set; }
-        public virtual DbSet<ShipHistory> ShipHistories { get; set; }
     }
 }

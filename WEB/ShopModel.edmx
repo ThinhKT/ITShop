@@ -758,6 +758,7 @@
           <EntitySet Name="Posts" EntityType="ShopModel.Post" />
           <EntitySet Name="ProductCategories" EntityType="ShopModel.ProductCategory" />
           <EntitySet Name="Products" EntityType="ShopModel.Product" />
+          <EntitySet Name="ShipHistories" EntityType="ShopModel.ShipHistory" />
           <EntitySet Name="Slides" EntityType="ShopModel.Slide" />
           <EntitySet Name="SupportOnlines" EntityType="ShopModel.SupportOnline" />
           <EntitySet Name="sysdiagrams" EntityType="ShopModel.sysdiagram" />
@@ -820,7 +821,6 @@
             <End Role="Product" EntitySet="Products" />
             <End Role="Tag" EntitySet="Tags" />
           </AssociationSet>
-          <EntitySet Name="ShipHistories" EntityType="ShopModel.ShipHistory" />
         </EntityContainer>
         <EntityType Name="C__MigrationHistory">
           <Key>
@@ -897,24 +897,24 @@
           <Property Name="Address" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="BirthDay" Type="DateTime" Precision="0" />
           <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="EmailConfirmed" Type="Boolean" />
-          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="UserName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsAdmin" Type="Boolean" />
+          <Property Name="IsShipper" Type="Boolean" />
+          <Property Name="Money" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="EmailConfirmed" Type="Boolean" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="PhoneNumberConfirmed" Type="Boolean" />
           <Property Name="TwoFactorEnabled" Type="Boolean" />
           <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
           <Property Name="LockoutEnabled" Type="Boolean" />
           <Property Name="AccessFailedCount" Type="Int32" />
-          <Property Name="UserName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="ApplicationUserClaims" Relationship="ShopModel.FK_ApplicationUserClaims_ApplicationUsers" FromRole="ApplicationUser" ToRole="ApplicationUserClaim" />
           <NavigationProperty Name="ApplicationUserLogins" Relationship="ShopModel.FK_ApplicationUserLogins_ApplicationUsers" FromRole="ApplicationUser" ToRole="ApplicationUserLogin" />
           <NavigationProperty Name="ApplicationUserRoles" Relationship="ShopModel.FK_ApplicationUserRoles_ApplicationUsers" FromRole="ApplicationUser" ToRole="ApplicationUserRole" />
           <NavigationProperty Name="Orders" Relationship="ShopModel.FK_Orders_ApplicationUsers" FromRole="ApplicationUser" ToRole="Order" />
           <NavigationProperty Name="ApplicationGroups" Relationship="ShopModel.ApplicationUserGroups" FromRole="ApplicationUser" ToRole="ApplicationGroup" />
-          <Property Name="IsAdmin" Type="Boolean" />
-          <Property Name="IsShipper" Type="Boolean" />
-          <Property Name="Money" Type="Decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="ContactDetail">
           <Key>
@@ -1124,6 +1124,17 @@
           <NavigationProperty Name="OrderDetails" Relationship="ShopModel.FK_dbo_OrderDetails_dbo_Products_ProductID" FromRole="Product" ToRole="OrderDetail" />
           <NavigationProperty Name="ProductCategory" Relationship="ShopModel.FK_dbo_Products_dbo_ProductCategories_CategoryID" FromRole="Product" ToRole="ProductCategory" />
           <NavigationProperty Name="Tags1" Relationship="ShopModel.ProductTags" FromRole="Product" ToRole="Tag" />
+        </EntityType>
+        <EntityType Name="ShipHistory">
+          <Key>
+            <PropertyRef Name="ShipperID" />
+            <PropertyRef Name="OrderID" />
+          </Key>
+          <Property Name="ShipperID" Type="Int32" Nullable="false" />
+          <Property Name="OrderID" Type="Int32" Nullable="false" />
+          <Property Name="RecievedMoney" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Status" Type="Boolean" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="Slide">
           <Key>
@@ -1336,17 +1347,6 @@
           <End Type="ShopModel.Product" Role="Product" Multiplicity="*" />
           <End Type="ShopModel.Tag" Role="Tag" Multiplicity="*" />
         </Association>
-        <EntityType Name="ShipHistory">
-          <Key>
-            <PropertyRef Name="ShipperID" />
-            <PropertyRef Name="OrderID" />
-          </Key>
-          <Property Name="ShipperID" Type="Int32" Nullable="false" />
-          <Property Name="OrderID" Type="Int32" Nullable="false" />
-          <Property Name="RecievedMoney" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="Status" Type="Boolean" Nullable="false" />
-          <Property Name="Date" Type="DateTime" Precision="3" />
-        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1416,19 +1416,19 @@
           <EntitySetMapping Name="ApplicationUsers">
             <EntityTypeMapping TypeName="ShopModel.ApplicationUser">
               <MappingFragment StoreEntitySet="ApplicationUsers">
-                <ScalarProperty Name="Money" ColumnName="Money" />
-                <ScalarProperty Name="IsShipper" ColumnName="IsShipper" />
-                <ScalarProperty Name="IsAdmin" ColumnName="IsAdmin" />
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
                 <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
                 <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
                 <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
                 <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
-                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
                 <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
-                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
                 <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="Money" ColumnName="Money" />
+                <ScalarProperty Name="IsShipper" ColumnName="IsShipper" />
+                <ScalarProperty Name="IsAdmin" ColumnName="IsAdmin" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="BirthDay" ColumnName="BirthDay" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
@@ -1645,6 +1645,17 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="ShipHistories">
+            <EntityTypeMapping TypeName="ShopModel.ShipHistory">
+              <MappingFragment StoreEntitySet="ShipHistory">
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="RecievedMoney" ColumnName="RecievedMoney" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="ShipperID" ColumnName="ShipperID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Slides">
             <EntityTypeMapping TypeName="ShopModel.Slide">
               <MappingFragment StoreEntitySet="Slides">
@@ -1746,17 +1757,6 @@
               <ScalarProperty Name="ID" ColumnName="ProductID" />
             </EndProperty>
           </AssociationSetMapping>
-          <EntitySetMapping Name="ShipHistories">
-            <EntityTypeMapping TypeName="ShopModel.ShipHistory">
-              <MappingFragment StoreEntitySet="ShipHistory">
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="RecievedMoney" ColumnName="RecievedMoney" />
-                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
-                <ScalarProperty Name="ShipperID" ColumnName="ShipperID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
