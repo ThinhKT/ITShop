@@ -137,6 +137,18 @@ namespace WEB.Controllers
         [HttpPost]
         public ActionResult MakeOrder(FormCollection fc)
         {
+            int id = int.Parse(Session["UserID"].ToString());
+            string pass = fc["re_password"].ToString();
+            //kiểm tra mật khẩu nhập lại
+            var queryyy = (from x in db.ApplicationUsers
+                          where x.Id == id && x.PasswordHash == pass
+                          select x).ToList();
+            if(queryyy.Count == 0)
+            {
+                Session["Message"] = "Nhập sai mật khẩu !";
+                return RedirectToAction("MakeOrder", "ShoppingCart");
+            }
+
             //lấy danh sách sản phẩm có trong giỏ hàng
             string sql = "Select * from Products where ID = ";
             for (int i = 0; i < TempCart.count; i++)
@@ -201,6 +213,7 @@ namespace WEB.Controllers
             TempCart.count = 1;
             TempCart.ID = new int[100];
             TempCart.ammount = new int[100];
+            Session["Message"] = "Tạo đơn hàng thành công";
             return RedirectToAction("ViewCart", "ShoppingCart");
         }
 
