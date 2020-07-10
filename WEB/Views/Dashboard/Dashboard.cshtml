@@ -2,7 +2,49 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="hero__item set-bg" data-setbg="/UploadedFiles/images/vostro.jpg" style="background-color:gray">
+
+<div style="clear:both"></div>
+<!-- Categories Section Begin -->
+<section class="categories">
+    <div class="container">
+        <div class="row">
+            <div class="latest-product__slider owl-carousel">
+                @*<div class="col-lg-3">
+            <div class="categories__item set-bg" data-setbg="img/categories/cat-5.jpg">
+                <h5><a href="#">drink fruits</a></h5>
+            </div>
+        </div>*@
+                <div class="hero__item set-bg " data-setbg="/UploadedFiles/images/vostro.jpg" style="background-color:gray">
+                    <div class="hero__text">
+                        <span>DELL VOSTRO 3568 i3</span>
+                        <h2>Laptop DELL<br />Dòng Vostro phổ thông</h2>
+                        <p>Hiện đang có giảm giá ở shop</p>
+                        <a href="/Product/Detail/10" class="primary-btn">MUA NGAY</a>
+                    </div>
+                </div>
+                <div class="hero__item set-bg " data-setbg="/UploadedFiles/images/vostro.jpg" style="background-color:gray">
+                    <div class="hero__text">
+                        <span>DELL VOSTRO 3568 i3</span>
+                        <h2>Laptop DELL<br />Dòng Vostro phổ thông</h2>
+                        <p>Hiện đang có giảm giá ở shop</p>
+                        <a href="/Product/Detail/10" class="primary-btn">MUA NGAY</a>
+                    </div>
+                </div>
+                <div class="hero__item set-bg " data-setbg="/UploadedFiles/images/vostro.jpg" style="background-color:gray">
+                    <div class="hero__text">
+                        <span>DELL VOSTRO 3568 i3</span>
+                        <h2>Laptop DELL<br />Dòng Vostro phổ thông</h2>
+                        <p>Hiện đang có giảm giá ở shop</p>
+                        <a href="/Product/Detail/10" class="primary-btn">MUA NGAY</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Categories Section End -->
+
+<div hidden class="hero__item set-bg" data-setbg="/UploadedFiles/images/vostro.jpg" style="background-color:gray">
     <div class="hero__text">
         <span>DELL VOSTRO 3568 i3</span>
         <h2>Laptop DELL<br />Dòng Vostro phổ thông</h2>
@@ -13,7 +55,7 @@
 
 <div class="container">
     <div class="row featured__filter">
-        @foreach(var item in ViewBag.ProductLoad)
+        @foreach (var item in ViewBag.ProductLoad)
         {
         <div class="col-lg-3 col-md-4 col-sm-6 mix oranges fresh-meat">
             <div class="featured__item">
@@ -29,7 +71,6 @@
                     <h5>@item.Price VND</h5>
                 </div>
             </div>
-        </div>
         }
     </div>
 </div>
