@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
@@ -24,13 +26,44 @@ namespace WEB.Controllers
         [HttpPost]
         public ActionResult Login(FormCollection fc)
         {
+            string username = fc["username"].ToString();
+            string pass = fc["password"].ToString();
+            var query = (from x in db.ApplicationUsers
+                         where x.IsAdmin == true && x.UserName == username
+                         select x.PasswordHash).ToList();
+            if (query.Count == 0)
+            {
+                ViewBag.WrongAccount = "Tài khoản không tồn tại !";
+                return View();
+            }
+            if (query[0].ToString() != pass)
+            {
+                ViewBag.WrongPass = "Sai mật khẩu !";
+                return View();
+            }
+            var query2 = (from x in db.ApplicationUsers
+                          where x.IsAdmin == true && x.UserName == username
+                          select x).ToList();
+            Session["Name"] = query2[0].FullName;
+            Session["ID"] = query2[0].Id;
             return RedirectToAction("Dashboard", "Admin");
+        }
+        public ActionResult Logout()
+        {
+            Session["Name"] = null;
+            Session["ID"] = null;
+            return View("Login");
         }
 
         //trang chủ
         public ActionResult Dashboard()
         {
+            //lấy các đơn hàng không bị hủy để show ra
+            string str = "select * from Orders where Status = 4 or Status = 5 or Status = 6 order by ID DESC";
+            var query = db.Orders.SqlQuery(str);
+            ViewBag.OrderList = query.ToList();
             Session["View"] = "Dashboard";
+
             return View();
         }
 
@@ -69,6 +102,7 @@ namespace WEB.Controllers
         //Sửa Sản Phẩm
         public ActionResult EditProduct(int? Id)
         {
+            ViewBag.ProductNo = Id.ToString();
             Session["View"] = "Product";
             var query = from pd in db.ProductCategories
                         select pd.ID;
@@ -120,6 +154,7 @@ namespace WEB.Controllers
         //Sửa Danh Mục Sản Phẩm
         public ActionResult EditProductCate(int? Id)
         {
+            ViewBag.CateNo = Id.ToString();
             Session["View"] = "Product";
             ProductCategory productCategory = new ProductCategory();
             productCategory = db.ProductCategories.Find(Id);
@@ -159,6 +194,7 @@ namespace WEB.Controllers
         {
             Session["View"] = "ListUser";
             var query = from pd in db.ApplicationUsers
+                        where pd.IsAdmin == false && pd.IsShipper == false
                         select pd;
             ViewBag.UserList = query.ToList();
             return View();
@@ -208,6 +244,29 @@ namespace WEB.Controllers
             db.SaveChanges();
             return RedirectToAction("ListUser");
         }
+
+        public ActionResult Purchase()
+        {
+            Session["View"] = "Other";
+            var query = from x in db.PurchaseHistories
+                        orderby x.ID descending
+                        select x;
+            ViewBag.PurchaseInfo = query.ToList();
+            return View();
+        }
+        public ActionResult DoPurchase(int id)
+        {
+            var query = (from x in db.PurchaseHistories
+                        where x.ID == id
+                        select x).ToList()[0];
+            string str = "update ApplicationUsers set Money = Money + " + query.Value.ToString() + " where Id = " + query.UserID.ToString();
+            var query2 = db.Database.ExecuteSqlCommand(str);
+            string str2 = "update PurchaseHistory set Status = 1 where ID = " + query.ID.ToString();
+            var query3 = db.Database.ExecuteSqlCommand(str2);
+
+            return RedirectToAction("Purchase","Admin");
+        }
+
         public ActionResult Manager()
         {
             Session["View"] = "Other";
@@ -353,11 +412,46 @@ namespace WEB.Controllers
             return RedirectToAction("Order", "Admin");
         }
 
-        //cái này là admin cũng có thể tự đóng gói để giao cho shipper
+        //admin đóng gói để giao cho shipper
         public ActionResult Checkout(int id)
         {
-            string str = "update Orders set Status = 4 where ID = " + id.ToString();
-            var query = db.Database.ExecuteSqlCommand(str);
+            var query = (from x in db.OrderDetails
+                         where x.OrderID == id
+                         select x).ToList();
+
+            string str = "select * from Products where ID = ";
+            for (int i = 0; i < query.Count - 1; i++)
+            {
+                str = str + query[i].ProductID.ToString() + " or ID = ";
+            }
+            str = str + query[query.Count - 1].ProductID.ToString();
+            var query2 = db.Products.SqlQuery(str);
+
+            ViewBag.Quantity = query;
+            ViewBag.Product = query2.ToList();
+            ViewBag.OrderNo = id;
+            return View();
+
+            //string str = "update Orders set Status = 4 where ID = " + id.ToString();
+            //var query = db.Database.ExecuteSqlCommand(str);
+            //return RedirectToAction("Order", "Admin");
+        }
+
+        //hàm xuất kho + đóng gói
+        public ActionResult Wrapper(int id)
+        {
+            var query = (from x in db.OrderDetails
+                         where x.OrderID == id
+                         select x).ToList();
+            string str;
+            foreach (var item in query)
+            {
+                str = "update Products set Quantity = Quantity - " +
+                    item.Quantity.ToString() + "where ID = " + item.ProductID.ToString();
+                var query2 = db.Database.ExecuteSqlCommand(str);
+            }
+            str = "update Orders set Status = 4 where ID = " + id.ToString();
+            var query3 = db.Database.ExecuteSqlCommand(str);
             return RedirectToAction("Order", "Admin");
         }
         #endregion
@@ -379,10 +473,163 @@ namespace WEB.Controllers
             return View();
         }
 
+        //Doanh thu theo tháng
         public ActionResult Chart()
         {
-            Session["View"] = "Other";
+            Session["View"] = "Income";
+            //string str = "select DATEPART(month, CreatedDate) as Thang,sum(TotalPrice) as TongTien from Orders where Status = 6 group by DATEPART(month, CreatedDate)";
+            var query = (from x in db.Orders
+                         where x.Status == 6
+                         orderby x.CreatedDate
+                         group x by x.CreatedDate.Value.Month into Thang
+                         select new
+                         {
+                             TongTien = Thang.Sum(x => x.TotalPrice),
+                             Thang = "Tháng " + Thang.Key.ToString()
+                         }).ToList();
+            ViewBag.DataPoints = JsonConvert.SerializeObject(query.ToList(), _jsonSetting);
             return View();
         }
+
+        //Cơ cấu số đơn đặt hàng sản phẩm theo mỗi hãng
+        public ActionResult ChartCoCauSP()
+        {
+            Session["View"] = "Income";
+            var query = (from x in db.ProductCategories
+                         orderby x.DisplayOrder descending
+                         select x).ToList();
+            ViewBag.DataPoints = JsonConvert.SerializeObject(query.ToList(), _jsonSetting);
+            return View();
+        }
+        //Số sản phẩm của mỗi loại theo từng tháng
+        public ActionResult ChartSpTheoLoai()
+        {
+            Session["View"] = "Income";
+
+            int Tong = db.Products.Sum(x => x.Quantity);
+
+            var query = from x in db.Products
+                        select x.CategoryID;
+
+            var query10 = (from x in db.Products
+                          where x.CategoryID == 10
+                          orderby x.CreatedDate
+                          group x by x.CreatedDate.Value.Month into product
+                          select new
+                          {
+                              CateId = 10,
+                              Thang = product.Key,
+                              PhanTram = 100*(float)product.Sum(x => x.Quantity) / (float)Tong
+                          }).ToList();
+
+            ViewBag.DataPoints10 = JsonConvert.SerializeObject(query10.ToList(), _jsonSetting);
+
+            var query11 = (from x in db.Products
+                           where x.CategoryID == 11
+                           orderby x.CreatedDate
+                           group x by x.CreatedDate.Value.Month into product
+                           select new
+                           {
+                               CateId = 11,
+                               Thang = product.Key,
+                               PhanTram = 100 * (float)product.Sum(x => x.Quantity) / (float)Tong
+                           }).ToList();
+
+            ViewBag.DataPoints11 = JsonConvert.SerializeObject(query11.ToList(), _jsonSetting);
+
+            var query12 = (from x in db.Products
+                           where x.CategoryID == 12
+                           orderby x.CreatedDate
+                           group x by x.CreatedDate.Value.Month into product
+                           select new
+                           {
+                               CateId = 12,
+                               Thang = product.Key,
+                               PhanTram = 100 * (float)product.Sum(x => x.Quantity) / (float)Tong
+                           }).ToList();
+
+            ViewBag.DataPoints12 = JsonConvert.SerializeObject(query12.ToList(), _jsonSetting);
+
+            var query13 = (from x in db.Products
+                           where x.CategoryID == 13
+                           orderby x.CreatedDate
+                           group x by x.CreatedDate.Value.Month into product
+                           select new
+                           {
+                               CateId = 13,
+                               Thang = product.Key,
+                               PhanTram = 100 * (float)product.Sum(x => x.Quantity) / (float)Tong
+                           }).ToList();
+
+            ViewBag.DataPoints13 = JsonConvert.SerializeObject(query13.ToList(), _jsonSetting);
+
+            var query14 = (from x in db.Products
+                           where x.CategoryID == 14
+                           orderby x.CreatedDate
+                           group x by x.CreatedDate.Value.Month into product
+                           select new
+                           {
+                               CateId = 14,
+                               Thang = product.Key,
+                               PhanTram = 100 * (float)product.Sum(x => x.Quantity) / (float)Tong
+                           }).ToList();
+
+            ViewBag.DataPoints14 = JsonConvert.SerializeObject(query14.ToList(), _jsonSetting);
+
+            var query15 = (from x in db.Products
+                           where x.CategoryID == 15
+                           orderby x.CreatedDate
+                           group x by x.CreatedDate.Value.Month into product
+                           select new
+                           {
+                               CateId = 15,
+                               Thang = product.Key,
+                               PhanTram = 100 * (float)product.Sum(x => x.Quantity) / (float)Tong
+                           }).ToList();
+
+            ViewBag.DataPoints15 = JsonConvert.SerializeObject(query15.ToList(), _jsonSetting);
+
+            var query16 = (from x in db.Products
+                           where x.CategoryID == 16
+                           orderby x.CreatedDate
+                           group x by x.CreatedDate.Value.Month into product
+                           select new
+                           {
+                               CateId = 16,
+                               Thang = product.Key,
+                               PhanTram = 100 * (float)product.Sum(x => x.Quantity) / (float)Tong
+                           }).ToList();
+
+            ViewBag.DataPoints16 = JsonConvert.SerializeObject(query16.ToList(), _jsonSetting);
+
+            var query17 = (from x in db.Products
+                           where x.CategoryID == 17
+                           orderby x.CreatedDate
+                           group x by x.CreatedDate.Value.Month into product
+                           select new
+                           {
+                               CateId = 17,
+                               Thang = product.Key,
+                               PhanTram = 100 * (float)product.Sum(x => x.Quantity) / (float)Tong
+                           }).ToList();
+
+            ViewBag.DataPoints17 = JsonConvert.SerializeObject(query17.ToList(), _jsonSetting);
+
+            var query18 = (from x in db.Products
+                           where x.CategoryID == 18
+                           orderby x.CreatedDate
+                           group x by x.CreatedDate.Value.Month into product
+                           select new
+                           {
+                               CateId = 18,
+                               Thang = product.Key,
+                               PhanTram = 100 * (float)product.Sum(x => x.Quantity) / (float)Tong
+                           }).ToList();
+
+            ViewBag.DataPoints18 = JsonConvert.SerializeObject(query18.ToList(), _jsonSetting);
+
+            return View();
+        }
+        JsonSerializerSettings _jsonSetting = new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Ignore };
     }
 }

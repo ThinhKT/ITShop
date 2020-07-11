@@ -12,7 +12,7 @@
                     <div class="product__details__pic">
                         <div class="product__details__pic__item">
                             <img class="product__details__pic__item--large"
-                                 src="@item.Image" alt="@item.Image.ToString()">
+                                 src="@item.MoreImages" alt="@item.MoreImages.ToString()">
                         </div>
                         <div class="product__details__pic__slider owl-carousel">
                             <img data-imgbigurl="img/product/details/product-details-2.jpg"
@@ -40,6 +40,7 @@
                         <div class="product__details__price">@item.Price VND</div>
                         <h4>Miễn phí vận chuyển</h4>
                         @Html.Raw(@item.Content)
+                        
                         <div class="product__details__quantity">
                             <div class="quantity">
                                 <div class="pro-qty">

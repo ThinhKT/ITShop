@@ -1,0 +1,63 @@
+﻿
+@{
+    ViewBag.Title = "Purchase";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="tm-bg-primary-dark tm-block tm-block-taller tm-block-scroll">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Ngày</th>
+                <th>Ngân hàng</th>
+                <th>Mệnh giá</th>
+                <th>Số tài khoản</th>
+                <th>Mã xác nhận</th>
+                <th>Trạng thái</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (ViewBag.PurchaseInfo != null)
+            {
+                foreach (var item in ViewBag.PurchaseInfo)
+                {
+                    <tr>
+                        <td class="shoping__cart__table">
+                            @item.ID
+                        </td>
+                        <td class="shoping__cart__table">
+                            @item.Date.ToString()
+                        </td>
+                        <td class="shoping__cart__table">
+                            @item.Bank
+                        </td>
+                        <td class="shoping__cart__table">
+                            @item.Value VND
+                        </td>
+                        <td class="shoping__cart__table">
+                            @item.BankCode
+                        </td>
+                        <td class="shoping__cart__table">
+                            @item.Code
+                        </td>
+                        @if (item.Status == false)
+                        {
+                            <td class="shoping__cart__table">
+                                Chưa xử lý<br/>
+                                <a href="/Admin/DoPurchase/@item.ID" style="color:red">Xác nhận chuyển khoản</a>
+                            </td>
+                        }
+                        else
+                        {
+                            <td class="shoping__cart__table">
+                                Đã chuyển khoản
+                            </td>
+                        }
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+

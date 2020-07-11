@@ -1,8 +1,7 @@
-﻿
-@{
+﻿@{
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-<h1>Các biểu đồ</h1>
+@*<h1>Các biểu đồ</h1>
 <div class="row tm-content-row">
     <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
         <div class="tm-bg-primary-dark tm-block">
@@ -24,4 +23,44 @@
             </div>
         </div>
     </div>
-</div>
+</div>*@
+<div id="chartContainer1" style="height: 370px; max-width: 920px; margin: 50px auto;"></div>
+<script src="~/Assets/Admin/js/canvasjs.min.js"></script>
+<script>
+
+    var result = @Html.Raw(ViewBag.DataPoints);
+    dataPoints = [];
+    for (var i = 0; i < result.length; i++) {
+        dataPoints.push({ label: result[i].Thang, y: result[i].TongTien });
+    }
+
+    window.onload = function () {
+        var chart = new CanvasJS.Chart("chartContainer1", {
+            animationEnabled: true,
+            theme: "dark2", // "light1", "light2", "dark1", "dark2"
+            title: {
+                text: "Tổng doanh thu theo tháng"
+            },
+            subtitles: [{
+                text: "Đơn vị VND",
+                fontSize: 16
+            }],
+            axisY: {
+                prefix: " VND",
+                scaleBreaks: {
+                    customBreaks: [{
+                        startValue: 7000000,
+                        endValue: 9000000
+                    }]
+                }
+            },
+            data: [{
+                type: "column",
+                yValueFormatString: "VND#,##0.00",
+                dataPoints: dataPoints,
+            }]
+        });
+        chart.render();
+
+    }
+</script>

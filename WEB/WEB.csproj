@@ -15,7 +15,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>WEB</RootNamespace>
     <AssemblyName>WEB</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
@@ -27,6 +27,7 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <TypeScriptToolsVersion>3.1</TypeScriptToolsVersion>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -59,6 +60,7 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
@@ -66,8 +68,7 @@
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.Helpers.dll</HintPath>
     </Reference>
@@ -86,9 +87,7 @@
     <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
-    <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
-    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Abstractions" />
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Xml" />
@@ -109,6 +108,7 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="System.Xml.Linq" />
     <Reference Include="WebGrease">
       <Private>True</Private>
       <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
@@ -127,7 +127,16 @@
     <Compile Include="ApplicationGroup.cs">
       <DependentUpon>ShopModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ApplicationGroupsInsertUpdateDelete_Result.cs">
+      <DependentUpon>ShopModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="ApplicationRole.cs">
+      <DependentUpon>ShopModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ApplicationRoleGroupsInsertUpdateDelete_Result.cs">
+      <DependentUpon>ShopModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ApplicationRolesInsertUpdateDelete_Result.cs">
       <DependentUpon>ShopModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ApplicationUser.cs">
@@ -136,10 +145,25 @@
     <Compile Include="ApplicationUserClaim.cs">
       <DependentUpon>ShopModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ApplicationUserClaimsInsertUpdateDelete_Result.cs">
+      <DependentUpon>ShopModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ApplicationUserGroupsInsertUpdateDelete_Result.cs">
+      <DependentUpon>ShopModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="ApplicationUserLogin.cs">
       <DependentUpon>ShopModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ApplicationUserLoginsInsertUpdateDelete_Result.cs">
+      <DependentUpon>ShopModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="ApplicationUserRole.cs">
+      <DependentUpon>ShopModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ApplicationUserRolesInsertUpdateDelete_Result.cs">
+      <DependentUpon>ShopModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ApplicationUsersInsertUpdateDelete_Result.cs">
       <DependentUpon>ShopModel.tt</DependentUpon>
     </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -147,6 +171,9 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Assets\User\TempCart.cs" />
     <Compile Include="ContactDetail.cs">
+      <DependentUpon>ShopModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ContactDetailsInsertUpdateDelete_Result.cs">
       <DependentUpon>ShopModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AboutController.cs" />
@@ -167,14 +194,29 @@
     <Compile Include="Error.cs">
       <DependentUpon>ShopModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ErrorsInsertUpdateDelete_Result.cs">
+      <DependentUpon>ShopModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Feedback.cs">
+      <DependentUpon>ShopModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FeedbacksInsertUpdateDelete_Result.cs">
       <DependentUpon>ShopModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Footer.cs">
       <DependentUpon>ShopModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="FootersInsertUpdateDelete_Result.cs">
+      <DependentUpon>ShopModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetRevenueStatistic_Result.cs">
+      <DependentUpon>ShopModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="HotProduct_Result.cs">
+      <DependentUpon>ShopModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Menu.cs">
       <DependentUpon>ShopModel.tt</DependentUpon>
@@ -188,7 +230,16 @@
     <Compile Include="OrderDetail.cs">
       <DependentUpon>ShopModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="OrderDetailsInsertUpdateDelete_Result.cs">
+      <DependentUpon>ShopModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OrdersInsertUpdateDelete_Result.cs">
+      <DependentUpon>ShopModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Page.cs">
+      <DependentUpon>ShopModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PagesInsertUpdateDelete_Result.cs">
       <DependentUpon>ShopModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Post.cs">
@@ -197,13 +248,40 @@
     <Compile Include="PostCategory.cs">
       <DependentUpon>ShopModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="PostsInsertUpdateDelete_Result.cs">
+      <DependentUpon>ShopModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PostTagsInsertUpdateDelete_Result.cs">
+      <DependentUpon>ShopModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Product.cs">
+      <DependentUpon>ShopModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProductByCategories_Result.cs">
+      <DependentUpon>ShopModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProductByCreater_Result.cs">
+      <DependentUpon>ShopModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProductByName_Result.cs">
+      <DependentUpon>ShopModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProductCategoriesInsertUpdateDelete_Result.cs">
       <DependentUpon>ShopModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ProductCategory.cs">
       <DependentUpon>ShopModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ProductCategoryByCreater_Result.cs">
+      <DependentUpon>ShopModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProductTagsInsertUpdateDelete_Result.cs">
+      <DependentUpon>ShopModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PurchaseHistory.cs">
+      <DependentUpon>ShopModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="ShipHistory.cs">
       <DependentUpon>ShopModel.tt</DependentUpon>
     </Compile>
@@ -225,7 +303,19 @@
     <Compile Include="Slide.cs">
       <DependentUpon>ShopModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="SlidesInsertUpdateDelete_Result.cs">
+      <DependentUpon>ShopModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>ShopModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_helpdiagrams_Result.cs">
+      <DependentUpon>ShopModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="SupportOnline.cs">
+      <DependentUpon>ShopModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SupportOnlinesInsertUpdateDelete_Result.cs">
       <DependentUpon>ShopModel.tt</DependentUpon>
     </Compile>
     <Compile Include="sysdiagram.cs">
@@ -234,10 +324,19 @@
     <Compile Include="SystemConfig.cs">
       <DependentUpon>ShopModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="SystemConfigsInsertUpdateDelete_Result.cs">
+      <DependentUpon>ShopModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Tag.cs">
       <DependentUpon>ShopModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="TagsInsertUpdateDelete_Result.cs">
+      <DependentUpon>ShopModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="VisitorStatistic.cs">
+      <DependentUpon>ShopModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VisitorStatisticsInsertUpdateDelete_Result.cs">
       <DependentUpon>ShopModel.tt</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -278,8 +377,11 @@
     <Content Include="Assets\Admin\jquery-ui-datepicker\jquery-ui.theme.min.css" />
     <Content Include="Assets\Admin\jquery-ui-datepicker\LICENSE.txt" />
     <Content Include="Assets\Admin\js\bootstrap.min.js" />
+    <Content Include="Assets\Admin\js\canvasjs.min.js" />
+    <Content Include="Assets\Admin\js\canvasjs.react.js" />
     <Content Include="Assets\Admin\js\Chart.min.js" />
     <Content Include="Assets\Admin\js\jquery-3.3.1.min.js" />
+    <Content Include="Assets\Admin\js\jquery.canvasjs.min.js" />
     <Content Include="Assets\Admin\js\moment.min.js" />
     <Content Include="Assets\Admin\js\tooplate-scripts.js" />
     <Content Include="Assets\Admin\webfonts\fa-brands-400.svg" />
@@ -422,6 +524,8 @@
     <Content Include="Assets\Admin\webfonts\fa-solid-900.ttf" />
     <Content Include="Assets\Admin\webfonts\fa-solid-900.woff" />
     <Content Include="Assets\Admin\webfonts\fa-solid-900.woff2" />
+    <Content Include="EmailTemplate\Text.cshtml" />
+    <Content Include="EmailTemplate\capmatkhau.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -824,7 +928,6 @@
     <Content Include="UploadedFiles\images\asus-x507ma-n4000-4gb-256gb-win10-br318t-xam-5-org.jpg" />
     <Content Include="UploadedFiles\images\Asus1.png" />
     <Content Include="UploadedFiles\images\dell-inspiron-3476-8j61p11-1-org.jpg" />
-    <Content Include="UploadedFiles\images\dell-inspiron-3476-8j61p11-2-org.jpg" />
     <Content Include="UploadedFiles\images\dell-inspiron-3476-8j61p11-3-org.jpg" />
     <Content Include="UploadedFiles\images\dell-inspiron-3476-8j61p11-5-org.jpg" />
     <Content Include="UploadedFiles\images\dell-inspiron-3576-p63f002n76b-mau-den-1-5-org.jpg" />
@@ -1045,6 +1148,15 @@
     <Content Include="Views\Shipper\MyShip.cshtml" />
     <Content Include="Views\Admin\ShipHistory.cshtml" />
     <Content Include="Views\ShoppingCart\GetMoney.cshtml" />
+    <Content Include="Views\Admin\ChartSpTheoLoai.cshtml" />
+    <Content Include="Views\Admin\ChartCoCauSP.cshtml" />
+    <Content Include="Views\Account\Confirm.cshtml" />
+    <Content Include="Views\Account\GetPassword.cshtml" />
+    <Content Include="Views\Admin\Checkout.cshtml" />
+    <Content Include="Views\Account\ChangeInfo.cshtml" />
+    <Content Include="Views\Account\ChangePass.cshtml" />
+    <Content Include="Views\ShoppingCart\RequestInfo.cshtml" />
+    <Content Include="Views\Admin\Purchase.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
