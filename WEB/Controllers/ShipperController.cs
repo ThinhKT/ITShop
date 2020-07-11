@@ -245,8 +245,8 @@ namespace WEB.Controllers
             try
             {
                 string str = "update ApplicationUsers set FullName = N'" + fc["name"] +"', " +
-                    "PhoneNumber = '" + fc["phone"]+ "' " +
-                    ", Email = '" + fc["email"] + "' where Id = " + Session["ID"].ToString();
+                    "PhoneNumber = '" + fc["phone"] + "', BirthDay = CONVERT(date,'" + fc["birthday"].ToString() +
+                    "'), Email = '" + fc["email"] + "' where Id = " + Session["ID"].ToString();
                 var query = db.Database.ExecuteSqlCommand(str);
                 Session["Sucsess"] = "Sửa thông tin thành công";
                 return RedirectToAction("MyAccount", "Shipper");

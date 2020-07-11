@@ -1,37 +1,608 @@
-﻿
-@{
+﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <!-- Checkout Section Begin -->
-<section class="checkout spad">
-    <div class="container">
-        <div class="checkout__form">
-            <h4>Đăng nhập</h4>
-            <form action="/Account/Login" method="post">
-                @if (ViewBag.Err != null)
-                {
-                    <h2 style="color:red">*@ViewBag.Err</h2>
-                }
-                <div class="row">
-                    @if (Session["NonLogin"] != null)
-                    {
-                        <h2 style="color:red">*@Session["NonLogin"]</h2>
-                        Session["NonLogin"] = null;
-                    }
-                    <div class="col-lg-8 col-md-6">
-                        <div class="checkout__input">
-                            <p>User Name<span>*</span></p>
-                            <input type="text" name="UserName" required>
-                        </div>
-                        <div class="checkout__input">
-                            <p>Password<span>*</span></p>
-                            <input type="password" name="Password" required>
-                        </div>
-                        <button type="submit" class="site-btn">Đăng nhập</button>
+<script src="https://code.jquery.com/jquery-1.10.2.js"
+        integrity="sha256-it5nQKHTz+34HijZJQkpNBIHsjpV8b6QzMJs9tmOBSo="
+        crossorigin="anonymous"></script>
+@*<script src="~/Scripts/bootstrap.min.js"></script>
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />*@
+@*<link href="~/Content/StyleSheet1.css" rel="stylesheet" />*@
+
+
+
+<div class="container" style="margin-left:25%">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-6 alert">
+            @if (Session["NonLogin"] != null)
+            {
+                <h4 style="color:red">@Session["NonLogin"].ToString()</h4>
+                Session["NonLogin"] = null;
+            }
+            <h3 class="text-center">Đăng nhập</h3>
+            <br />
+            <form id="loginForm">
+                <div id="msg"><ul style="color:red;"> Tên đăng nhập hoặc mật khẩu không đúng</ul></div>
+                <div class="">
+                    <div class="checkout__input">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                        <input class="form-control" type="email" name="Email" id="LogEmail" placeholder="UserName" />
                     </div>
                 </div>
+
+                <div class="">
+                    <div class="checkout__input">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                        <input class="form-control" type="password" name="PasswordHash" id="LogPasswordHash" placeholder="Mật khẩu" />
+                    </div>
+                </div>
+
             </form>
+            <div class="form-group text-center">
+                <button class="btn btn-info form-control" style="background-color:#7fad39" type="submit" onclick="Login()"><i class="glyphicon glyphicon-log-in"></i> Đăng nhập</button>
+            </div>
+            <div class="form-group">
+                <a style="float:left;cursor:pointer;color:blue" onclick="ForgotPassword()">Quên mật khẩu ? </a><a style="float:right;cursor:pointer;color:blue" onclick="SignUp()"> Đăng ký</a>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+@*Design Modal With Registration form*@
+
+<div class="modal fade" id="ShowModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="text-center">Đăng ký</h4>
+                <a href="#" class="close" data-dismiss="modal">&times;</a>
+                <div id="message2">
+                    <div class="alert alert-danger">
+                        <span class="glyphicon glyphicon-remove"></span><strong>Lỗi thông tin đăng ký của bạn không hợp lệ</strong>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div id="message1">
+                    <div class="alert alert-success">
+                        <span class="glyphicon glyphicon-ok"></span><strong>
+                            Thành công!<br />
+                            Vui lòng kiểm tra xác nhận email để hoàn thành việc đăng ký!<br />
+
+                        </strong>
+                    </div>
+                </div>
+                <form id="Registration">
+                    <div class="form-group" id="1">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                            <input class="form-control" type="text" name="UserName" pattern="[a-zA-Z0-9]{1,15}" id="UserName" placeholder="Tên đăng nhập" required />
+                        </div>
+                    </div>
+                    @*Trường này không được bỏ trống*@
+                    <div id="msgUserName1">
+                        <div class="alert alert-danger">
+                            <span class="glyphicon glyphicon-remove"></span><strong>Tên người dùng không được bỏ trống.</strong>
+                        </div>
+                    </div>
+                    @*Tên người dùng chỉ bao gồm chữ cái, số và không quá 15 kí tự*@
+                    <div id="msgUserName2">
+                        <div class="alert alert-danger">
+                            <span class="glyphicon glyphicon-remove"></span><strong>Tên người dùng chỉ bao gồm chữ cái,chữ số và không quá 15 kí tự</strong>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                            @{
+                                string str = @"[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$";
+                            }
+
+                            <input class="form-control" type="email" name="Email" id="Email" placeholder="Email" pattern=@str required />
+                        </div>
+
+                    </div>
+                    @*Trường này không được bỏ trống*@
+                    <div id="msgEmail1">
+                        <div class="alert alert-danger">
+                            <span class="glyphicon glyphicon-remove"></span><strong>Email không được bỏ trống</strong>
+                        </div>
+                    </div>
+                    @*Tên email phải bao gồm ...*@
+                    <div id="msgEmail2">
+                        <div class="alert alert-danger">
+                            <span class="glyphicon glyphicon-remove"></span><strong>Vui lòng nhập địa chỉ email hợp lệ</strong>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                            <input class="form-control" type="password" name="PasswordHash" id="PasswordHash" placeholder="Mật khẩu" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required />
+                        </div>
+
+                    </div>
+                    @*//Trường này không được bỏ trống*@
+                    <div id="msgPasswordHash1">
+                        <div class="alert alert-danger">
+                            <span class="glyphicon glyphicon-remove"></span><strong>Mật khẩu không được bỏ trống</strong>
+                        </div>
+                    </div>
+                    @*MK phải bao gồm....*@
+                    <div id="msgPasswordHash2">
+                        <div class="alert alert-danger">
+                            <span class="glyphicon glyphicon-remove"></span><strong>Mật khẩu phải có ít nhất 8 ký tự, có ít nhất một chữ hoa (uppercase), và có ít nhất một chữ thường (lowercase). </strong>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                            <input class="form-control" type="password" name="PasswordHash" id="RePasswordHash" placeholder="Nhập lại mật khẩu" required />
+                        </div>
+                    </div>
+                    @* Hai mật khẩu không khớp*@
+                    <div id="msgRePasswordHash1">
+                        <div class="alert alert-danger">
+                            <span class="glyphicon glyphicon-remove"></span><strong>Nhập lại mật khẩu không được bỏ trống</strong>
+                        </div>
+                    </div>
+                    <div id="msgRePasswordHash2">
+                        <div class="alert alert-danger">
+                            <span class="glyphicon glyphicon-remove"></span><strong>Mật khẩu và nhập lại mật khẩu phải khớp nhau</strong>
+                        </div>
+                    </div>
+                    @* //Số điện thoại, địa chỉ, email*@
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
+                            <input class="form-control" type="tel" name="PhoneNumber" id="PhoneNumber" placeholder="Số điện thoại" required />
+                        </div>
+                    </div>
+                    @*Sdt phải chỉ bao gồm 10 chữ số*@
+                    <div id="msgPhoneNumber">
+                        <div class="alert alert-danger">
+                            <span class="glyphicon glyphicon-remove"></span><strong>Số điện thoại không được bỏ trống</strong>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+                            <input class="form-control" type="text" name="Address" id="Address" placeholder="Nhập địa chỉ" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class=""><i class="glyphicon glyphicon-calendar">&nbsp;Ngày sinh: </i></span>
+                            <input class="form-control" type="date" name="BirthDay" id="BirthDay" placeholder="Ngày sinh" />
+                        </div>
+
+                    </div>
+                </form>
+                <div class="form-group text-center">
+                    <button class="btn btn-info form-control" style="background-color:#7fad39" type="submit" onclick="SaveForm()"><i class="glyphicon glyphicon-registration-mark"></i> Đăng ký</button>
+                </div>
+
+            </div>
         </div>
     </div>
-</section>
+</div>
+@*Design Modal With ForgotPassword form*@
+
+<div class="modal fade" id="XacNhanMail">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4>Quên mật khẩu</h4>
+                <a href="#" class="close" data-dismiss="modal">&times;</a>
+                
+            </div>
+            <div class="modal-body">
+                <div id="message4">
+                    <div class="alert alert-danger">
+                        <span class="glyphicon glyphicon-remove"></span><strong>Lỗi vui lòng kiểm tra lại email của bạn.</strong>
+                    </div>
+                </div>
+                <div id="message5">
+                    <div class="alert alert-danger">
+                        <span class="glyphicon glyphicon-remove"></span><strong>Lỗi email này chưa được đăng ký vui lòng kiểm tra lại email của bạn.</strong>
+                    </div>
+                </div>
+                <div id="thongbao" style="color:blue">
+                    Vui lòng nhập email bạn đã đăng ký trước đó để được tạo lại mật khẩu.
+                </div>
+                <div id="message3">
+                    <div class="alert alert-success">
+                        <span class="glyphicon glyphicon-ok"></span><strong>
+                            Thư đã được gửi.<br />
+                            Vui lòng kiểm tra xác nhận email để tiếp tục.<br />
+                        </strong>
+                    </div>
+                </div>
+                <form id="Registration1">
+                    @*<div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                    <input class="form-control" type="text" name="UserName" id="UserName" placeholder="Tên đăng nhập" />
+                </div>
+            </div>*@
+
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                            <input class="form-control" type="email" name="Email1" id="Email1" placeholder="Email" />
+                        </div>
+                    </div>
+
+                    @*<div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                    <input class="form-control" type="password" name="PasswordHash" id="PasswordHash" placeholder="Mật khẩu" />
+                </div>
+            </div>*@
+                    @*<div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                    <input class="form-control" type="password" name="PasswordHash" id="RePasswordHash" placeholder="Nhập lại mật khẩu" />
+                </div>
+            </div>*@
+                </form>
+                <div class="form-group">
+                    <button class="btn btn-info form-control" style="background-color:#7fad39" type="submit" onclick="XacNhanMail()"><i class="glyphicon glyphicon-registration-mark"></i> Gửi yêu cầu</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+@*Form tạo lại password*@
+<div class="modal fade" id="TaoMatKhau">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a href="#" class="close" data-dismiss="modal">&times;</a>
+                <h4>Tạo lại mật khẩu</h4>
+                <br />
+                <br />
+                <div style="color:blue">
+                    Vui lòng nhập mật khẩu mới của bạn để tạo lại mật khẩu.
+                </div>
+                @*<div style="color:blue">
+                        Vui lòng nhập email bạn đã đăng ký trước đó để được tạo lại mật khẩu.
+                    </div>
+                    <div id="message3">
+                        <div class="alert alert-success">
+                            <span class="glyphicon glyphicon-ok"></span><strong>
+                                Thư đã được gửi.<br />
+                                Vui lòng kiểm tra xác nhận email để tiếp tục.<br />
+                            </strong>
+                        </div>
+                    </div>
+                    <div id="message4">
+                        <div class="alert alert-danger">
+                            <span class="glyphicon glyphicon-remove"></span><strong>Lỗi vui lòng kiểm tra lại email của bạn.</strong>
+                        </div>
+                    </div>*@
+            </div>
+            <div class="modal-body">
+                <form id="Registration2">
+                    @*<div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                <input class="form-control" type="text" name="UserName" id="UserName" placeholder="Tên đăng nhập" />
+                            </div>
+                        </div>*@
+                    @*<div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                                <input class="form-control" type="email" name="Email1" id="Email1" placeholder="Email" />
+                            </div>
+                        </div>*@
+
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                            <input class="form-control" type="password" name="PasswordHash" id="PasswordHash" placeholder="Nhập mật khẩu mới" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                            <input class="form-control" type="password" name="PasswordHash" id="RePasswordHash" placeholder="Nhập lại mật khẩu mới" />
+                        </div>
+                    </div>
+                </form>
+                <div class="form-group">
+                    <button class="btn btn-info form-control" type="submit" onclick=""><i class="glyphicon glyphicon-registration-mark"></i> Xác nhận</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    //Xử lý validate
+    //var input = document.getElementById('UserName');
+    //input.oninvalid = function (event) {
+    //    event.target.setCustomValidity('Tên tài khoản của bạn chỉ bao gồm các chữ cái thường.VD: Đức Huy');
+    //}
+    function ForgotPassword() {
+        $("#XacNhanMail").modal();
+        //$("#TaoMatKhau").modal();
+        $("#message3").hide();
+        $("#message4").hide();
+        $("#message5").hide();
+    }
+    function XacNhanMail() {
+        var mail = $("#Email1").val();
+        if (mail == "") {
+            $("#message3").hide();
+            $("#message4").show();
+            $("#message5").hide();
+
+            return false;
+        }
+        //var data = $("#Registration1").serialize();
+        // var data = mail;
+        $.ajax({
+            type: "post",
+            data: { 'Email1': $("#Email1").val() },
+            url: "/Account/ChangePassWord",
+            success: function (result) {
+                if (result == "Fail") {
+                    $("#message4").hide();
+                    $("#message3").hide();
+                    $("#message5").show();
+
+
+                    ("#Registration1")[0].reset();
+                }
+                else {
+                    $("#message4").hide();
+                    $("#message3").show();
+                    $("#message5").hide();
+                    $("#thongbao").hide();
+
+                    //("#Registration1")[0].reset();
+                }
+
+                //$("#Registration")[0].reset();
+            }
+        });
+    }
+    function SignUp() {
+        $("#ShowModal").modal();
+        $("#message1").hide();
+        $("#message2").hide();
+    }
+    $("#msgUserName1").hide();
+    $("#msgUserName2").hide();
+    $("#msgEmail1").hide();
+    $("#msgEmail2").hide();
+    $("#msgPasswordHash1").hide();
+    $("#msgPasswordHash2").hide();
+    $("#msgRePasswordHash1").hide();
+    $("#msgRePasswordHash2").hide();
+    $("#msgPhoneNumber").hide();
+
+
+    function SaveForm() {
+        var a = 1;
+        if (document.getElementById('UserName').validity.valueMissing)
+        {
+            document.getElementById('UserName').style.borderColor = "red";
+            $("#msgUserName1").show();
+            $("#msgUserName2").hide();
+            a = 0;
+           // return false;
+        }
+        else {
+            if (document.getElementById('UserName').validity.patternMismatch) {
+                document.getElementById('UserName').style.borderColor = "red";
+                $("#msgUserName1").hide();
+                $("#msgUserName2").show();
+                a = 0;
+                //return false;
+            }
+            else {
+                document.getElementById('UserName').style.borderColor = "#CCCCCC";
+                $("#msgUserName2").hide();
+                $("#msgUserName1").hide();
+
+        }
+
+        }
+        if (document.getElementById('Email').validity.valueMissing) {
+            document.getElementById('Email').style.borderColor = "red";
+            $("#msgEmail2").hide();
+            $("#msgEmail1").show();
+            a = 0;
+            // return false;
+        }
+        else {
+            if (document.getElementById('Email').validity.patternMismatch) {
+                document.getElementById('Email').style.borderColor = "red";
+                $("#msgEmail2").show();
+                $("#msgEmail1").hide();
+                a = 0;
+                //return false;
+            }
+            else {
+                document.getElementById('Email').style.borderColor = "#CCCCCC";
+                $("#msgEmail2").hide();
+                $("#msgEmail1").hide();
+
+
+            }
+        }
+
+
+        if (document.getElementById('PasswordHash').validity.valueMissing) {
+            document.getElementById('PasswordHash').style.borderColor = "red";
+            $("#msgPasswordHash2").hide();
+            $("#msgPasswordHash1").show();
+            a = 0;
+            //return false;
+        }
+        else {
+            if (document.getElementById('PasswordHash').validity.patternMismatch) {
+                document.getElementById('PasswordHash').style.borderColor = "red";
+                $("#msgPasswordHash2").show();
+                $("#msgPasswordHash1").hide();
+                // return false;
+                a = 0;
+            }
+            else {
+                document.getElementById('PasswordHash').style.borderColor = "#CCCCCC";
+                $("#msgPasswordHash2").hide();
+                $("#msgPasswordHash1").hide();
+
+
+            }
+
+        }
+        if (document.getElementById('RePasswordHash').validity.valueMissing) {
+            document.getElementById('RePasswordHash').style.borderColor = "red";
+            $("#msgRePasswordHash2").hide();
+            $("#msgRePasswordHash1").show();
+            a = 0;
+            //return false;
+        }
+        else {
+            if (document.getElementById('RePasswordHash').value != document.getElementById('PasswordHash').value) {
+                document.getElementById('RePasswordHash').style.borderColor = "red";
+                document.getElementById('PasswordHash').style.borderColor = "red";
+                $("#msgRePasswordHash1").hide();
+                $("#msgRePasswordHash2").show();
+
+                // return false;
+                a = 0;
+            }
+            else {
+                document.getElementById('RePasswordHash').style.borderColor = "#CCCCCC";
+                document.getElementById('PasswordHash').style.borderColor = "#CCCCCC";
+                $("#msgRePasswordHash1").hide();
+                $("#msgRePasswordHash2").hide();
+
+
+            }
+        }
+        if (document.getElementById('PhoneNumber').validity.valueMissing) {
+            document.getElementById('PhoneNumber').style.borderColor = "red";
+            $("#msgPhoneNumber").show();
+           // return false;
+            a = 0;
+        }
+        else {
+            document.getElementById('PhoneNumber').style.borderColor = "#CCCCCC";
+            $("#msgPhoneNumber").hide();
+        }
+        if (a == 0)
+            return false;
+        // document.getElementById('bar').validity.valueMissing;
+        // alert("sai");
+        //  document.getElementById('bar').validity.patternMismatch;//true
+        //  $("#message2").hide();
+        //$("#message1").hide();
+        // var input = document.getElementById('UserName');
+        //   var input = $("#UserName").val();
+        // (function () {
+        //     var input = $("#UserName").val();
+
+        // var input = $("#UserName").val();
+
+        // var form = document.getElementById('Registration');
+        // var elem = document.createElement('div');
+        //elem.id = 'notify';
+        // elem.style.display = 'none';
+        // alert("mmmmd dd");
+        //form.appendChild(elem);
+
+        //  input.addEventListener('invalid', function (event) {
+        //    event.preventDefault();
+        //      if (!event.target.validity.valid) {
+        //input.className = 'invalid animated shake';
+        //elem.textContent = 'Tên should only contain lowercase letters e.g. john';
+        //elem.className = 'error';
+        //elem.style.display = 'block';
+        //  $("#message2").show();
+        //  document.getElementById('message2').show();
+        //     alert("mmmmd dd");
+        //  return false;
+        // }
+
+        //    });
+
+        // input.addEventListener('input', function (event) {
+        //if ('block' === elem.style.display) {
+        //    input.className = '';
+        //    elem.style.display = 'none';
+        //}
+        //   $("#message2").hide();
+        //  });
+        // })();
+
+        //var input = document.getElementById('UserName');
+        //input.oninvalid = function (event) {
+        //    event.target.setCustomValidity('Tên tài khoản của bạn chỉ bao gồm các chữ cái thường.VD: Đức Huy');
+        //}
+        //    return false;
+        //}
+        //var name = $("#UserName").val();
+        //var pwd = $("#PasswordHash").val();
+        //var rpwd = $("#RePasswordHash").val();
+
+        //var email = $("#Email").val();
+        //  var input = document.getElementById('UserName');
+
+
+        //if (name == "" || pwd == "" || email == "" || pwd != rpwd) {
+        //    $("#message1").hide();
+        //    $("#message2").show();
+        //    // document.getElementById('message2').show();
+        //    return false;
+        //}
+        var data = $("#Registration").serialize();
+        $.ajax({
+            type: "post",
+            data: data,
+            url: "/Account/SaveData",
+            success: function (result) {
+
+                $("#message1").show();
+                $("#message2").hide();
+                $("#Registration")[0].reset();
+            }
+        });
+    }
+
+    //Login System
+    $("#msg").hide();
+
+    var Login = function () {
+        var data = $("#loginForm").serialize();
+        $.ajax({
+            type: "post",
+            url: "/Account/CheckValidUser",
+            data: data,
+            success: function (result) {
+                if (result == "1") {
+                    $("#loginForm")[0].reset();
+                    $("#msg").show();
+                }
+                else if (result == "2") {
+
+                    window.location.href = "/Dashboard/Dashboard";
+                    $("#msg").hide();
+                }
+                else {
+                    window.location.href = "/Dashboard/Index";
+                    $("#msg").hide();
+
+                }
+            }
+        })
+    }
+</script>
 <!-- Checkout Section End -->

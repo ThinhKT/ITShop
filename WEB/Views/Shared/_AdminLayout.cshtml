@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>QuocQT Shop Admin - Trang quản trị website</title>
+    <title>QT Shop Admin - Trang quản trị website</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700">
     <!-- https://fonts.google.com/specimen/Roboto -->
     <link rel="stylesheet" href="/Assets/Admin/css/fontawesome.min.css">
@@ -23,8 +23,8 @@
     <div class="" id="home">
         <nav class="navbar navbar-expand-xl">
             <div class="container h-100">
-                <a class="navbar-brand" href="">
-                    <h1 class="tm-site-title mb-0">QuocQT Admin</h1>
+                <a class="navbar-brand" href="/Admin/Dashboard">
+                    <h1 class="tm-site-title mb-0">QT Shop Admin</h1>
                 </a>
                 <button class="navbar-toggler ml-auto mr-0" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -157,15 +157,15 @@
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="/Admin/ShipHistory">Lịch sử bán hàng</a>
                                     <a class="dropdown-item" href="/Admin/Shipper">Shipper</a>
-                                    @*<a class="dropdown-item" href="/Admin/Chart">Biểu đồ</a>
-                                    <a class="dropdown-item" href="/Admin/ProductCate">Danh mục sản phẩm</a>*@
+                                    <a class="dropdown-item" href="/Admin/Product">Danh mục sản phẩm</a>
+                                    <a class="dropdown-item" href="/Admin/Purchase">Khách hàng nạp tiền</a>
                                 </div>
                         </li>
                     </ul>
                     <ul class="navbar-nav">
                         <li class="nav-item">
                             <a class="nav-link d-block" href="/Admin/Login">
-                                <b>Đăng xuất</b>
+                                @Session["Name"].ToString(), <b>Đăng xuất</b>
                             </a>
                         </li>
                     </ul>

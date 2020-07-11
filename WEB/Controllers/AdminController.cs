@@ -26,13 +26,44 @@ namespace WEB.Controllers
         [HttpPost]
         public ActionResult Login(FormCollection fc)
         {
+            string username = fc["username"].ToString();
+            string pass = fc["password"].ToString();
+            var query = (from x in db.ApplicationUsers
+                         where x.IsAdmin == true && x.UserName == username
+                         select x.PasswordHash).ToList();
+            if (query.Count == 0)
+            {
+                ViewBag.WrongAccount = "Tài khoản không tồn tại !";
+                return View();
+            }
+            if (query[0].ToString() != pass)
+            {
+                ViewBag.WrongPass = "Sai mật khẩu !";
+                return View();
+            }
+            var query2 = (from x in db.ApplicationUsers
+                          where x.IsAdmin == true && x.UserName == username
+                          select x).ToList();
+            Session["Name"] = query2[0].FullName;
+            Session["ID"] = query2[0].Id;
             return RedirectToAction("Dashboard", "Admin");
+        }
+        public ActionResult Logout()
+        {
+            Session["Name"] = null;
+            Session["ID"] = null;
+            return View("Login");
         }
 
         //trang chủ
         public ActionResult Dashboard()
         {
+            //lấy các đơn hàng không bị hủy để show ra
+            string str = "select * from Orders where Status = 4 or Status = 5 or Status = 6 order by ID DESC";
+            var query = db.Orders.SqlQuery(str);
+            ViewBag.OrderList = query.ToList();
             Session["View"] = "Dashboard";
+
             return View();
         }
 
@@ -161,6 +192,7 @@ namespace WEB.Controllers
         {
             Session["View"] = "ListUser";
             var query = from pd in db.ApplicationUsers
+                        where pd.IsAdmin == false && pd.IsShipper == false
                         select pd;
             ViewBag.UserList = query.ToList();
             return View();
@@ -210,6 +242,29 @@ namespace WEB.Controllers
             db.SaveChanges();
             return RedirectToAction("ListUser");
         }
+
+        public ActionResult Purchase()
+        {
+            Session["View"] = "Other";
+            var query = from x in db.PurchaseHistories
+                        orderby x.ID descending
+                        select x;
+            ViewBag.PurchaseInfo = query.ToList();
+            return View();
+        }
+        public ActionResult DoPurchase(int id)
+        {
+            var query = (from x in db.PurchaseHistories
+                        where x.ID == id
+                        select x).ToList()[0];
+            string str = "update ApplicationUsers set Money = Money + " + query.Value.ToString() + " where Id = " + query.UserID.ToString();
+            var query2 = db.Database.ExecuteSqlCommand(str);
+            string str2 = "update PurchaseHistory set Status = 1 where ID = " + query.ID.ToString();
+            var query3 = db.Database.ExecuteSqlCommand(str2);
+
+            return RedirectToAction("Purchase","Admin");
+        }
+
         public ActionResult Manager()
         {
             Session["View"] = "Other";
@@ -355,11 +410,46 @@ namespace WEB.Controllers
             return RedirectToAction("Order", "Admin");
         }
 
-        //cái này là admin cũng có thể tự đóng gói để giao cho shipper
+        //admin đóng gói để giao cho shipper
         public ActionResult Checkout(int id)
         {
-            string str = "update Orders set Status = 4 where ID = " + id.ToString();
-            var query = db.Database.ExecuteSqlCommand(str);
+            var query = (from x in db.OrderDetails
+                         where x.OrderID == id
+                         select x).ToList();
+
+            string str = "select * from Products where ID = ";
+            for (int i = 0; i < query.Count - 1; i++)
+            {
+                str = str + query[i].ProductID.ToString() + " or ID = ";
+            }
+            str = str + query[query.Count - 1].ProductID.ToString();
+            var query2 = db.Products.SqlQuery(str);
+
+            ViewBag.Quantity = query;
+            ViewBag.Product = query2.ToList();
+            ViewBag.OrderNo = id;
+            return View();
+
+            //string str = "update Orders set Status = 4 where ID = " + id.ToString();
+            //var query = db.Database.ExecuteSqlCommand(str);
+            //return RedirectToAction("Order", "Admin");
+        }
+
+        //hàm xuất kho + đóng gói
+        public ActionResult Wrapper(int id)
+        {
+            var query = (from x in db.OrderDetails
+                         where x.OrderID == id
+                         select x).ToList();
+            string str;
+            foreach (var item in query)
+            {
+                str = "update Products set Quantity = Quantity - " +
+                    item.Quantity.ToString() + "where ID = " + item.ProductID.ToString();
+                var query2 = db.Database.ExecuteSqlCommand(str);
+            }
+            str = "update Orders set Status = 4 where ID = " + id.ToString();
+            var query3 = db.Database.ExecuteSqlCommand(str);
             return RedirectToAction("Order", "Admin");
         }
         #endregion

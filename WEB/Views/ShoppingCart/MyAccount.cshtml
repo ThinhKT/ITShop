@@ -100,26 +100,26 @@
 <hr/>
 
 <div class="row">
-    <div class="col-lg-8 col-md-6">
+    <div class="col-lg-7 col-md-6">
         @foreach (var item in ViewBag.Info)
         {
             <div class="row">
                 <div class="col-lg-6">
                     <div class="checkout__input">
                         <p>Họ tên</p>
-                        <input style="color:black" type="text" placeholder="Họ Tên*" value="@item.FullName" required>
+                        <input style="color:black" type="text" placeholder="Họ Tên*" value="@item.FullName" readonly>
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="checkout__input">
                         <p>Ngày sinh</p>
-                        <input style="color:black" type="text" placeholder="Ngày sinh*" value="@item.BirthDay.ToString()" required>
+                        <input style="color:black" type="text" placeholder="Ngày sinh*" value="@item.BirthDay.ToString()" readonly>
                     </div>
                 </div>
             </div>
             <div class="checkout__input">
                 <p>Địa chỉ</p>
-                <input style="color:black" type="text" placeholder="Số nhà, tên đường, quận, huyện,..." class="checkout__input__add" value="@item.Address" required>
+                <input style="color:black" type="text" placeholder="Số nhà, tên đường, quận, huyện,..." class="checkout__input__add" value="@item.Address" readonly>
             </div>
             <div class="checkout__input">
                 <p>Số dư tài khoản </p>
@@ -129,30 +129,34 @@
                 <div class="col-lg-6">
                     <div class="checkout__input">
                         <p>Số điện thoại</p>
-                        <input style="color:black" type="text" placeholder="Số điện thoại*" value="@item.PhoneNumber" required>
+                        <input style="color:black" type="text" placeholder="Số điện thoại*" value="@item.PhoneNumber" readonly>
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="checkout__input">
                         <p>Email</p>
-                        <input style="color:black" type="email" placeholder="Email*" value="@item.Email" required>
+                        <input style="color:black" type="email" placeholder="Email*" value="@item.Email" readonly>
                     </div>
                 </div>
             </div>
         }
     </div>
-    <div class="col-lg-4 col-md-6">
-        <div class="checkout__order">
+    <div class="col-lg-5 col-md-6">
+        <div class="checkout__order text-center">
             <div>
-                <a href="#" style="color:white" class="primary-btn">Sửa thông tin</a>
+                <a href="/Account/ChangeInfo" style="color:white" class="primary-btn">Sửa thông tin</a>
             </div>
-            <hr/>
+            <hr />
             <div>
-                <a href="#" style="color:white" class="primary-btn">Đổi mật khẩu</a>
+                <a href="/Account/ChangePass" style="color:white" class="primary-btn">Đổi mật khẩu</a>
             </div>
-            <hr/>
+            <hr />
             <div>
-                <a href="/ShoppingCart/GetMoney" style="color:white" class="primary-btn">Nạp tiền</a>
+                <a href="/ShoppingCart/GetMoney" style="color:white" class="primary-btn">Nạp thêm tiền</a>
+            </div>
+            <hr />
+            <div>
+                <a href="/ShoppingCart/RequestInfo" style="color:white" class="primary-btn">Lịch sử nạp</a>
             </div>
         </div>
     </div>

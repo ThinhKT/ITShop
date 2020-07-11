@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using WEB.Assets.User;
+<!DOCTYPE html>
 <html lang="zxx">
 
 <head>
@@ -10,7 +11,8 @@
     <title>QuocQT - Shop Laptop&Mobile Uy tín</title>
 
     <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
+    @*<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">*@
+    <link href="https://fonts.googleapis.com/css2?family=Muli:ital,wght@1,800&display=swap" rel="stylesheet">
 
     <!-- Css Styles -->
     <link rel="stylesheet" href="~/Assets/User/css/bootstrap.min.css" type="text/css">
@@ -53,18 +55,29 @@
                     <li><a href="#">English</a></li>
                 </ul>
             </div>
-            <div class="header__top__right__auth">
-                @if (Session["UserName"] != null)
-                {
-                    <a href="/Account/Logout"><i class="fa fa-user"></i>@Session["UserName"] - Đăng xuất</a>
-                }
-                else
-                {
+            @if (Session["UserName"] != null)
+            {
+                <div class="header__top__right__auth">
+                    <a href="/ShoppingCart/MyAccount" style="color:blue"><i class="fa fa-user"></i>@Session["UserName"]</a>
+                </div>
+                <div class="header__top__right__auth">
+                    <a href="/Account/Logout" style="color:black"> - Đăng xuất</a>
+                </div>
+            }
+            else
+            {
+                <div class="header__top__right__auth">
                     <a href="/Account/Login"><i class="fa fa-user"></i> Đăng nhập   </a>
-                }
-            </div>
+                </div>
+            }
             <div class="header__top__right__auth">
-                <a href="/ShoppingCart/ViewCart"><i class="fa fa-shopping-bag"></i> <span>3</span></a>
+                <a href="/ShoppingCart/ViewCart">
+                    <i class="fa fa-shopping-bag"></i>
+                    @if (Session["UserName"] != null)
+                    {
+                        <span style="color:red;font-weight:bold">@(TempCart.count - 1 )</span>
+                    }
+                </a>
             </div>
         </div>
         <nav class="humberger__menu__nav mobile-menu">
@@ -129,22 +142,33 @@
                                     <li><a href="#">English</a></li>
                                 </ul>
                             </div>
-                            <div class="header__top__right__auth">
-                                @if (Session["UserName"] != null)
-                                {
-                                    <a href="/Account/Logout"><i class="fa fa-user"></i>@Session["UserName"] - Đăng xuất   </a>
-                                }
-                                else
-                                {
+                            @if (Session["UserName"] != null)
+                            {
+                                <div class="header__top__right__auth">
+                                    <a href="/ShoppingCart/MyAccount" style="color:blue"><i class="fa fa-user"></i>@Session["UserName"]</a>
+                                </div>
+                                <div class="header__top__right__auth">
+                                    <a href="/Account/Logout" style="color:black"> - Đăng xuất</a>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="header__top__right__auth">
                                     <a href="/Account/Login"><i class="fa fa-user"></i> Đăng nhập   </a>
-                                }
+                                </div>
+                            }
 
-                            </div>
                             <div class="header__top__right__auth">
-                                <a href="/ShoppingCart/ViewCart"><i class="fa fa-shopping-bag"></i> <span></span></a>
+                                <a href="/ShoppingCart/ViewCart">
+                                    <i class="fa fa-shopping-bag"></i>
+                                    @if (Session["UserName"] != null)
+                                    {
+                                        <span style="color:red;font-weight:bold">@(TempCart.count - 1 )</span>
+                                    }
+                                </a>
                             </div>
                         </div>
-                    </div>
+                            </div>
                 </div>
             </div>
         </div>
@@ -202,7 +226,7 @@
                     <div class="hero__categories">
                         <div class="hero__categories__all">
                             <i class="fa fa-bars"></i>
-                            <span>Danh mục sản phẩm</span>
+                            <span style="font-size:medium">Danh mục sản phẩm</span>
                         </div>
                         <ul>
                             <li><a href="/Dashboard/Category/10">Laptop DELL</a></li>
@@ -219,7 +243,7 @@
                 <div class="col-lg-9">
                     <div class="hero__search">
                         <div class="hero__search__form">
-                            <form action="/Dashboard/Search" method="post" >
+                            <form action="/Dashboard/Search" method="post">
                                 <div class="hero__search__categories" hidden>
                                     All Categories
                                     <span class="arrow_carrot-down"></span>
@@ -246,8 +270,7 @@
     </section>
     <!-- Hero Section End -->
     <!-- Featured Section Begin -->
-    <section class="featured spad">
-    </section>
+    <section class="featured spad"></section>
     <!-- Featured Section End -->
     <!-- Categories Section Begin -->
     <section class="categories">
@@ -340,11 +363,32 @@
                 </div>
                 <div class="col-lg-4 col-md-12">
                     <div class="footer__widget">
-                        <h6>Đăng ký nhận tin khuyến mãi</h6>
-                        <form action="#">
-                            <input type="text" placeholder="Nhập Email">
-                            <button type="submit" class="site-btn">Đăng ký</button>
-                        </form>
+                       
+    
+                            <!-- Begin Mailchimp Signup Form -->
+                            <link href="//cdn-images.mailchimp.com/embedcode/slim-10_7.css" rel="stylesheet" type="text/css">
+                            <style type="text/css">
+                                #mc_embed_signup {
+                                    background: #F3F6FA;
+                                    clear: left;
+                                    font: 14px Helvetica,Arial,sans-serif;
+                                }
+                                                         /* Add your own Mailchimp form style overrides in your site stylesheet or in this style block.
+                                We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
+                            </style>
+                            <div id="mc_embed_signup">
+                                <form action="https://azurewebsites.us10.list-manage.com/subscribe/post?u=3f8923c395e065e91b992bf55&amp;id=ec8ddad954" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+                                    <div id="mc_embed_signup_scroll">
+                                        <label for="mce-EMAIL">Đăng ký nhận khuyến mãi</label>
+                                        <input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required>
+                                        <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+                                        <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_3f8923c395e065e91b992bf55_ec8ddad954" tabindex="-1" value=""></div>
+                                        <div class="clear"><input type="submit" value="Đăng ký" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <!--End mc_embed_signup-->
                         <div class="footer__widget__social">
                             <a href="#"><i class="fa fa-facebook"></i></a>
                             <a href="#"><i class="fa fa-instagram"></i></a>
@@ -359,10 +403,7 @@
                     <div class="footer__copyright">
                         <div class="footer__copyright__text">
                             <p>
-                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                                Copyright &copy;
-                                <script>document.write(new Date().getFullYear());</script> All rights reserved |  <i class="fa fa-heart" aria-hidden="true"></i><a href="https://colorlib.com" target="_blank"></a>
-                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                               
                             </p>
                         </div>
                         <div class="footer__copyright__payment"><img src="img/payment-item.png" alt=""></div>

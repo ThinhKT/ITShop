@@ -30,14 +30,14 @@
                 <div class="tm-bg-primary-dark tm-block tm-block-h-auto">
                     <div class="row">
                         <div class="col-12 text-center">
-                            <h2 class="tm-block-title mb-4">Page for Shipper, Login</h2>
+                            <h2 class="tm-block-title mb-4">Đăng nhập</h2>
                         </div>
                     </div>
                     <div class="row mt-2">
                         <div class="col-12">
                             <form action="/Shipper/Login" method="post" class="tm-login-form">
                                 <div class="form-group">
-                                    <label for="username">Username</label>
+                                    <label for="username">Tên đăng nhập</label>
                                     @if (ViewBag.WrongAccount != null)
                                     {
                                         <h6 style="color:red">@ViewBag.WrongAccount</h6>
@@ -50,7 +50,7 @@
                                            required />
                                 </div>
                                 <div class="form-group mt-3">
-                                    <label for="password">Password</label>
+                                    <label for="password">Mật khẩu</label>
                                     @if (ViewBag.WrongPass != null)
                                     {
                                         <h6 style="color:red">@ViewBag.WrongPass</h6>
@@ -65,7 +65,7 @@
                                 <div class="form-group mt-4">
                                     <button type="submit"
                                             class="btn btn-primary btn-block text-uppercase">
-                                        Login
+                                        Đăng nhập
                                     </button>
                                 </div>
                                 <button class="mt-5 btn btn-primary btn-block text-uppercase" hidden>
