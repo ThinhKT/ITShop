@@ -69,7 +69,7 @@
         items: 4,
         dots: false,
         nav: true,
-        navText: ["<span class='fa fa-angle-left'><span/>", "<span class='fa fa-angle-right'><span/>"],
+        navText: ["<span class=''><span/>", "<span class=''><span/>"],
         animateOut: 'fadeOut',
         animateIn: 'fadeIn',
         smartSpeed: 1200,
@@ -109,7 +109,7 @@
         items: 1,
         dots: false,
         nav: true,
-        navText: ["<span class='fa fa-angle-left'><span/>", "<span class='fa fa-angle-right'><span/>"],
+        navText: ["<span class=''><span/>", "<span class=''><span/>"],
         smartSpeed: 1200,
         autoHeight: false,
         autoplay: true
