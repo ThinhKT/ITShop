@@ -190,6 +190,7 @@ namespace WEB.Controllers
         {
             Session["View"] = "ListUser";
             var query = from pd in db.ApplicationUsers
+                        where pd.IsAdmin == false && pd.IsShipper == false
                         select pd;
             ViewBag.UserList = query.ToList();
             return View();
