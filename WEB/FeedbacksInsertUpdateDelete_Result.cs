@@ -10,15 +10,14 @@
 namespace WEB
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class OrderDetail
+    public partial class FeedbacksInsertUpdateDelete_Result
     {
-        public int OrderID { get; set; }
-        public int ProductID { get; set; }
-        public int Quantity { get; set; }
-        public decimal Price { get; set; }
-    
-        public virtual Product Product { get; set; }
+        public int ID { get; set; }
+        public string Name { get; set; }
+        public string Email { get; set; }
+        public string Message { get; set; }
+        public System.DateTime CreatedDate { get; set; }
+        public bool Status { get; set; }
     }
 }

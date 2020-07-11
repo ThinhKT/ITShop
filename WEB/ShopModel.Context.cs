@@ -12,6 +12,8 @@ namespace WEB
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class ShopEntities : DbContext
     {
@@ -52,6 +54,1072 @@ namespace WEB
         public virtual DbSet<SystemConfig> SystemConfigs { get; set; }
         public virtual DbSet<Tag> Tags { get; set; }
         public virtual DbSet<VisitorStatistic> VisitorStatistics { get; set; }
+        public virtual ObjectResult<ApplicationGroupsInsertUpdateDelete_Result> ApplicationGroupsInsertUpdateDelete(Nullable<int> iD, string name, string description, string statementType)
+        {
+            var iDParameter = iD.HasValue ?
+                new ObjectParameter("ID", iD) :
+                new ObjectParameter("ID", typeof(int));
+    
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            var descriptionParameter = description != null ?
+                new ObjectParameter("Description", description) :
+                new ObjectParameter("Description", typeof(string));
+    
+            var statementTypeParameter = statementType != null ?
+                new ObjectParameter("StatementType", statementType) :
+                new ObjectParameter("StatementType", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ApplicationGroupsInsertUpdateDelete_Result>("ApplicationGroupsInsertUpdateDelete", iDParameter, nameParameter, descriptionParameter, statementTypeParameter);
+        }
+    
+        public virtual ObjectResult<ApplicationRoleGroupsInsertUpdateDelete_Result> ApplicationRoleGroupsInsertUpdateDelete(Nullable<int> groupId, string roleId, string statementType)
+        {
+            var groupIdParameter = groupId.HasValue ?
+                new ObjectParameter("GroupId", groupId) :
+                new ObjectParameter("GroupId", typeof(int));
+    
+            var roleIdParameter = roleId != null ?
+                new ObjectParameter("RoleId", roleId) :
+                new ObjectParameter("RoleId", typeof(string));
+    
+            var statementTypeParameter = statementType != null ?
+                new ObjectParameter("StatementType", statementType) :
+                new ObjectParameter("StatementType", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ApplicationRoleGroupsInsertUpdateDelete_Result>("ApplicationRoleGroupsInsertUpdateDelete", groupIdParameter, roleIdParameter, statementTypeParameter);
+        }
+    
+        public virtual ObjectResult<ApplicationRolesInsertUpdateDelete_Result> ApplicationRolesInsertUpdateDelete(string id, string name, string description, string discriminator, string statementType)
+        {
+            var idParameter = id != null ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(string));
+    
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            var descriptionParameter = description != null ?
+                new ObjectParameter("Description", description) :
+                new ObjectParameter("Description", typeof(string));
+    
+            var discriminatorParameter = discriminator != null ?
+                new ObjectParameter("Discriminator", discriminator) :
+                new ObjectParameter("Discriminator", typeof(string));
+    
+            var statementTypeParameter = statementType != null ?
+                new ObjectParameter("StatementType", statementType) :
+                new ObjectParameter("StatementType", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ApplicationRolesInsertUpdateDelete_Result>("ApplicationRolesInsertUpdateDelete", idParameter, nameParameter, descriptionParameter, discriminatorParameter, statementTypeParameter);
+        }
+    
+        public virtual ObjectResult<ApplicationUserClaimsInsertUpdateDelete_Result> ApplicationUserClaimsInsertUpdateDelete(Nullable<int> id, string userId, string claimType, string claimValue, string applicationUser_Id, string statementType)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(int));
+    
+            var userIdParameter = userId != null ?
+                new ObjectParameter("UserId", userId) :
+                new ObjectParameter("UserId", typeof(string));
+    
+            var claimTypeParameter = claimType != null ?
+                new ObjectParameter("ClaimType", claimType) :
+                new ObjectParameter("ClaimType", typeof(string));
+    
+            var claimValueParameter = claimValue != null ?
+                new ObjectParameter("ClaimValue", claimValue) :
+                new ObjectParameter("ClaimValue", typeof(string));
+    
+            var applicationUser_IdParameter = applicationUser_Id != null ?
+                new ObjectParameter("ApplicationUser_Id", applicationUser_Id) :
+                new ObjectParameter("ApplicationUser_Id", typeof(string));
+    
+            var statementTypeParameter = statementType != null ?
+                new ObjectParameter("StatementType", statementType) :
+                new ObjectParameter("StatementType", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ApplicationUserClaimsInsertUpdateDelete_Result>("ApplicationUserClaimsInsertUpdateDelete", idParameter, userIdParameter, claimTypeParameter, claimValueParameter, applicationUser_IdParameter, statementTypeParameter);
+        }
+    
+        public virtual ObjectResult<ApplicationUserGroupsInsertUpdateDelete_Result> ApplicationUserGroupsInsertUpdateDelete(string userId, Nullable<int> groupId, string statementType)
+        {
+            var userIdParameter = userId != null ?
+                new ObjectParameter("UserId", userId) :
+                new ObjectParameter("UserId", typeof(string));
+    
+            var groupIdParameter = groupId.HasValue ?
+                new ObjectParameter("GroupId", groupId) :
+                new ObjectParameter("GroupId", typeof(int));
+    
+            var statementTypeParameter = statementType != null ?
+                new ObjectParameter("StatementType", statementType) :
+                new ObjectParameter("StatementType", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ApplicationUserGroupsInsertUpdateDelete_Result>("ApplicationUserGroupsInsertUpdateDelete", userIdParameter, groupIdParameter, statementTypeParameter);
+        }
+    
+        public virtual ObjectResult<ApplicationUserLoginsInsertUpdateDelete_Result> ApplicationUserLoginsInsertUpdateDelete(string userId, string loginProvider, string providerKey, string applicationUser_Id, string statementType)
+        {
+            var userIdParameter = userId != null ?
+                new ObjectParameter("UserId", userId) :
+                new ObjectParameter("UserId", typeof(string));
+    
+            var loginProviderParameter = loginProvider != null ?
+                new ObjectParameter("LoginProvider", loginProvider) :
+                new ObjectParameter("LoginProvider", typeof(string));
+    
+            var providerKeyParameter = providerKey != null ?
+                new ObjectParameter("ProviderKey", providerKey) :
+                new ObjectParameter("ProviderKey", typeof(string));
+    
+            var applicationUser_IdParameter = applicationUser_Id != null ?
+                new ObjectParameter("ApplicationUser_Id", applicationUser_Id) :
+                new ObjectParameter("ApplicationUser_Id", typeof(string));
+    
+            var statementTypeParameter = statementType != null ?
+                new ObjectParameter("StatementType", statementType) :
+                new ObjectParameter("StatementType", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ApplicationUserLoginsInsertUpdateDelete_Result>("ApplicationUserLoginsInsertUpdateDelete", userIdParameter, loginProviderParameter, providerKeyParameter, applicationUser_IdParameter, statementTypeParameter);
+        }
+    
+        public virtual ObjectResult<ApplicationUserRolesInsertUpdateDelete_Result> ApplicationUserRolesInsertUpdateDelete(string userId, string roleId, string identityRole_Id, string applicationUser_Id, string statementType)
+        {
+            var userIdParameter = userId != null ?
+                new ObjectParameter("UserId", userId) :
+                new ObjectParameter("UserId", typeof(string));
+    
+            var roleIdParameter = roleId != null ?
+                new ObjectParameter("RoleId", roleId) :
+                new ObjectParameter("RoleId", typeof(string));
+    
+            var identityRole_IdParameter = identityRole_Id != null ?
+                new ObjectParameter("IdentityRole_Id", identityRole_Id) :
+                new ObjectParameter("IdentityRole_Id", typeof(string));
+    
+            var applicationUser_IdParameter = applicationUser_Id != null ?
+                new ObjectParameter("ApplicationUser_Id", applicationUser_Id) :
+                new ObjectParameter("ApplicationUser_Id", typeof(string));
+    
+            var statementTypeParameter = statementType != null ?
+                new ObjectParameter("StatementType", statementType) :
+                new ObjectParameter("StatementType", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ApplicationUserRolesInsertUpdateDelete_Result>("ApplicationUserRolesInsertUpdateDelete", userIdParameter, roleIdParameter, identityRole_IdParameter, applicationUser_IdParameter, statementTypeParameter);
+        }
+    
+        public virtual ObjectResult<ApplicationUsersInsertUpdateDelete_Result> ApplicationUsersInsertUpdateDelete(string id, string fullName, string address, Nullable<System.DateTime> birthDay, string email, Nullable<bool> emailConfirmed, string passwordHash, string securityStamp, string phoneNumber, Nullable<bool> phoneNumberConfirmed, Nullable<bool> twoFactorEnabled, Nullable<System.DateTime> lockoutEndDateUtc, Nullable<bool> lockoutEnabled, Nullable<int> accessFailedCount, string userName, string statementType)
+        {
+            var idParameter = id != null ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(string));
+    
+            var fullNameParameter = fullName != null ?
+                new ObjectParameter("FullName", fullName) :
+                new ObjectParameter("FullName", typeof(string));
+    
+            var addressParameter = address != null ?
+                new ObjectParameter("Address", address) :
+                new ObjectParameter("Address", typeof(string));
+    
+            var birthDayParameter = birthDay.HasValue ?
+                new ObjectParameter("BirthDay", birthDay) :
+                new ObjectParameter("BirthDay", typeof(System.DateTime));
+    
+            var emailParameter = email != null ?
+                new ObjectParameter("Email", email) :
+                new ObjectParameter("Email", typeof(string));
+    
+            var emailConfirmedParameter = emailConfirmed.HasValue ?
+                new ObjectParameter("EmailConfirmed", emailConfirmed) :
+                new ObjectParameter("EmailConfirmed", typeof(bool));
+    
+            var passwordHashParameter = passwordHash != null ?
+                new ObjectParameter("PasswordHash", passwordHash) :
+                new ObjectParameter("PasswordHash", typeof(string));
+    
+            var securityStampParameter = securityStamp != null ?
+                new ObjectParameter("SecurityStamp", securityStamp) :
+                new ObjectParameter("SecurityStamp", typeof(string));
+    
+            var phoneNumberParameter = phoneNumber != null ?
+                new ObjectParameter("PhoneNumber", phoneNumber) :
+                new ObjectParameter("PhoneNumber", typeof(string));
+    
+            var phoneNumberConfirmedParameter = phoneNumberConfirmed.HasValue ?
+                new ObjectParameter("PhoneNumberConfirmed", phoneNumberConfirmed) :
+                new ObjectParameter("PhoneNumberConfirmed", typeof(bool));
+    
+            var twoFactorEnabledParameter = twoFactorEnabled.HasValue ?
+                new ObjectParameter("TwoFactorEnabled", twoFactorEnabled) :
+                new ObjectParameter("TwoFactorEnabled", typeof(bool));
+    
+            var lockoutEndDateUtcParameter = lockoutEndDateUtc.HasValue ?
+                new ObjectParameter("LockoutEndDateUtc", lockoutEndDateUtc) :
+                new ObjectParameter("LockoutEndDateUtc", typeof(System.DateTime));
+    
+            var lockoutEnabledParameter = lockoutEnabled.HasValue ?
+                new ObjectParameter("LockoutEnabled", lockoutEnabled) :
+                new ObjectParameter("LockoutEnabled", typeof(bool));
+    
+            var accessFailedCountParameter = accessFailedCount.HasValue ?
+                new ObjectParameter("AccessFailedCount", accessFailedCount) :
+                new ObjectParameter("AccessFailedCount", typeof(int));
+    
+            var userNameParameter = userName != null ?
+                new ObjectParameter("UserName", userName) :
+                new ObjectParameter("UserName", typeof(string));
+    
+            var statementTypeParameter = statementType != null ?
+                new ObjectParameter("StatementType", statementType) :
+                new ObjectParameter("StatementType", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ApplicationUsersInsertUpdateDelete_Result>("ApplicationUsersInsertUpdateDelete", idParameter, fullNameParameter, addressParameter, birthDayParameter, emailParameter, emailConfirmedParameter, passwordHashParameter, securityStampParameter, phoneNumberParameter, phoneNumberConfirmedParameter, twoFactorEnabledParameter, lockoutEndDateUtcParameter, lockoutEnabledParameter, accessFailedCountParameter, userNameParameter, statementTypeParameter);
+        }
+    
+        public virtual ObjectResult<ContactDetailsInsertUpdateDelete_Result> ContactDetailsInsertUpdateDelete(Nullable<int> iD, string name, string phone, string email, string website, string address, string other, Nullable<double> lat, Nullable<double> lng, Nullable<bool> status, string statementType)
+        {
+            var iDParameter = iD.HasValue ?
+                new ObjectParameter("ID", iD) :
+                new ObjectParameter("ID", typeof(int));
+    
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            var phoneParameter = phone != null ?
+                new ObjectParameter("Phone", phone) :
+                new ObjectParameter("Phone", typeof(string));
+    
+            var emailParameter = email != null ?
+                new ObjectParameter("Email", email) :
+                new ObjectParameter("Email", typeof(string));
+    
+            var websiteParameter = website != null ?
+                new ObjectParameter("Website", website) :
+                new ObjectParameter("Website", typeof(string));
+    
+            var addressParameter = address != null ?
+                new ObjectParameter("Address", address) :
+                new ObjectParameter("Address", typeof(string));
+    
+            var otherParameter = other != null ?
+                new ObjectParameter("Other", other) :
+                new ObjectParameter("Other", typeof(string));
+    
+            var latParameter = lat.HasValue ?
+                new ObjectParameter("Lat", lat) :
+                new ObjectParameter("Lat", typeof(double));
+    
+            var lngParameter = lng.HasValue ?
+                new ObjectParameter("Lng", lng) :
+                new ObjectParameter("Lng", typeof(double));
+    
+            var statusParameter = status.HasValue ?
+                new ObjectParameter("Status", status) :
+                new ObjectParameter("Status", typeof(bool));
+    
+            var statementTypeParameter = statementType != null ?
+                new ObjectParameter("StatementType", statementType) :
+                new ObjectParameter("StatementType", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ContactDetailsInsertUpdateDelete_Result>("ContactDetailsInsertUpdateDelete", iDParameter, nameParameter, phoneParameter, emailParameter, websiteParameter, addressParameter, otherParameter, latParameter, lngParameter, statusParameter, statementTypeParameter);
+        }
+    
+        public virtual ObjectResult<ErrorsInsertUpdateDelete_Result> ErrorsInsertUpdateDelete(Nullable<int> iD, string message, string stackTrace, Nullable<System.DateTime> createdDate, string statementType)
+        {
+            var iDParameter = iD.HasValue ?
+                new ObjectParameter("ID", iD) :
+                new ObjectParameter("ID", typeof(int));
+    
+            var messageParameter = message != null ?
+                new ObjectParameter("Message", message) :
+                new ObjectParameter("Message", typeof(string));
+    
+            var stackTraceParameter = stackTrace != null ?
+                new ObjectParameter("StackTrace", stackTrace) :
+                new ObjectParameter("StackTrace", typeof(string));
+    
+            var createdDateParameter = createdDate.HasValue ?
+                new ObjectParameter("CreatedDate", createdDate) :
+                new ObjectParameter("CreatedDate", typeof(System.DateTime));
+    
+            var statementTypeParameter = statementType != null ?
+                new ObjectParameter("StatementType", statementType) :
+                new ObjectParameter("StatementType", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ErrorsInsertUpdateDelete_Result>("ErrorsInsertUpdateDelete", iDParameter, messageParameter, stackTraceParameter, createdDateParameter, statementTypeParameter);
+        }
+    
+        public virtual ObjectResult<FeedbacksInsertUpdateDelete_Result> FeedbacksInsertUpdateDelete(Nullable<int> iD, string name, string email, string message, Nullable<System.DateTime> createdDate, Nullable<bool> stastus, string statementType)
+        {
+            var iDParameter = iD.HasValue ?
+                new ObjectParameter("ID", iD) :
+                new ObjectParameter("ID", typeof(int));
+    
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            var emailParameter = email != null ?
+                new ObjectParameter("Email", email) :
+                new ObjectParameter("Email", typeof(string));
+    
+            var messageParameter = message != null ?
+                new ObjectParameter("Message", message) :
+                new ObjectParameter("Message", typeof(string));
+    
+            var createdDateParameter = createdDate.HasValue ?
+                new ObjectParameter("CreatedDate", createdDate) :
+                new ObjectParameter("CreatedDate", typeof(System.DateTime));
+    
+            var stastusParameter = stastus.HasValue ?
+                new ObjectParameter("Stastus", stastus) :
+                new ObjectParameter("Stastus", typeof(bool));
+    
+            var statementTypeParameter = statementType != null ?
+                new ObjectParameter("StatementType", statementType) :
+                new ObjectParameter("StatementType", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<FeedbacksInsertUpdateDelete_Result>("FeedbacksInsertUpdateDelete", iDParameter, nameParameter, emailParameter, messageParameter, createdDateParameter, stastusParameter, statementTypeParameter);
+        }
+    
+        public virtual ObjectResult<FootersInsertUpdateDelete_Result> FootersInsertUpdateDelete(string iD, string content, string statementType)
+        {
+            var iDParameter = iD != null ?
+                new ObjectParameter("ID", iD) :
+                new ObjectParameter("ID", typeof(string));
+    
+            var contentParameter = content != null ?
+                new ObjectParameter("Content", content) :
+                new ObjectParameter("Content", typeof(string));
+    
+            var statementTypeParameter = statementType != null ?
+                new ObjectParameter("StatementType", statementType) :
+                new ObjectParameter("StatementType", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<FootersInsertUpdateDelete_Result>("FootersInsertUpdateDelete", iDParameter, contentParameter, statementTypeParameter);
+        }
+    
+        public virtual ObjectResult<GetRevenueStatistic_Result> GetRevenueStatistic(string fromDate, string toDate)
+        {
+            var fromDateParameter = fromDate != null ?
+                new ObjectParameter("fromDate", fromDate) :
+                new ObjectParameter("fromDate", typeof(string));
+    
+            var toDateParameter = toDate != null ?
+                new ObjectParameter("toDate", toDate) :
+                new ObjectParameter("toDate", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetRevenueStatistic_Result>("GetRevenueStatistic", fromDateParameter, toDateParameter);
+        }
+    
+        [DbFunction("ShopEntities", "HotProduct")]
+        public virtual IQueryable<HotProduct_Result> HotProduct()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<HotProduct_Result>("[ShopEntities].[HotProduct]()");
+        }
+    
+        public virtual ObjectResult<OrderDetailsInsertUpdateDelete_Result> OrderDetailsInsertUpdateDelete(Nullable<int> orderID, Nullable<int> productID, Nullable<int> quantity, Nullable<decimal> price, string statementType)
+        {
+            var orderIDParameter = orderID.HasValue ?
+                new ObjectParameter("OrderID", orderID) :
+                new ObjectParameter("OrderID", typeof(int));
+    
+            var productIDParameter = productID.HasValue ?
+                new ObjectParameter("ProductID", productID) :
+                new ObjectParameter("ProductID", typeof(int));
+    
+            var quantityParameter = quantity.HasValue ?
+                new ObjectParameter("Quantity", quantity) :
+                new ObjectParameter("Quantity", typeof(int));
+    
+            var priceParameter = price.HasValue ?
+                new ObjectParameter("Price", price) :
+                new ObjectParameter("Price", typeof(decimal));
+    
+            var statementTypeParameter = statementType != null ?
+                new ObjectParameter("StatementType", statementType) :
+                new ObjectParameter("StatementType", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<OrderDetailsInsertUpdateDelete_Result>("OrderDetailsInsertUpdateDelete", orderIDParameter, productIDParameter, quantityParameter, priceParameter, statementTypeParameter);
+        }
+    
+        public virtual ObjectResult<OrdersInsertUpdateDelete_Result> OrdersInsertUpdateDelete(Nullable<int> iD, string customerName, string customerAddress, string customerEmail, string customerMobile, string customerMessage, string paymentMethod, Nullable<System.DateTime> createdDate, string createdBy, string paymentStatus, Nullable<bool> status, string customerId, string statementType)
+        {
+            var iDParameter = iD.HasValue ?
+                new ObjectParameter("ID", iD) :
+                new ObjectParameter("ID", typeof(int));
+    
+            var customerNameParameter = customerName != null ?
+                new ObjectParameter("CustomerName", customerName) :
+                new ObjectParameter("CustomerName", typeof(string));
+    
+            var customerAddressParameter = customerAddress != null ?
+                new ObjectParameter("CustomerAddress", customerAddress) :
+                new ObjectParameter("CustomerAddress", typeof(string));
+    
+            var customerEmailParameter = customerEmail != null ?
+                new ObjectParameter("CustomerEmail", customerEmail) :
+                new ObjectParameter("CustomerEmail", typeof(string));
+    
+            var customerMobileParameter = customerMobile != null ?
+                new ObjectParameter("CustomerMobile", customerMobile) :
+                new ObjectParameter("CustomerMobile", typeof(string));
+    
+            var customerMessageParameter = customerMessage != null ?
+                new ObjectParameter("CustomerMessage", customerMessage) :
+                new ObjectParameter("CustomerMessage", typeof(string));
+    
+            var paymentMethodParameter = paymentMethod != null ?
+                new ObjectParameter("PaymentMethod", paymentMethod) :
+                new ObjectParameter("PaymentMethod", typeof(string));
+    
+            var createdDateParameter = createdDate.HasValue ?
+                new ObjectParameter("CreatedDate", createdDate) :
+                new ObjectParameter("CreatedDate", typeof(System.DateTime));
+    
+            var createdByParameter = createdBy != null ?
+                new ObjectParameter("CreatedBy", createdBy) :
+                new ObjectParameter("CreatedBy", typeof(string));
+    
+            var paymentStatusParameter = paymentStatus != null ?
+                new ObjectParameter("PaymentStatus", paymentStatus) :
+                new ObjectParameter("PaymentStatus", typeof(string));
+    
+            var statusParameter = status.HasValue ?
+                new ObjectParameter("Status", status) :
+                new ObjectParameter("Status", typeof(bool));
+    
+            var customerIdParameter = customerId != null ?
+                new ObjectParameter("CustomerId", customerId) :
+                new ObjectParameter("CustomerId", typeof(string));
+    
+            var statementTypeParameter = statementType != null ?
+                new ObjectParameter("StatementType", statementType) :
+                new ObjectParameter("StatementType", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<OrdersInsertUpdateDelete_Result>("OrdersInsertUpdateDelete", iDParameter, customerNameParameter, customerAddressParameter, customerEmailParameter, customerMobileParameter, customerMessageParameter, paymentMethodParameter, createdDateParameter, createdByParameter, paymentStatusParameter, statusParameter, customerIdParameter, statementTypeParameter);
+        }
+    
+        public virtual ObjectResult<PagesInsertUpdateDelete_Result> PagesInsertUpdateDelete(Nullable<int> iD, string name, string alias, string content, Nullable<System.DateTime> createdDate, string createdBy, Nullable<System.DateTime> updatedDate, string updatedBy, string metaKeyword, string metaDescription, Nullable<bool> status, string statementType)
+        {
+            var iDParameter = iD.HasValue ?
+                new ObjectParameter("ID", iD) :
+                new ObjectParameter("ID", typeof(int));
+    
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            var aliasParameter = alias != null ?
+                new ObjectParameter("Alias", alias) :
+                new ObjectParameter("Alias", typeof(string));
+    
+            var contentParameter = content != null ?
+                new ObjectParameter("Content", content) :
+                new ObjectParameter("Content", typeof(string));
+    
+            var createdDateParameter = createdDate.HasValue ?
+                new ObjectParameter("CreatedDate", createdDate) :
+                new ObjectParameter("CreatedDate", typeof(System.DateTime));
+    
+            var createdByParameter = createdBy != null ?
+                new ObjectParameter("CreatedBy", createdBy) :
+                new ObjectParameter("CreatedBy", typeof(string));
+    
+            var updatedDateParameter = updatedDate.HasValue ?
+                new ObjectParameter("UpdatedDate", updatedDate) :
+                new ObjectParameter("UpdatedDate", typeof(System.DateTime));
+    
+            var updatedByParameter = updatedBy != null ?
+                new ObjectParameter("UpdatedBy", updatedBy) :
+                new ObjectParameter("UpdatedBy", typeof(string));
+    
+            var metaKeywordParameter = metaKeyword != null ?
+                new ObjectParameter("MetaKeyword", metaKeyword) :
+                new ObjectParameter("MetaKeyword", typeof(string));
+    
+            var metaDescriptionParameter = metaDescription != null ?
+                new ObjectParameter("MetaDescription", metaDescription) :
+                new ObjectParameter("MetaDescription", typeof(string));
+    
+            var statusParameter = status.HasValue ?
+                new ObjectParameter("Status", status) :
+                new ObjectParameter("Status", typeof(bool));
+    
+            var statementTypeParameter = statementType != null ?
+                new ObjectParameter("StatementType", statementType) :
+                new ObjectParameter("StatementType", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PagesInsertUpdateDelete_Result>("PagesInsertUpdateDelete", iDParameter, nameParameter, aliasParameter, contentParameter, createdDateParameter, createdByParameter, updatedDateParameter, updatedByParameter, metaKeywordParameter, metaDescriptionParameter, statusParameter, statementTypeParameter);
+        }
+    
+        public virtual ObjectResult<PostsInsertUpdateDelete_Result> PostsInsertUpdateDelete(Nullable<int> iD, string name, string alias, Nullable<int> categoryID, string image, string description, string content, Nullable<bool> homeFlag, Nullable<bool> hotFlag, Nullable<int> viewCount, Nullable<System.DateTime> createdDate, string createdBy, Nullable<System.DateTime> updatedDate, string updatedBy, string metaKeyword, string metaDescription, Nullable<bool> status, string statementType)
+        {
+            var iDParameter = iD.HasValue ?
+                new ObjectParameter("ID", iD) :
+                new ObjectParameter("ID", typeof(int));
+    
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            var aliasParameter = alias != null ?
+                new ObjectParameter("Alias", alias) :
+                new ObjectParameter("Alias", typeof(string));
+    
+            var categoryIDParameter = categoryID.HasValue ?
+                new ObjectParameter("CategoryID", categoryID) :
+                new ObjectParameter("CategoryID", typeof(int));
+    
+            var imageParameter = image != null ?
+                new ObjectParameter("Image", image) :
+                new ObjectParameter("Image", typeof(string));
+    
+            var descriptionParameter = description != null ?
+                new ObjectParameter("Description", description) :
+                new ObjectParameter("Description", typeof(string));
+    
+            var contentParameter = content != null ?
+                new ObjectParameter("Content", content) :
+                new ObjectParameter("Content", typeof(string));
+    
+            var homeFlagParameter = homeFlag.HasValue ?
+                new ObjectParameter("HomeFlag", homeFlag) :
+                new ObjectParameter("HomeFlag", typeof(bool));
+    
+            var hotFlagParameter = hotFlag.HasValue ?
+                new ObjectParameter("HotFlag", hotFlag) :
+                new ObjectParameter("HotFlag", typeof(bool));
+    
+            var viewCountParameter = viewCount.HasValue ?
+                new ObjectParameter("ViewCount", viewCount) :
+                new ObjectParameter("ViewCount", typeof(int));
+    
+            var createdDateParameter = createdDate.HasValue ?
+                new ObjectParameter("CreatedDate", createdDate) :
+                new ObjectParameter("CreatedDate", typeof(System.DateTime));
+    
+            var createdByParameter = createdBy != null ?
+                new ObjectParameter("CreatedBy", createdBy) :
+                new ObjectParameter("CreatedBy", typeof(string));
+    
+            var updatedDateParameter = updatedDate.HasValue ?
+                new ObjectParameter("UpdatedDate", updatedDate) :
+                new ObjectParameter("UpdatedDate", typeof(System.DateTime));
+    
+            var updatedByParameter = updatedBy != null ?
+                new ObjectParameter("UpdatedBy", updatedBy) :
+                new ObjectParameter("UpdatedBy", typeof(string));
+    
+            var metaKeywordParameter = metaKeyword != null ?
+                new ObjectParameter("MetaKeyword", metaKeyword) :
+                new ObjectParameter("MetaKeyword", typeof(string));
+    
+            var metaDescriptionParameter = metaDescription != null ?
+                new ObjectParameter("MetaDescription", metaDescription) :
+                new ObjectParameter("MetaDescription", typeof(string));
+    
+            var statusParameter = status.HasValue ?
+                new ObjectParameter("Status", status) :
+                new ObjectParameter("Status", typeof(bool));
+    
+            var statementTypeParameter = statementType != null ?
+                new ObjectParameter("StatementType", statementType) :
+                new ObjectParameter("StatementType", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PostsInsertUpdateDelete_Result>("PostsInsertUpdateDelete", iDParameter, nameParameter, aliasParameter, categoryIDParameter, imageParameter, descriptionParameter, contentParameter, homeFlagParameter, hotFlagParameter, viewCountParameter, createdDateParameter, createdByParameter, updatedDateParameter, updatedByParameter, metaKeywordParameter, metaDescriptionParameter, statusParameter, statementTypeParameter);
+        }
+    
+        public virtual ObjectResult<PostTagsInsertUpdateDelete_Result> PostTagsInsertUpdateDelete(Nullable<int> postID, string tagID, string statementType)
+        {
+            var postIDParameter = postID.HasValue ?
+                new ObjectParameter("PostID", postID) :
+                new ObjectParameter("PostID", typeof(int));
+    
+            var tagIDParameter = tagID != null ?
+                new ObjectParameter("TagID", tagID) :
+                new ObjectParameter("TagID", typeof(string));
+    
+            var statementTypeParameter = statementType != null ?
+                new ObjectParameter("StatementType", statementType) :
+                new ObjectParameter("StatementType", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PostTagsInsertUpdateDelete_Result>("PostTagsInsertUpdateDelete", postIDParameter, tagIDParameter, statementTypeParameter);
+        }
+    
+        [DbFunction("ShopEntities", "ProductByCategories")]
+        public virtual IQueryable<ProductByCategories_Result> ProductByCategories()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<ProductByCategories_Result>("[ShopEntities].[ProductByCategories]()");
+        }
+    
+        [DbFunction("ShopEntities", "ProductByCreater")]
+        public virtual IQueryable<ProductByCreater_Result> ProductByCreater()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<ProductByCreater_Result>("[ShopEntities].[ProductByCreater]()");
+        }
+    
+        [DbFunction("ShopEntities", "ProductByName")]
+        public virtual IQueryable<ProductByName_Result> ProductByName()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<ProductByName_Result>("[ShopEntities].[ProductByName]()");
+        }
+    
+        public virtual ObjectResult<ProductCategoriesInsertUpdateDelete_Result> ProductCategoriesInsertUpdateDelete(Nullable<int> iD, string name, string alias, string description, Nullable<int> parentID, Nullable<int> displayOrder, Nullable<System.DateTime> createdDate, string createdBy, Nullable<System.DateTime> updatedDate, string updatedBy, string metaKeyword, string metaDescription, Nullable<bool> status, string statementType)
+        {
+            var iDParameter = iD.HasValue ?
+                new ObjectParameter("ID", iD) :
+                new ObjectParameter("ID", typeof(int));
+    
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            var aliasParameter = alias != null ?
+                new ObjectParameter("Alias", alias) :
+                new ObjectParameter("Alias", typeof(string));
+    
+            var descriptionParameter = description != null ?
+                new ObjectParameter("Description", description) :
+                new ObjectParameter("Description", typeof(string));
+    
+            var parentIDParameter = parentID.HasValue ?
+                new ObjectParameter("ParentID", parentID) :
+                new ObjectParameter("ParentID", typeof(int));
+    
+            var displayOrderParameter = displayOrder.HasValue ?
+                new ObjectParameter("DisplayOrder", displayOrder) :
+                new ObjectParameter("DisplayOrder", typeof(int));
+    
+            var createdDateParameter = createdDate.HasValue ?
+                new ObjectParameter("CreatedDate", createdDate) :
+                new ObjectParameter("CreatedDate", typeof(System.DateTime));
+    
+            var createdByParameter = createdBy != null ?
+                new ObjectParameter("CreatedBy", createdBy) :
+                new ObjectParameter("CreatedBy", typeof(string));
+    
+            var updatedDateParameter = updatedDate.HasValue ?
+                new ObjectParameter("UpdatedDate", updatedDate) :
+                new ObjectParameter("UpdatedDate", typeof(System.DateTime));
+    
+            var updatedByParameter = updatedBy != null ?
+                new ObjectParameter("UpdatedBy", updatedBy) :
+                new ObjectParameter("UpdatedBy", typeof(string));
+    
+            var metaKeywordParameter = metaKeyword != null ?
+                new ObjectParameter("MetaKeyword", metaKeyword) :
+                new ObjectParameter("MetaKeyword", typeof(string));
+    
+            var metaDescriptionParameter = metaDescription != null ?
+                new ObjectParameter("MetaDescription", metaDescription) :
+                new ObjectParameter("MetaDescription", typeof(string));
+    
+            var statusParameter = status.HasValue ?
+                new ObjectParameter("Status", status) :
+                new ObjectParameter("Status", typeof(bool));
+    
+            var statementTypeParameter = statementType != null ?
+                new ObjectParameter("StatementType", statementType) :
+                new ObjectParameter("StatementType", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ProductCategoriesInsertUpdateDelete_Result>("ProductCategoriesInsertUpdateDelete", iDParameter, nameParameter, aliasParameter, descriptionParameter, parentIDParameter, displayOrderParameter, createdDateParameter, createdByParameter, updatedDateParameter, updatedByParameter, metaKeywordParameter, metaDescriptionParameter, statusParameter, statementTypeParameter);
+        }
+    
+        [DbFunction("ShopEntities", "ProductCategoryByCreater")]
+        public virtual IQueryable<ProductCategoryByCreater_Result> ProductCategoryByCreater()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<ProductCategoryByCreater_Result>("[ShopEntities].[ProductCategoryByCreater]()");
+        }
+    
+        public virtual int ProductsInsertUpdateDelete(Nullable<int> iD, string name, string alias, Nullable<int> categoryID, string image, string moreImages, Nullable<decimal> price, Nullable<decimal> promotionPrice, Nullable<int> warranty, string description, string content, Nullable<bool> homeFlag, Nullable<bool> hotFlag, Nullable<int> viewCount, Nullable<System.DateTime> createdDate, string createdBy, Nullable<System.DateTime> updatedDate, string updatedBy, string metaKeyword, string metaDescription, Nullable<bool> status, string tags, Nullable<int> quantity, Nullable<decimal> originalPrice, string statementType)
+        {
+            var iDParameter = iD.HasValue ?
+                new ObjectParameter("ID", iD) :
+                new ObjectParameter("ID", typeof(int));
+    
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            var aliasParameter = alias != null ?
+                new ObjectParameter("Alias", alias) :
+                new ObjectParameter("Alias", typeof(string));
+    
+            var categoryIDParameter = categoryID.HasValue ?
+                new ObjectParameter("CategoryID", categoryID) :
+                new ObjectParameter("CategoryID", typeof(int));
+    
+            var imageParameter = image != null ?
+                new ObjectParameter("Image", image) :
+                new ObjectParameter("Image", typeof(string));
+    
+            var moreImagesParameter = moreImages != null ?
+                new ObjectParameter("MoreImages", moreImages) :
+                new ObjectParameter("MoreImages", typeof(string));
+    
+            var priceParameter = price.HasValue ?
+                new ObjectParameter("Price", price) :
+                new ObjectParameter("Price", typeof(decimal));
+    
+            var promotionPriceParameter = promotionPrice.HasValue ?
+                new ObjectParameter("PromotionPrice", promotionPrice) :
+                new ObjectParameter("PromotionPrice", typeof(decimal));
+    
+            var warrantyParameter = warranty.HasValue ?
+                new ObjectParameter("Warranty", warranty) :
+                new ObjectParameter("Warranty", typeof(int));
+    
+            var descriptionParameter = description != null ?
+                new ObjectParameter("Description", description) :
+                new ObjectParameter("Description", typeof(string));
+    
+            var contentParameter = content != null ?
+                new ObjectParameter("Content", content) :
+                new ObjectParameter("Content", typeof(string));
+    
+            var homeFlagParameter = homeFlag.HasValue ?
+                new ObjectParameter("HomeFlag", homeFlag) :
+                new ObjectParameter("HomeFlag", typeof(bool));
+    
+            var hotFlagParameter = hotFlag.HasValue ?
+                new ObjectParameter("HotFlag", hotFlag) :
+                new ObjectParameter("HotFlag", typeof(bool));
+    
+            var viewCountParameter = viewCount.HasValue ?
+                new ObjectParameter("ViewCount", viewCount) :
+                new ObjectParameter("ViewCount", typeof(int));
+    
+            var createdDateParameter = createdDate.HasValue ?
+                new ObjectParameter("CreatedDate", createdDate) :
+                new ObjectParameter("CreatedDate", typeof(System.DateTime));
+    
+            var createdByParameter = createdBy != null ?
+                new ObjectParameter("CreatedBy", createdBy) :
+                new ObjectParameter("CreatedBy", typeof(string));
+    
+            var updatedDateParameter = updatedDate.HasValue ?
+                new ObjectParameter("UpdatedDate", updatedDate) :
+                new ObjectParameter("UpdatedDate", typeof(System.DateTime));
+    
+            var updatedByParameter = updatedBy != null ?
+                new ObjectParameter("UpdatedBy", updatedBy) :
+                new ObjectParameter("UpdatedBy", typeof(string));
+    
+            var metaKeywordParameter = metaKeyword != null ?
+                new ObjectParameter("MetaKeyword", metaKeyword) :
+                new ObjectParameter("MetaKeyword", typeof(string));
+    
+            var metaDescriptionParameter = metaDescription != null ?
+                new ObjectParameter("MetaDescription", metaDescription) :
+                new ObjectParameter("MetaDescription", typeof(string));
+    
+            var statusParameter = status.HasValue ?
+                new ObjectParameter("Status", status) :
+                new ObjectParameter("Status", typeof(bool));
+    
+            var tagsParameter = tags != null ?
+                new ObjectParameter("Tags", tags) :
+                new ObjectParameter("Tags", typeof(string));
+    
+            var quantityParameter = quantity.HasValue ?
+                new ObjectParameter("Quantity", quantity) :
+                new ObjectParameter("Quantity", typeof(int));
+    
+            var originalPriceParameter = originalPrice.HasValue ?
+                new ObjectParameter("OriginalPrice", originalPrice) :
+                new ObjectParameter("OriginalPrice", typeof(decimal));
+    
+            var statementTypeParameter = statementType != null ?
+                new ObjectParameter("StatementType", statementType) :
+                new ObjectParameter("StatementType", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ProductsInsertUpdateDelete", iDParameter, nameParameter, aliasParameter, categoryIDParameter, imageParameter, moreImagesParameter, priceParameter, promotionPriceParameter, warrantyParameter, descriptionParameter, contentParameter, homeFlagParameter, hotFlagParameter, viewCountParameter, createdDateParameter, createdByParameter, updatedDateParameter, updatedByParameter, metaKeywordParameter, metaDescriptionParameter, statusParameter, tagsParameter, quantityParameter, originalPriceParameter, statementTypeParameter);
+        }
+    
+        public virtual ObjectResult<ProductTagsInsertUpdateDelete_Result> ProductTagsInsertUpdateDelete(Nullable<int> productID, string tagID, string statementType)
+        {
+            var productIDParameter = productID.HasValue ?
+                new ObjectParameter("ProductID", productID) :
+                new ObjectParameter("ProductID", typeof(int));
+    
+            var tagIDParameter = tagID != null ?
+                new ObjectParameter("TagID", tagID) :
+                new ObjectParameter("TagID", typeof(string));
+    
+            var statementTypeParameter = statementType != null ?
+                new ObjectParameter("StatementType", statementType) :
+                new ObjectParameter("StatementType", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ProductTagsInsertUpdateDelete_Result>("ProductTagsInsertUpdateDelete", productIDParameter, tagIDParameter, statementTypeParameter);
+        }
+    
+        public virtual ObjectResult<SlidesInsertUpdateDelete_Result> SlidesInsertUpdateDelete(Nullable<int> iD, string name, string description, string image, string url, Nullable<int> displayOrder, Nullable<bool> status, string content, string statementType)
+        {
+            var iDParameter = iD.HasValue ?
+                new ObjectParameter("ID", iD) :
+                new ObjectParameter("ID", typeof(int));
+    
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            var descriptionParameter = description != null ?
+                new ObjectParameter("Description", description) :
+                new ObjectParameter("Description", typeof(string));
+    
+            var imageParameter = image != null ?
+                new ObjectParameter("Image", image) :
+                new ObjectParameter("Image", typeof(string));
+    
+            var urlParameter = url != null ?
+                new ObjectParameter("Url", url) :
+                new ObjectParameter("Url", typeof(string));
+    
+            var displayOrderParameter = displayOrder.HasValue ?
+                new ObjectParameter("DisplayOrder", displayOrder) :
+                new ObjectParameter("DisplayOrder", typeof(int));
+    
+            var statusParameter = status.HasValue ?
+                new ObjectParameter("Status", status) :
+                new ObjectParameter("Status", typeof(bool));
+    
+            var contentParameter = content != null ?
+                new ObjectParameter("Content", content) :
+                new ObjectParameter("Content", typeof(string));
+    
+            var statementTypeParameter = statementType != null ?
+                new ObjectParameter("StatementType", statementType) :
+                new ObjectParameter("StatementType", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SlidesInsertUpdateDelete_Result>("SlidesInsertUpdateDelete", iDParameter, nameParameter, descriptionParameter, imageParameter, urlParameter, displayOrderParameter, statusParameter, contentParameter, statementTypeParameter);
+        }
+    
+        public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
+        {
+            var diagramnameParameter = diagramname != null ?
+                new ObjectParameter("diagramname", diagramname) :
+                new ObjectParameter("diagramname", typeof(string));
+    
+            var owner_idParameter = owner_id.HasValue ?
+                new ObjectParameter("owner_id", owner_id) :
+                new ObjectParameter("owner_id", typeof(int));
+    
+            var versionParameter = version.HasValue ?
+                new ObjectParameter("version", version) :
+                new ObjectParameter("version", typeof(int));
+    
+            var definitionParameter = definition != null ?
+                new ObjectParameter("definition", definition) :
+                new ObjectParameter("definition", typeof(byte[]));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_alterdiagram", diagramnameParameter, owner_idParameter, versionParameter, definitionParameter);
+        }
+    
+        public virtual int sp_creatediagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
+        {
+            var diagramnameParameter = diagramname != null ?
+                new ObjectParameter("diagramname", diagramname) :
+                new ObjectParameter("diagramname", typeof(string));
+    
+            var owner_idParameter = owner_id.HasValue ?
+                new ObjectParameter("owner_id", owner_id) :
+                new ObjectParameter("owner_id", typeof(int));
+    
+            var versionParameter = version.HasValue ?
+                new ObjectParameter("version", version) :
+                new ObjectParameter("version", typeof(int));
+    
+            var definitionParameter = definition != null ?
+                new ObjectParameter("definition", definition) :
+                new ObjectParameter("definition", typeof(byte[]));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_creatediagram", diagramnameParameter, owner_idParameter, versionParameter, definitionParameter);
+        }
+    
+        public virtual int sp_dropdiagram(string diagramname, Nullable<int> owner_id)
+        {
+            var diagramnameParameter = diagramname != null ?
+                new ObjectParameter("diagramname", diagramname) :
+                new ObjectParameter("diagramname", typeof(string));
+    
+            var owner_idParameter = owner_id.HasValue ?
+                new ObjectParameter("owner_id", owner_id) :
+                new ObjectParameter("owner_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_dropdiagram", diagramnameParameter, owner_idParameter);
+        }
+    
+        public virtual ObjectResult<sp_helpdiagramdefinition_Result> sp_helpdiagramdefinition(string diagramname, Nullable<int> owner_id)
+        {
+            var diagramnameParameter = diagramname != null ?
+                new ObjectParameter("diagramname", diagramname) :
+                new ObjectParameter("diagramname", typeof(string));
+    
+            var owner_idParameter = owner_id.HasValue ?
+                new ObjectParameter("owner_id", owner_id) :
+                new ObjectParameter("owner_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_helpdiagramdefinition_Result>("sp_helpdiagramdefinition", diagramnameParameter, owner_idParameter);
+        }
+    
+        public virtual ObjectResult<sp_helpdiagrams_Result> sp_helpdiagrams(string diagramname, Nullable<int> owner_id)
+        {
+            var diagramnameParameter = diagramname != null ?
+                new ObjectParameter("diagramname", diagramname) :
+                new ObjectParameter("diagramname", typeof(string));
+    
+            var owner_idParameter = owner_id.HasValue ?
+                new ObjectParameter("owner_id", owner_id) :
+                new ObjectParameter("owner_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_helpdiagrams_Result>("sp_helpdiagrams", diagramnameParameter, owner_idParameter);
+        }
+    
+        public virtual int sp_renamediagram(string diagramname, Nullable<int> owner_id, string new_diagramname)
+        {
+            var diagramnameParameter = diagramname != null ?
+                new ObjectParameter("diagramname", diagramname) :
+                new ObjectParameter("diagramname", typeof(string));
+    
+            var owner_idParameter = owner_id.HasValue ?
+                new ObjectParameter("owner_id", owner_id) :
+                new ObjectParameter("owner_id", typeof(int));
+    
+            var new_diagramnameParameter = new_diagramname != null ?
+                new ObjectParameter("new_diagramname", new_diagramname) :
+                new ObjectParameter("new_diagramname", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_renamediagram", diagramnameParameter, owner_idParameter, new_diagramnameParameter);
+        }
+    
+        public virtual int sp_upgraddiagrams()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");
+        }
+    
+        public virtual ObjectResult<SupportOnlinesInsertUpdateDelete_Result> SupportOnlinesInsertUpdateDelete(Nullable<int> iD, string name, string department, string skype, string mobile, string email, string yahoo, string facebook, Nullable<bool> status, Nullable<int> displayOrder, string statementType)
+        {
+            var iDParameter = iD.HasValue ?
+                new ObjectParameter("ID", iD) :
+                new ObjectParameter("ID", typeof(int));
+    
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            var departmentParameter = department != null ?
+                new ObjectParameter("Department", department) :
+                new ObjectParameter("Department", typeof(string));
+    
+            var skypeParameter = skype != null ?
+                new ObjectParameter("Skype", skype) :
+                new ObjectParameter("Skype", typeof(string));
+    
+            var mobileParameter = mobile != null ?
+                new ObjectParameter("Mobile", mobile) :
+                new ObjectParameter("Mobile", typeof(string));
+    
+            var emailParameter = email != null ?
+                new ObjectParameter("Email", email) :
+                new ObjectParameter("Email", typeof(string));
+    
+            var yahooParameter = yahoo != null ?
+                new ObjectParameter("Yahoo", yahoo) :
+                new ObjectParameter("Yahoo", typeof(string));
+    
+            var facebookParameter = facebook != null ?
+                new ObjectParameter("Facebook", facebook) :
+                new ObjectParameter("Facebook", typeof(string));
+    
+            var statusParameter = status.HasValue ?
+                new ObjectParameter("Status", status) :
+                new ObjectParameter("Status", typeof(bool));
+    
+            var displayOrderParameter = displayOrder.HasValue ?
+                new ObjectParameter("DisplayOrder", displayOrder) :
+                new ObjectParameter("DisplayOrder", typeof(int));
+    
+            var statementTypeParameter = statementType != null ?
+                new ObjectParameter("StatementType", statementType) :
+                new ObjectParameter("StatementType", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SupportOnlinesInsertUpdateDelete_Result>("SupportOnlinesInsertUpdateDelete", iDParameter, nameParameter, departmentParameter, skypeParameter, mobileParameter, emailParameter, yahooParameter, facebookParameter, statusParameter, displayOrderParameter, statementTypeParameter);
+        }
+    
+        public virtual ObjectResult<SystemConfigsInsertUpdateDelete_Result> SystemConfigsInsertUpdateDelete(Nullable<int> iD, string code, string valueString, Nullable<int> valueInt, string statementType)
+        {
+            var iDParameter = iD.HasValue ?
+                new ObjectParameter("ID", iD) :
+                new ObjectParameter("ID", typeof(int));
+    
+            var codeParameter = code != null ?
+                new ObjectParameter("Code", code) :
+                new ObjectParameter("Code", typeof(string));
+    
+            var valueStringParameter = valueString != null ?
+                new ObjectParameter("ValueString", valueString) :
+                new ObjectParameter("ValueString", typeof(string));
+    
+            var valueIntParameter = valueInt.HasValue ?
+                new ObjectParameter("ValueInt", valueInt) :
+                new ObjectParameter("ValueInt", typeof(int));
+    
+            var statementTypeParameter = statementType != null ?
+                new ObjectParameter("StatementType", statementType) :
+                new ObjectParameter("StatementType", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SystemConfigsInsertUpdateDelete_Result>("SystemConfigsInsertUpdateDelete", iDParameter, codeParameter, valueStringParameter, valueIntParameter, statementTypeParameter);
+        }
+    
+        public virtual ObjectResult<TagsInsertUpdateDelete_Result> TagsInsertUpdateDelete(string iD, string name, string type, string statementType)
+        {
+            var iDParameter = iD != null ?
+                new ObjectParameter("ID", iD) :
+                new ObjectParameter("ID", typeof(string));
+    
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            var typeParameter = type != null ?
+                new ObjectParameter("Type", type) :
+                new ObjectParameter("Type", typeof(string));
+    
+            var statementTypeParameter = statementType != null ?
+                new ObjectParameter("StatementType", statementType) :
+                new ObjectParameter("StatementType", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<TagsInsertUpdateDelete_Result>("TagsInsertUpdateDelete", iDParameter, nameParameter, typeParameter, statementTypeParameter);
+        }
+    
+        public virtual ObjectResult<VisitorStatisticsInsertUpdateDelete_Result> VisitorStatisticsInsertUpdateDelete(Nullable<System.Guid> iD, Nullable<System.DateTime> visitedDate, string iPAddress, string statementType)
+        {
+            var iDParameter = iD.HasValue ?
+                new ObjectParameter("ID", iD) :
+                new ObjectParameter("ID", typeof(System.Guid));
+    
+            var visitedDateParameter = visitedDate.HasValue ?
+                new ObjectParameter("VisitedDate", visitedDate) :
+                new ObjectParameter("VisitedDate", typeof(System.DateTime));
+    
+            var iPAddressParameter = iPAddress != null ?
+                new ObjectParameter("IPAddress", iPAddress) :
+                new ObjectParameter("IPAddress", typeof(string));
+    
+            var statementTypeParameter = statementType != null ?
+                new ObjectParameter("StatementType", statementType) :
+                new ObjectParameter("StatementType", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<VisitorStatisticsInsertUpdateDelete_Result>("VisitorStatisticsInsertUpdateDelete", iDParameter, visitedDateParameter, iPAddressParameter, statementTypeParameter);
+        }
         public virtual DbSet<PurchaseHistory> PurchaseHistories { get; set; }
     }
 }

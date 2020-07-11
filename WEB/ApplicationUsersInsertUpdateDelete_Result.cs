@@ -10,19 +10,9 @@
 namespace WEB
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class ApplicationUser
+    public partial class ApplicationUsersInsertUpdateDelete_Result
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public ApplicationUser()
-        {
-            this.ApplicationUserClaims = new HashSet<ApplicationUserClaim>();
-            this.ApplicationUserLogins = new HashSet<ApplicationUserLogin>();
-            this.ApplicationUserRoles = new HashSet<ApplicationUserRole>();
-            this.ApplicationGroups = new HashSet<ApplicationGroup>();
-        }
-    
         public int Id { get; set; }
         public string FullName { get; set; }
         public string Address { get; set; }
@@ -41,14 +31,5 @@ namespace WEB
         public Nullable<System.DateTime> LockoutEndDateUtc { get; set; }
         public Nullable<bool> LockoutEnabled { get; set; }
         public Nullable<int> AccessFailedCount { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ApplicationUserClaim> ApplicationUserClaims { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ApplicationUserLogin> ApplicationUserLogins { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ApplicationUserRole> ApplicationUserRoles { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ApplicationGroup> ApplicationGroups { get; set; }
     }
 }
