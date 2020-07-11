@@ -102,6 +102,7 @@ namespace WEB.Controllers
         //Sửa Sản Phẩm
         public ActionResult EditProduct(int? Id)
         {
+            ViewBag.ProductNo = Id.ToString();
             Session["View"] = "Product";
             var query = from pd in db.ProductCategories
                         select pd.ID;
@@ -153,6 +154,7 @@ namespace WEB.Controllers
         //Sửa Danh Mục Sản Phẩm
         public ActionResult EditProductCate(int? Id)
         {
+            ViewBag.CateNo = Id.ToString();
             Session["View"] = "Product";
             ProductCategory productCategory = new ProductCategory();
             productCategory = db.ProductCategories.Find(Id);
