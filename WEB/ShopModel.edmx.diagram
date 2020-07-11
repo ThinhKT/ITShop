@@ -36,12 +36,9 @@
         <AssociationConnector Association="ShopModel.FK_ApplicationUserClaims_ApplicationUsers" />
         <AssociationConnector Association="ShopModel.FK_ApplicationUserLogins_ApplicationUsers" />
         <AssociationConnector Association="ShopModel.FK_ApplicationUserRoles_ApplicationUsers" />
-        <AssociationConnector Association="ShopModel.FK_Orders_ApplicationUsers" />
         <AssociationConnector Association="ShopModel.FK_dbo_Menus_dbo_MenuGroups_GroupID" />
-        <AssociationConnector Association="ShopModel.FK_dbo_OrderDetails_dbo_Orders_OrderID" />
         <AssociationConnector Association="ShopModel.FK_dbo_OrderDetails_dbo_Products_ProductID" />
         <AssociationConnector Association="ShopModel.FK_dbo_Posts_dbo_PostCategories_CategoryID" />
-        <AssociationConnector Association="ShopModel.FK_dbo_Products_dbo_ProductCategories_CategoryID" />
         <AssociationConnector Association="ShopModel.ApplicationRoleGroups" />
         <AssociationConnector Association="ShopModel.ApplicationUserGroups" />
         <AssociationConnector Association="ShopModel.PostTags" />

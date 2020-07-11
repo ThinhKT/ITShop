@@ -10,9 +10,8 @@
 namespace WEB
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Order
+    public partial class OrdersInsertUpdateDelete_Result
     {
         public int ID { get; set; }
         public string CustomerName { get; set; }

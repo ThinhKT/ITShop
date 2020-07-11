@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
@@ -190,6 +192,7 @@ namespace WEB.Controllers
         {
             Session["View"] = "ListUser";
             var query = from pd in db.ApplicationUsers
+                        where pd.IsAdmin == false && pd.IsShipper == false
                         select pd;
             ViewBag.UserList = query.ToList();
             return View();
@@ -468,10 +471,163 @@ namespace WEB.Controllers
             return View();
         }
 
+        //Doanh thu theo tháng
         public ActionResult Chart()
         {
-            Session["View"] = "Other";
+            Session["View"] = "Income";
+            //string str = "select DATEPART(month, CreatedDate) as Thang,sum(TotalPrice) as TongTien from Orders where Status = 6 group by DATEPART(month, CreatedDate)";
+            var query = (from x in db.Orders
+                         where x.Status == 6
+                         orderby x.CreatedDate
+                         group x by x.CreatedDate.Value.Month into Thang
+                         select new
+                         {
+                             TongTien = Thang.Sum(x => x.TotalPrice),
+                             Thang = "Tháng " + Thang.Key.ToString()
+                         }).ToList();
+            ViewBag.DataPoints = JsonConvert.SerializeObject(query.ToList(), _jsonSetting);
             return View();
         }
+
+        //Cơ cấu số đơn đặt hàng sản phẩm theo mỗi hãng
+        public ActionResult ChartCoCauSP()
+        {
+            Session["View"] = "Income";
+            var query = (from x in db.ProductCategories
+                         orderby x.DisplayOrder descending
+                         select x).ToList();
+            ViewBag.DataPoints = JsonConvert.SerializeObject(query.ToList(), _jsonSetting);
+            return View();
+        }
+        //Số sản phẩm của mỗi loại theo từng tháng
+        public ActionResult ChartSpTheoLoai()
+        {
+            Session["View"] = "Income";
+
+            int Tong = db.Products.Sum(x => x.Quantity);
+
+            var query = from x in db.Products
+                        select x.CategoryID;
+
+            var query10 = (from x in db.Products
+                          where x.CategoryID == 10
+                          orderby x.CreatedDate
+                          group x by x.CreatedDate.Value.Month into product
+                          select new
+                          {
+                              CateId = 10,
+                              Thang = product.Key,
+                              PhanTram = 100*(float)product.Sum(x => x.Quantity) / (float)Tong
+                          }).ToList();
+
+            ViewBag.DataPoints10 = JsonConvert.SerializeObject(query10.ToList(), _jsonSetting);
+
+            var query11 = (from x in db.Products
+                           where x.CategoryID == 11
+                           orderby x.CreatedDate
+                           group x by x.CreatedDate.Value.Month into product
+                           select new
+                           {
+                               CateId = 11,
+                               Thang = product.Key,
+                               PhanTram = 100 * (float)product.Sum(x => x.Quantity) / (float)Tong
+                           }).ToList();
+
+            ViewBag.DataPoints11 = JsonConvert.SerializeObject(query11.ToList(), _jsonSetting);
+
+            var query12 = (from x in db.Products
+                           where x.CategoryID == 12
+                           orderby x.CreatedDate
+                           group x by x.CreatedDate.Value.Month into product
+                           select new
+                           {
+                               CateId = 12,
+                               Thang = product.Key,
+                               PhanTram = 100 * (float)product.Sum(x => x.Quantity) / (float)Tong
+                           }).ToList();
+
+            ViewBag.DataPoints12 = JsonConvert.SerializeObject(query12.ToList(), _jsonSetting);
+
+            var query13 = (from x in db.Products
+                           where x.CategoryID == 13
+                           orderby x.CreatedDate
+                           group x by x.CreatedDate.Value.Month into product
+                           select new
+                           {
+                               CateId = 13,
+                               Thang = product.Key,
+                               PhanTram = 100 * (float)product.Sum(x => x.Quantity) / (float)Tong
+                           }).ToList();
+
+            ViewBag.DataPoints13 = JsonConvert.SerializeObject(query13.ToList(), _jsonSetting);
+
+            var query14 = (from x in db.Products
+                           where x.CategoryID == 14
+                           orderby x.CreatedDate
+                           group x by x.CreatedDate.Value.Month into product
+                           select new
+                           {
+                               CateId = 14,
+                               Thang = product.Key,
+                               PhanTram = 100 * (float)product.Sum(x => x.Quantity) / (float)Tong
+                           }).ToList();
+
+            ViewBag.DataPoints14 = JsonConvert.SerializeObject(query14.ToList(), _jsonSetting);
+
+            var query15 = (from x in db.Products
+                           where x.CategoryID == 15
+                           orderby x.CreatedDate
+                           group x by x.CreatedDate.Value.Month into product
+                           select new
+                           {
+                               CateId = 15,
+                               Thang = product.Key,
+                               PhanTram = 100 * (float)product.Sum(x => x.Quantity) / (float)Tong
+                           }).ToList();
+
+            ViewBag.DataPoints15 = JsonConvert.SerializeObject(query15.ToList(), _jsonSetting);
+
+            var query16 = (from x in db.Products
+                           where x.CategoryID == 16
+                           orderby x.CreatedDate
+                           group x by x.CreatedDate.Value.Month into product
+                           select new
+                           {
+                               CateId = 16,
+                               Thang = product.Key,
+                               PhanTram = 100 * (float)product.Sum(x => x.Quantity) / (float)Tong
+                           }).ToList();
+
+            ViewBag.DataPoints16 = JsonConvert.SerializeObject(query16.ToList(), _jsonSetting);
+
+            var query17 = (from x in db.Products
+                           where x.CategoryID == 17
+                           orderby x.CreatedDate
+                           group x by x.CreatedDate.Value.Month into product
+                           select new
+                           {
+                               CateId = 17,
+                               Thang = product.Key,
+                               PhanTram = 100 * (float)product.Sum(x => x.Quantity) / (float)Tong
+                           }).ToList();
+
+            ViewBag.DataPoints17 = JsonConvert.SerializeObject(query17.ToList(), _jsonSetting);
+
+            var query18 = (from x in db.Products
+                           where x.CategoryID == 18
+                           orderby x.CreatedDate
+                           group x by x.CreatedDate.Value.Month into product
+                           select new
+                           {
+                               CateId = 18,
+                               Thang = product.Key,
+                               PhanTram = 100 * (float)product.Sum(x => x.Quantity) / (float)Tong
+                           }).ToList();
+
+            ViewBag.DataPoints18 = JsonConvert.SerializeObject(query18.ToList(), _jsonSetting);
+
+            return View();
+        }
+        JsonSerializerSettings _jsonSetting = new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Ignore };
     }
 }

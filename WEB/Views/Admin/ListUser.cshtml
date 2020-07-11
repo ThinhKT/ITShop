@@ -35,7 +35,7 @@
         <tbody>
             @foreach (var item in ViewBag.UserList)
             {
-            <tr onclick="window.location='/Admin/EditUser/@item.Id';">
+            <tr>
                 <th scope="row"><b>@item.Id</b></th>
                 <td>
                     @*<div class="tm-status-circle moving">*@
@@ -56,7 +56,7 @@
         </tbody>
     </table>
 </div>
-<a href="/Admin/AddUser"
+<a hidden href="/Admin/AddUser"
    class="btn btn-primary btn-block text-uppercase mb-3">Thêm</a>
 @*<button href="/Admin/AddUser.cshtml" class="btn btn-primary btn-block text-uppercase mb-3">
     Thêm
