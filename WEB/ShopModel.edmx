@@ -314,6 +314,19 @@
           <Property Name="ProductID" Type="int" Nullable="false" />
           <Property Name="TagID" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <EntityType Name="PurchaseHistory">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="Code" Type="nvarchar(max)" />
+          <Property Name="Bank" Type="nvarchar" MaxLength="100" />
+          <Property Name="BankCode" Type="nvarchar" MaxLength="100" />
+          <Property Name="Value" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Status" Type="bit" />
+          <Property Name="Date" Type="datetime" />
+        </EntityType>
         <EntityType Name="ShipHistory">
           <Key>
             <PropertyRef Name="ShipperID" />
@@ -653,6 +666,7 @@
           <EntitySet Name="ProductCategories" EntityType="Self.ProductCategories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductTags" EntityType="Self.ProductTags" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PurchaseHistory" EntityType="Self.PurchaseHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ShipHistory" EntityType="Self.ShipHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Slides" EntityType="Self.Slides" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SupportOnlines" EntityType="Self.SupportOnlines" Schema="dbo" store:Type="Tables" />
@@ -821,6 +835,7 @@
             <End Role="Product" EntitySet="Products" />
             <End Role="Tag" EntitySet="Tags" />
           </AssociationSet>
+          <EntitySet Name="PurchaseHistories" EntityType="ShopModel.PurchaseHistory" />
         </EntityContainer>
         <EntityType Name="C__MigrationHistory">
           <Key>
@@ -1347,6 +1362,19 @@
           <End Type="ShopModel.Product" Role="Product" Multiplicity="*" />
           <End Type="ShopModel.Tag" Role="Tag" Multiplicity="*" />
         </Association>
+        <EntityType Name="PurchaseHistory">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="Code" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Bank" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="BankCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Value" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Status" Type="Boolean" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1757,6 +1785,20 @@
               <ScalarProperty Name="ID" ColumnName="ProductID" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="PurchaseHistories">
+            <EntityTypeMapping TypeName="ShopModel.PurchaseHistory">
+              <MappingFragment StoreEntitySet="PurchaseHistory">
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="BankCode" ColumnName="BankCode" />
+                <ScalarProperty Name="Bank" ColumnName="Bank" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

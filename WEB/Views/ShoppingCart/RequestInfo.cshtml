@@ -1,0 +1,66 @@
+﻿
+@{
+    ViewBag.Title = "RequestInfo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="shoping__cart__table pre-scrollable">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Ngày</th>
+                        <th>Ngân hàng</th>
+                        <th>Mệnh giá</th>
+                        <th>Số tài khoản</th>
+                        <th>Mã xác nhận</th>
+                        <th>Trạng thái</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (ViewBag.RequestInfo != null)
+                    {
+                        foreach (var item in ViewBag.RequestInfo)
+                        {
+                    <tr>
+                        <td class="shoping__cart__table">
+                            @item.ID
+                        </td>
+                        <td class="shoping__cart__table">
+                            @item.Date.ToString()
+                        </td>
+                        <td class="shoping__cart__table">
+                            @item.Bank
+                        </td>
+                        <td class="shoping__cart__table">
+                            @item.Value VND
+                        </td>
+                        <td class="shoping__cart__table">
+                            @item.BankCode
+                        </td>
+                        <td class="shoping__cart__table" style="color:blue">
+                            @item.Code
+                        </td>
+                        @if (item.Status == false)
+                        {
+                            <td class="shoping__cart__table">
+                                Chưa nhận
+                            </td>
+                        }
+                        else
+                        {
+                            <td class="shoping__cart__table">
+                                Đã nhận
+                            </td>
+                        }
+                    </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+

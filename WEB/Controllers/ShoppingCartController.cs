@@ -339,18 +339,44 @@ namespace WEB.Controllers
         [HttpPost]
         public ActionResult GetMoney(FormCollection fc)
         {
-            try
-            {
-                string str = "update ApplicationUsers set Money = Money + " + fc["money"].ToString() + " where Id = " + Session["UserID"].ToString();
-                var query = db.Database.ExecuteSqlCommand(str);
-                Session["Message"] = "Nạp thêm thành công !";
-                return RedirectToAction("GetMoney","ShoppingCart");
-            }
-            catch
-            {
-                Session["Message"] = "Nạp thêm thất bại !";
-                return RedirectToAction("GetMoney", "ShoppingCart");
-            }
+            //gen mã dài loằng ngoằng
+            string id = Session["UserID"].ToString();
+            string name = Session["UserName"].ToString().ToUpper();
+            string myMoney = fc["MyMoney"].ToString();
+            string newMoney = fc["money"].ToString();
+            string bank = fc["bank"].ToString().ToUpper();
+            string bankcode = fc["bankcode"].ToString();
+
+            string code = name + id + newMoney + bankcode + bank;
+
+            //thêm vào database
+            string str = "INSERT INTO PurchaseHistory (UserID,Code,Bank,BankCode,Value,Status,Date)  " +
+                "VALUES ("+ id + ", '" + code + "', '" + bank + "', '" + bankcode + "', " + newMoney + ", 0, GETDATE())";
+            var query = db.Database.ExecuteSqlCommand(str);
+
+            return RedirectToAction("RequestInfo","ShoppingCart");
+            //try
+            //{
+            //    string str = "update ApplicationUsers set Money = Money + " + fc["money"].ToString() + " where Id = " + Session["UserID"].ToString();
+            //    var query = db.Database.ExecuteSqlCommand(str);
+            //    Session["Message"] = "Nạp thêm thành công !";
+            //    return RedirectToAction("GetMoney","ShoppingCart");
+            //}
+            //catch
+            //{
+            //    Session["Message"] = "Nạp thêm thất bại !";
+            //    return RedirectToAction("GetMoney", "ShoppingCart");
+            //}
+        }
+        public ActionResult RequestInfo()
+        {
+            int id = int.Parse(Session["UserID"].ToString());
+            var query = (from x in db.PurchaseHistories
+                        where x.UserID == id
+                        orderby x.ID descending
+                        select x).ToList();
+            ViewBag.RequestInfo = query;
+            return View();
         }
     }
 }
