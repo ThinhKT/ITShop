@@ -54,6 +54,8 @@ namespace WEB
         public virtual DbSet<SystemConfig> SystemConfigs { get; set; }
         public virtual DbSet<Tag> Tags { get; set; }
         public virtual DbSet<VisitorStatistic> VisitorStatistics { get; set; }
+        public virtual DbSet<PurchaseHistory> PurchaseHistories { get; set; }
+    
         public virtual ObjectResult<ApplicationGroupsInsertUpdateDelete_Result> ApplicationGroupsInsertUpdateDelete(Nullable<int> iD, string name, string description, string statementType)
         {
             var iDParameter = iD.HasValue ?
@@ -1120,6 +1122,5 @@ namespace WEB
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<VisitorStatisticsInsertUpdateDelete_Result>("VisitorStatisticsInsertUpdateDelete", iDParameter, visitedDateParameter, iPAddressParameter, statementTypeParameter);
         }
-        public virtual DbSet<PurchaseHistory> PurchaseHistories { get; set; }
     }
 }

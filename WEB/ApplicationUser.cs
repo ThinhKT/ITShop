@@ -21,6 +21,7 @@ namespace WEB
             this.ApplicationUserLogins = new HashSet<ApplicationUserLogin>();
             this.ApplicationUserRoles = new HashSet<ApplicationUserRole>();
             this.ApplicationGroups = new HashSet<ApplicationGroup>();
+            this.Orders = new HashSet<Order>();
         }
     
         public int Id { get; set; }
@@ -50,5 +51,7 @@ namespace WEB
         public virtual ICollection<ApplicationUserRole> ApplicationUserRoles { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ApplicationGroup> ApplicationGroups { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Order> Orders { get; set; }
     }
 }

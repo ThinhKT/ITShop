@@ -517,6 +517,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_dbo_OrderDetails_dbo_Orders_OrderID">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="OrderDetails">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_dbo_OrderDetails_dbo_Products_ProductID">
           <End Role="Products" Type="Self.Products" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -573,6 +587,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_dbo_Products_dbo_ProductCategories_CategoryID">
+          <End Role="ProductCategories" Type="Self.ProductCategories" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductCategories">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_dbo_ProductTags_dbo_Products_ProductID">
           <End Role="Products" Type="Self.Products" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -598,6 +626,18 @@
             </Principal>
             <Dependent Role="ProductTags">
               <PropertyRef Name="TagID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_ApplicationUsers">
+          <End Role="ApplicationUsers" Type="Self.ApplicationUsers" Multiplicity="0..1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ApplicationUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="CustomerId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1028,6 +1068,10 @@
             <End Role="MenuGroups" EntitySet="MenuGroups" />
             <End Role="Menus" EntitySet="Menus" />
           </AssociationSet>
+          <AssociationSet Name="FK_dbo_OrderDetails_dbo_Orders_OrderID" Association="Self.FK_dbo_OrderDetails_dbo_Orders_OrderID">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="OrderDetails" EntitySet="OrderDetails" />
+          </AssociationSet>
           <AssociationSet Name="FK_dbo_OrderDetails_dbo_Products_ProductID" Association="Self.FK_dbo_OrderDetails_dbo_Products_ProductID">
             <End Role="Products" EntitySet="Products" />
             <End Role="OrderDetails" EntitySet="OrderDetails" />
@@ -1044,6 +1088,10 @@
             <End Role="Tags" EntitySet="Tags" />
             <End Role="PostTags" EntitySet="PostTags" />
           </AssociationSet>
+          <AssociationSet Name="FK_dbo_Products_dbo_ProductCategories_CategoryID" Association="Self.FK_dbo_Products_dbo_ProductCategories_CategoryID">
+            <End Role="ProductCategories" EntitySet="ProductCategories" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
           <AssociationSet Name="FK_dbo_ProductTags_dbo_Products_ProductID" Association="Self.FK_dbo_ProductTags_dbo_Products_ProductID">
             <End Role="Products" EntitySet="Products" />
             <End Role="ProductTags" EntitySet="ProductTags" />
@@ -1051,6 +1099,10 @@
           <AssociationSet Name="FK_dbo_ProductTags_dbo_Tags_TagID" Association="Self.FK_dbo_ProductTags_dbo_Tags_TagID">
             <End Role="Tags" EntitySet="Tags" />
             <End Role="ProductTags" EntitySet="ProductTags" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_ApplicationUsers" Association="Self.FK_Orders_ApplicationUsers">
+            <End Role="ApplicationUsers" EntitySet="ApplicationUsers" />
+            <End Role="Orders" EntitySet="Orders" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -1418,6 +1470,18 @@
             <End Role="Tag" EntitySet="Tags" />
           </AssociationSet>
           <EntitySet Name="PurchaseHistories" EntityType="ShopModel.PurchaseHistory" />
+          <AssociationSet Name="FK_Orders_ApplicationUsers" Association="ShopModel.FK_Orders_ApplicationUsers">
+            <End Role="ApplicationUser" EntitySet="ApplicationUsers" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_OrderDetails_dbo_Orders_OrderID" Association="ShopModel.FK_dbo_OrderDetails_dbo_Orders_OrderID">
+            <End Role="Order" EntitySet="Orders" />
+            <End Role="OrderDetail" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Products_dbo_ProductCategories_CategoryID" Association="ShopModel.FK_dbo_Products_dbo_ProductCategories_CategoryID">
+            <End Role="ProductCategory" EntitySet="ProductCategories" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="ApplicationGroupsInsertUpdateDelete_Result">
           <Property Type="Int32" Name="ID" Nullable="false" />
@@ -1773,6 +1837,7 @@
           <NavigationProperty Name="ApplicationUserLogins" Relationship="ShopModel.FK_ApplicationUserLogins_ApplicationUsers" FromRole="ApplicationUser" ToRole="ApplicationUserLogin" />
           <NavigationProperty Name="ApplicationUserRoles" Relationship="ShopModel.FK_ApplicationUserRoles_ApplicationUsers" FromRole="ApplicationUser" ToRole="ApplicationUserRole" />
           <NavigationProperty Name="ApplicationGroups" Relationship="ShopModel.ApplicationUserGroups" FromRole="ApplicationUser" ToRole="ApplicationGroup" />
+          <NavigationProperty Name="Orders" Relationship="ShopModel.FK_Orders_ApplicationUsers" FromRole="ApplicationUser" ToRole="Order" />
         </EntityType>
         <EntityType Name="ContactDetail">
           <Key>
@@ -1847,6 +1912,7 @@
           <Property Name="Quantity" Type="Int32" Nullable="false" />
           <Property Name="Price" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <NavigationProperty Name="Product" Relationship="ShopModel.FK_dbo_OrderDetails_dbo_Products_ProductID" FromRole="OrderDetail" ToRole="Product" />
+          <NavigationProperty Name="Order" Relationship="ShopModel.FK_dbo_OrderDetails_dbo_Orders_OrderID" FromRole="OrderDetail" ToRole="Order" />
         </EntityType>
         <EntityType Name="Order">
           <Key>
@@ -1865,6 +1931,8 @@
           <Property Name="Status" Type="Int32" Nullable="false" />
           <Property Name="CustomerId" Type="Int32" />
           <Property Name="TotalPrice" Type="Decimal" Precision="18" Scale="2" />
+          <NavigationProperty Name="ApplicationUser" Relationship="ShopModel.FK_Orders_ApplicationUsers" FromRole="Order" ToRole="ApplicationUser" />
+          <NavigationProperty Name="OrderDetails" Relationship="ShopModel.FK_dbo_OrderDetails_dbo_Orders_OrderID" FromRole="Order" ToRole="OrderDetail" />
         </EntityType>
         <EntityType Name="Page">
           <Key>
@@ -1946,6 +2014,7 @@
           <Property Name="MetaKeyword" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="MetaDescription" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="Status" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Products" Relationship="ShopModel.FK_dbo_Products_dbo_ProductCategories_CategoryID" FromRole="ProductCategory" ToRole="Product" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -1977,6 +2046,7 @@
           <Property Name="OriginalPrice" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <NavigationProperty Name="OrderDetails" Relationship="ShopModel.FK_dbo_OrderDetails_dbo_Products_ProductID" FromRole="Product" ToRole="OrderDetail" />
           <NavigationProperty Name="Tags1" Relationship="ShopModel.ProductTags" FromRole="Product" ToRole="Tag" />
+          <NavigationProperty Name="ProductCategory" Relationship="ShopModel.FK_dbo_Products_dbo_ProductCategories_CategoryID" FromRole="Product" ToRole="ProductCategory" />
         </EntityType>
         <EntityType Name="ShipHistory">
           <Key>
@@ -2173,6 +2243,46 @@
           <Property Name="Status" Type="Boolean" />
           <Property Name="Date" Type="DateTime" Precision="3" />
         </EntityType>
+        <Association Name="FK_Orders_ApplicationUsers">
+          <End Type="ShopModel.ApplicationUser" Role="ApplicationUser" Multiplicity="0..1" />
+          <End Type="ShopModel.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ApplicationUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_OrderDetails_dbo_Orders_OrderID">
+          <End Type="ShopModel.Order" Role="Order" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="ShopModel.OrderDetail" Role="OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="OrderDetail">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Products_dbo_ProductCategories_CategoryID">
+          <End Type="ShopModel.ProductCategory" Role="ProductCategory" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="ShopModel.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductCategory">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->

@@ -44,6 +44,9 @@
         <AssociationConnector Association="ShopModel.PostTags" />
         <AssociationConnector Association="ShopModel.ProductTags" />
         <EntityTypeShape EntityType="ShopModel.PurchaseHistory" Width="1.5" PointX="14.375" PointY="6.75" />
+        <AssociationConnector Association="ShopModel.FK_Orders_ApplicationUsers" />
+        <AssociationConnector Association="ShopModel.FK_dbo_OrderDetails_dbo_Orders_OrderID" />
+        <AssociationConnector Association="ShopModel.FK_dbo_Products_dbo_ProductCategories_CategoryID" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
