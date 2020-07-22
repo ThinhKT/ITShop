@@ -342,7 +342,7 @@ namespace WEB.Controllers
             //gen mã dài loằng ngoằng
             string id = Session["UserID"].ToString();
             string name = Session["UserName"].ToString().ToUpper();
-            string myMoney = fc["MyMoney"].ToString();
+            //string myMoney = fc["MyMoney"].ToString();
             string newMoney = fc["money"].ToString();
             string bank = fc["bank"].ToString().ToUpper();
             string bankcode = fc["bankcode"].ToString();
@@ -354,7 +354,10 @@ namespace WEB.Controllers
                 "VALUES ("+ id + ", '" + code + "', '" + bank + "', '" + bankcode + "', " + newMoney + ", 0, GETDATE())";
             var query = db.Database.ExecuteSqlCommand(str);
 
-            return RedirectToAction("RequestInfo","ShoppingCart");
+            Session["code"] = code;
+            Session["Message"] = "Yêu cầu đang được xử lý. Xem tại lịch sử nạp";
+
+            return RedirectToAction("GetMoney","ShoppingCart");
             //try
             //{
             //    string str = "update ApplicationUsers set Money = Money + " + fc["money"].ToString() + " where Id = " + Session["UserID"].ToString();

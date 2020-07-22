@@ -45,6 +45,27 @@
                                 <b>Số tiền muốn nạp thêm :</b>
                                 <input type="number" name="money" required>
                             </div>
+                            <div class="checkout__input">
+                                <b>Số tài khoản thụ hưởng : 0881000453799</b>
+                            </div>
+                            <div class="checkout__input">
+                                <b>Tên người thụ hưởng : Trần Minh Thịnh</b>
+                            </div>
+                            <div class="checkout__input">
+                                @if (Session["code"] != null)
+                                {
+                                    <b>
+                                        Nội dung chuyển tiền : NAP QTSHOP @Session["code"].ToString()
+                                    </b>
+                                    Session["code"] = null;
+                                }
+                                else
+                                {
+                                    <b>
+                                        Nội dung chuyển tiền : NAP QTSHOP
+                                    </b>
+                                }
+                            </div>
                             <button type="submit" class="site-btn">Nạp</button>
                             <a href="/ShoppingCart/MyAccount" class="site-btn">Về tài khoản</a>
                         </div>
